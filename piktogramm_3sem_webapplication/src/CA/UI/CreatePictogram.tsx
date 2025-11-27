@@ -6,11 +6,10 @@ import './StyleSheet/UI_Module_Template.css';
 
 export default function ViewCreatePictogram() {
     //Data
-
+    
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<File | null >(null);
     const [descripion, setDescription] = useState('');
-    const [test, setTest] = useState();
     //restrict, what Filetypes can be uploaded by the user;
     const acceptedFileEndingList: String[] = [ ".jpg", ".png", ".svg" ];
     
@@ -51,7 +50,7 @@ export default function ViewCreatePictogram() {
     return (<>
 
         <div className="module">
-            <ImagePreview file={file}/>
+            <div ><ImagePreview file={file} /></div>
             <br/>
             <label>
                 Title:
@@ -87,6 +86,6 @@ type ImagePreviewProps = {
 //Custom Previewer
   const ImagePreview = ({ file }: ImagePreviewProps) => {
     if (!file) { return null };
-    return (<img src={URL.createObjectURL(file)} />)
+      return (<img className="imagePreview" style={{ height: 300, width: 300 } } src={URL.createObjectURL(file)} />)
 
 }

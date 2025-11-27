@@ -1,39 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import ViewCreatePictogram from './CA/UI/CreatePictogram'
-
+import ViewCreatePictogram from './CA/UI/CreatePictogram';
+import logo from "./assets/pictoplanner_logo.svg"
+let currentView = <ViewCreatePictogram></ViewCreatePictogram>
+window.addEventListener("resize", function () { 
+    const test = document.getElementById("test");
+    if (test) {
+        test.style.width = window.innerWidth + "px";
+    }
+})//check for window resize
 function App() {
-  const [count, setCount] = useState(0)
+    
+
+
 
   return (
       <>
-          <ViewCreatePictogram></ViewCreatePictogram>
-          <div>
-              
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-          </p>
-      
+         
+          <div style={{marginBottom: 15} }><Navbar></Navbar></div>
+          {currentView}
+          
     </>
   )
 }
 
 export default App
+function Navbar() {
+    
+    return (
+
+        <nav className="navbar" id="test">
+            
+                <img src={logo} className="logo"></img>
+                <button>home</button>
+                <button onClick={function () { currentView = <ViewCreatePictogram></ViewCreatePictogram> }}  >Oprett Piktogramm</button>
+            <button>test</button>
+
+        </nav>
+
+    )
+}

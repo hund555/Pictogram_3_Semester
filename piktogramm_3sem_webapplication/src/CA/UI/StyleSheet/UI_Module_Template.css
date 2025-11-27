@@ -2,6 +2,10 @@
     background-color: dimgray;
     align-items: center;
     display:block;
+    height:100%;
+    width:100%;
+    
+
 }
 .module input[type="text"] {
     border-color: gray;
@@ -31,4 +35,8 @@
     padding-left:3%;
     margin-left:6%
     
+}
+.module button:hover {
+    background-color:white;
+    color:black;
 }
