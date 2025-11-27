@@ -21,6 +21,11 @@ namespace PictogramAPI.Services
             _usersCollection = _mongodb.GetCollection<User>(options.Value.UserCollectionName);
         }
 
+        public async Task<User> GetUserById(string id)
+        {
+            return await _usersCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task CreateUser(CreateUserDTO userDTO)
         {
             User existingUser = await _usersCollection.Find(user => user.Email == userDTO.Email).FirstOrDefaultAsync();
