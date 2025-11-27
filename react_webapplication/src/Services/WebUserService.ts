@@ -1,7 +1,7 @@
 import type CreateUserWeb from "../Domain/CreateUserWeb";
 import axios, { type AxiosResponse } from "axios";
 
-class UserService {
+class WebUserService {
     
 
     // Creates a new user in the system
@@ -12,4 +12,4 @@ class UserService {
         return axios.post(baseURL + "/users", payload).then((response: AxiosResponse<CreateUserWeb>) => response.data);
     }
 }
-export default UserService;
+export default WebUserService;
