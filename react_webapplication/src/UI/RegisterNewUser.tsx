@@ -10,16 +10,15 @@ function RegisterNewUser() {
     const navigateToSite = useNavigate();
 
     function handleCreateUser() {
-        if (email === "") {
-            return setError("E-mail skal udfyldes");
+        if (email.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || fullName.trim() === "") {
+            setError("Alle Felter Skal Udfyldes");
+            return
         }
-        else if (password === "") {
-            return setError("Password skal udfyldes");
+
+        if (password.includes(" ") || repeatPassword.includes(" ")) {
+            setError("Password må ikke indholde mellemrum");
+            return;
         }
-        else if (password === "") {
-            return setError("Password skal udfyldes");
-        }
-        return setError(null);        
     }
 
 
@@ -60,13 +59,15 @@ function RegisterNewUser() {
                 <input type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
             </div>
 
             {/* Password field */}
             <div style={{ marginBottom: "0.5rem" }}>
                 <label style={{ marginRight: "0.5rem" }}>Gentag Adgangskode</label>
-                <input type="text"
+                <input type="password"
+                    required
                     value={repeatPassword}
                     onChange={(e) => setRepeatPassword(e.target.value)}
                 />
