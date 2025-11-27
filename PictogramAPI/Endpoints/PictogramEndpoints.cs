@@ -1,4 +1,5 @@
-﻿using PictogramAPI.Services.DTOCollection;
+﻿using Microsoft.AspNetCore.Mvc;
+using PictogramAPI.Services.DTOCollection;
 using PictogramAPI.Services.Interfaces;
 
 namespace PictogramAPI.Endpoints
@@ -7,11 +8,11 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService, CreatePictogramDTO createPictogramDTO, string userId, IFormFile file) =>
+            app.MapPost("/pictograms", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO, string userId) =>
             {
                 try
                 {
-                    await pictogramService.CreatePictogram(createPictogramDTO, userId, file);
+                    await pictogramService.CreatePictogram(createPictogramDTO, userId);
                     return Results.Created();
                 }
                 catch (NullReferenceException e)

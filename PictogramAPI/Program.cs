@@ -13,6 +13,7 @@ namespace PictogramAPI
 
             // Add services to the container.
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IPictogramService, PictogramService>();
 
             // Configure DatabaseInfo from appsettings.json
             builder.Services.Configure<DatabaseInfo>(builder.Configuration.GetSection("DatabaseSettings"));

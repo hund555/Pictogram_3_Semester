@@ -26,7 +26,7 @@ namespace PictogramAPI.Services
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);
         }
 
-        public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO, string userId, IFormFile picture)
+        public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO, string userId)
         {
             if (await _userService.GetUserById(userId) == null)
             {
@@ -38,7 +38,7 @@ namespace PictogramAPI.Services
             // thise two lines where found on stack overflow https://stackoverflow.com/questions/36432028/how-to-convert-a-file-into-byte-array-in-memory
             // They convert the IFormFile to a byte array to be stored in MongoDB GridFS
             await using var memoryStream = new MemoryStream();
-            await picture.CopyToAsync(memoryStream);
+            await createPictogramDTO.Picture.CopyToAsync(memoryStream);
 
             ObjectId gridFsId = await gridFSBucket.UploadFromBytesAsync(createPictogramDTO.Title, memoryStream.ToArray());
 
