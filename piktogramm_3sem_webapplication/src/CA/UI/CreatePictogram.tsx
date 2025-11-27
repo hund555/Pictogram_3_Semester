@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
 import Pictogram from '../Domain/Pictogram';
-
+import './StyleSheet/UI_Module_Template.css';
 
 
 export default function ViewCreatePictogram() {
@@ -50,21 +50,21 @@ export default function ViewCreatePictogram() {
     //HTML
     return (<>
 
-        <div>
+        <div className="module">
             <ImagePreview file={file}/>
             <br/>
             <label>
                 Title:
-                
-                <input value={title} name="Title" placeholder="Enter your title" onChange={e => setTitle(e.target.value)}></input>
-            </label> <br />
-           
+                <input type="text" value={title} name="Title" placeholder="Enter your title" onChange={e => setTitle(e.target.value)}></input>
+            </label>
+            
+            <br />
             <label>
-                Description:
-                <input type="text" height="200px" width="200px" onChange={e => setDescription(e.target.value)} value={descripion} />
-            </label><br />
+                Desc:
+                <input type="text" height="200px" width="200px" onChange={e => setDescription(e.target.value)} value={descripion} /></label>
+            <br />
             <label>
-                File:
+                File:    
                 <input accept={ acceptableFileEndings()} type="file" onChange={handleFileChange}></input>
             </label> <br />
             <button onClick={handleSubmit}>Opret</button>
