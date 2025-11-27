@@ -41,6 +41,7 @@ namespace PictogramAPI
             app.UseAuthorization();
 
             app.MapUserEndpoints();
+            app.MapPictogramEndpoints();
 
             app.Run();
         }

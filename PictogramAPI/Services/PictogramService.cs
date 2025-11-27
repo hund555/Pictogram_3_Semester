@@ -30,7 +30,7 @@ namespace PictogramAPI.Services
         {
             if (await _userService.GetUserById(userId) == null)
             {
-                throw new Exception("User not found.");
+                throw new NullReferenceException($"No user found with id: {userId}");
             }
 
             IGridFSBucket gridFSBucket = new GridFSBucket(_database, new GridFSBucketOptions() { BucketName = GRID_FS_BUCKET_NAME });
