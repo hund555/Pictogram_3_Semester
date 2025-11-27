@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import Pictogram from '../Domain/Pictogram'
+import Pictogram from '../Domain/Pictogram';
+
 
 
 export default function ViewCreatePictogram() {
@@ -28,6 +29,7 @@ export default function ViewCreatePictogram() {
             if (pictogram != null) {
                 //insert API port here
                 alert("success")
+                
             }
         }
 
@@ -75,7 +77,7 @@ export default function ViewCreatePictogram() {
 
 
 }
-//Create own type to store file in
+//Create own property to pass the file;
 type ImagePreviewProps = {
     file: File | null
 
