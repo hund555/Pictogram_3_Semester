@@ -9,7 +9,6 @@ function App() {
 
   return (
       <>
-          <ViewCreatePictogram></ViewCreatePictogram>
           <div>
               
         <a href="https://vite.dev" target="_blank">
