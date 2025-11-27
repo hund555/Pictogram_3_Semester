@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginHomePage() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
 
+    const navigateToSite = useNavigate();
 
     function handleLogin() {
         if (email === "") {
@@ -18,7 +20,7 @@ function LoginHomePage() {
 
 
     function registerNewUser() {
-
+        navigateToSite("/registerUser");
     }
 
 
