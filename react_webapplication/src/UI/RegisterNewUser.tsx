@@ -1,4 +1,4 @@
-import { useState } from "react";
+ï»¿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type UserWeb from "../Domain/UserWeb";
 import WebUserService from "../Services/WebUserService";
@@ -19,7 +19,7 @@ function RegisterNewUser() {
         setError(null);
 
         if (password.includes(" ") || repeatPassword.includes(" ")) {
-            setError("Password må ikke indholde mellemrum");
+            setError("Password mÃ¥ ikke indholde mellemrum");
             return;
         }
 
@@ -37,7 +37,7 @@ function RegisterNewUser() {
                 navigateToSite("/");
             })
             .catch(() => {
-                setError("Kunne ikke oprette bruger. Prøv igen");
+                setError("Kunne ikke oprette bruger. PrÃ¸v igen");
             })
             .finally(() => {
                 setLoading(false);
