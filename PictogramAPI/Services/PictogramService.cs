@@ -12,8 +12,7 @@ namespace PictogramAPI.Services
 {
     public class PictogramService : IPictogramService
     {
-        const string GRID_FS_BUCKET_NAME = "pictures";
-
+        private readonly string GRID_FS_BUCKET_NAME;
         private readonly IMongoDatabase _database;
         private readonly IMongoCollection<Pictogram> _pictogramsCollection;
         private readonly IUserService _userService;
@@ -21,6 +20,7 @@ namespace PictogramAPI.Services
         public PictogramService(IOptions<DatabaseInfo> options, IUserService userService)
         {
             this._userService = userService;
+            this.GRID_FS_BUCKET_NAME = options.Value.PictureCollectionName;
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _database = mongoClient.GetDatabase(options.Value.DatabaseName);
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);

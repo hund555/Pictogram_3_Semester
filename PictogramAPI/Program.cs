@@ -18,6 +18,18 @@ namespace PictogramAPI
             // Configure DatabaseInfo from appsettings.json
             builder.Services.Configure<DatabaseInfo>(builder.Configuration.GetSection("DatabaseSettings"));
 
+            // Configure CORS
+            const string myCors = "client";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(myCors, policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 
