@@ -6,7 +6,7 @@
         public string Description { get; set; }
         public string FileType { get; set; }
         public bool IsPrivate { get; set; }
-        public IFormFile Picture { get; set; }
+        public byte[] Picture { get; set; }
         public string UserId { get; set; }
     }
 }
