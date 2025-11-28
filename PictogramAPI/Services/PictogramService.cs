@@ -26,6 +26,12 @@ namespace PictogramAPI.Services
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);
         }
 
+        /// <summary>
+        /// Creates a new pictogram in the database.
+        /// </summary>
+        /// <param name="createPictogramDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
         public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO)
         {
             if (await _userService.GetUserDisplayInfoById(createPictogramDTO.UserId) == null)
@@ -46,6 +52,18 @@ namespace PictogramAPI.Services
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
 
+        /// <summary>
+        /// Retrieves a pictogram by its unique identifier.
+        /// </summary>
+        /// <remarks>If the pictogram is marked as private, it will only be returned if the <paramref
+        /// name="userId"/> matches the owner of the pictogram.</remarks>
+        /// <param name="pictogramId">The unique identifier of the pictogram to retrieve. Cannot be <see langword="null"/> or empty.</param>
+        /// <param name="userId">The unique identifier of the user making the request. Used to determine access permissions for private
+        /// pictograms.</param>
+        /// <returns>The <see cref="Pictogram"/> object corresponding to the specified <paramref name="pictogramId"/> if found
+        /// and accessible to the user; otherwise, <see langword="null"/> if the pictogram is private and the user does
+        /// not have access.</returns>
+        /// <exception cref="NullReferenceException">Thrown if no pictogram exists with the specified <paramref name="pictogramId"/>.</exception>
         public async Task<Pictogram> GetPictogramById(string pictogramId, string userId)
         {
             Pictogram pictogram = await _pictogramsCollection.Find(pictogram => pictogram.PictogramId == pictogramId).FirstOrDefaultAsync();

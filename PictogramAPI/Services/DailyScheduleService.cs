@@ -23,6 +23,12 @@ namespace PictogramAPI.Services
             _dailySchedulesCollection = _database.GetCollection<DailyScheduleTask>(options.Value.DailyScheduleCollectionName);
         }
 
+        /// <summary>
+        /// creates a new daily schedule task in the database.
+        /// </summary>
+        /// <param name="dailyTaskDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
         public async Task CreateDailyScheduleTask(CreateDailyTaskDTO dailyTaskDTO)
         {
             if (_userService.GetUserDisplayInfoById(dailyTaskDTO.UserId) == null)
