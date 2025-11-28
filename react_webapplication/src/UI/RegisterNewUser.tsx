@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type UserWeb from "../Domain/UserWeb";
 import WebUserService from "../Services/WebUserService";
 function RegisterNewUser() {
-    const [fullName, setFullName] = useState<string>("");
+    const [name, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [repeatPassword, setRepeatPassword] = useState<string>("");
@@ -31,7 +31,7 @@ function RegisterNewUser() {
         setLoading(true);
         setCreatedUser(null);
 
-        WebUserService.createUser(email, fullName, password)
+        WebUserService.createUser(name, email, password)
             .then((webUser) => {
                 setCreatedUser(webUser);
                 navigateToSite("/");
@@ -65,7 +65,7 @@ function RegisterNewUser() {
                     </label>
                     <input type="text"
                         minLength={2}
-                        value={fullName}
+                        value={name}
                         onChange={(e) => setFullName(e.target.value)}
                         required
                     />
