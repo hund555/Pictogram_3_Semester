@@ -6,6 +6,12 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
 {
     public static class MapPictogramDTO
     {
+        /// <summary>
+        /// Map CreatePictogramDTO to Pictogram domain object with provided GridFS id
+        /// </summary>
+        /// <param name="pictogramDTO"></param>
+        /// <param name="gridFsId"></param>
+        /// <returns></returns>
         public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO, ObjectId gridFsId)
         {
             return new Pictogram
