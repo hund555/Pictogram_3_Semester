@@ -2,6 +2,8 @@
 import { useNavigate } from "react-router-dom";
 import type UserWeb from "../Domain/UserWeb";
 import WebUserService from "../Services/WebUserService";
+
+// Component for creating a new User
 function RegisterNewUser() {
     const [name, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");

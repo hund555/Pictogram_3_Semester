@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Component for the Homepage with login and create new user
 function LoginHomePage() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -8,6 +9,7 @@ function LoginHomePage() {
 
     const navigateToSite = useNavigate();
 
+    // If 
     function handleLogin() {
         if (email === "") {
             return setError("E-mail skal udfyldes");
@@ -18,7 +20,7 @@ function LoginHomePage() {
         return setError(null);           
     }
 
-
+    //When user presses "Opret Bruger" they are send to the Registration Form site
     function registerNewUser() {
         navigateToSite("/registerUser");
     }

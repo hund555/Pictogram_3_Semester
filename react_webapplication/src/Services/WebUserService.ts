@@ -1,9 +1,8 @@
 import type CreateUserWeb from "../Domain/UserWeb";
 import axios, { type AxiosResponse } from "axios";
 
+// Service class to handle API-requests from the users
 class WebUserService {
-    
-
     // Creates a new user in the system
     static async createUser(name: string, email: string, password: string): Promise<CreateUserWeb> {
         const baseURL = "http://10.176.160.103:8080";
