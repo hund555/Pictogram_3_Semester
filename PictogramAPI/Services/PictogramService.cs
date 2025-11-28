@@ -45,5 +45,24 @@ namespace PictogramAPI.Services
             Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(gridFsId);
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
+
+        public async Task<Pictogram> GetPictogramById(string pictogramId, string userId)
+        {
+            Pictogram pictogram = await _pictogramsCollection.Find(pictogram => pictogram.PictogramId == pictogramId).FirstOrDefaultAsync();
+
+            if (pictogram == null)
+            {
+                throw new NullReferenceException($"No pictogram found with id: {pictogramId}");
+            }
+            else if (await _userService.GetUserDisplayInfoById(userId) == null)
+            {
+                if (pictogram.IsPrivate && pictogram.UserId != userId)
+                {
+                    pictogram = null;
+                }
+            }
+
+            return pictogram;
+        }
     }
 }

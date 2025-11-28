@@ -1,8 +1,7 @@
-﻿namespace PictogramAPI.Domain
+﻿namespace PictogramAPI.Services.DTOCollection
 {
-    public class DailyScheduleTask
+    public class CreateDailyTaskDTO
     {
-        public string Id { get; set; }
         public string UserId { get; set; }
         public string Day { get; set; }
         public string PictogramId { get; set; }
