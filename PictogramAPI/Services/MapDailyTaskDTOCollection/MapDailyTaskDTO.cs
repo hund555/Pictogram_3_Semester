@@ -21,5 +21,21 @@ namespace PictogramAPI.Services.MapDailyTaskDTOCollection
                 Index = dailyTaskDTO.Index
             };
         }
+
+        /// <summary>
+        /// Map DailyScheduleTask domain object to DisplayTaskDTO
+        /// </summary>
+        /// <param name="dailyScheduleTask"></param>
+        /// <param name="pictogram"></param>
+        /// <returns></returns>
+        public static DisplayTaskDTO MapDomainDailyScheduleTaskToDisplayTaskDTO(this DailyScheduleTask dailyScheduleTask, Pictogram pictogram)
+        {
+            return new DisplayTaskDTO
+            {
+                DailyScheduleTaskId = dailyScheduleTask.Id,
+                Pictogram = pictogram,
+                Index = dailyScheduleTask.Index
+            };
+        }
     }
 }

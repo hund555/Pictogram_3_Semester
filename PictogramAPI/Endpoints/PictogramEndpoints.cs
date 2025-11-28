@@ -26,7 +26,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Pictogram")
             .WithName("CreatePictogram")
-            .WithSummary("Create a new pictogram in the system");
+            .WithSummary("Create a new pictogram in the system")
+            .WithMetadata(new IgnoreAntiforgeryTokenAttribute());
         }
     }
 }

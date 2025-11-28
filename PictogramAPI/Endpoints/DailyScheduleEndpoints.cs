@@ -27,6 +27,22 @@ namespace PictogramAPI.Endpoints
             .WithTags("DailySchedule")
             .WithName("CreateDailyTask")
             .WithSummary("Create a new daily schedule task in the system.");
+
+            app.MapGet("/dailyschedule/today", async (IDailyScheduleService dailyScheduleService, string userId) =>
+            {
+                try
+                {
+                    List<DisplayDayScheduleDTO> daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, DateTime.Today.ToString());
+                    return Results.Ok(daySchedule);
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+            })
+            .WithTags("DailySchedule")
+            .WithName("GetCurrentDaySchedule")
+            .WithSummary("Get schedule task for the current day");
         }
     }
 }

@@ -16,6 +16,12 @@ namespace PictogramAPI
             builder.Services.AddScoped<IPictogramService, PictogramService>();
             builder.Services.AddScoped<IDailyScheduleService, DailyScheduleService>();
 
+            // Configure Antiforgery
+            builder.Services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-XSRF-TOKEN";
+            });
+
             // Configure DatabaseInfo from appsettings.json
             builder.Services.Configure<DatabaseInfo>(builder.Configuration.GetSection("DatabaseSettings"));
 
@@ -55,6 +61,8 @@ namespace PictogramAPI
             //app.UseAuthorization();
 
             app.UseCors(myCors);
+            app.UseAntiforgery();
+
 
             app.MapUserEndpoints();
             app.MapPictogramEndpoints();
