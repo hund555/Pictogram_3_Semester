@@ -1,4 +1,4 @@
-import type CreateUserWeb from "../Domain/CreateUserWeb";
+import type CreateUserWeb from "../Domain/UserWeb";
 import axios, { type AxiosResponse } from "axios";
 
 class WebUserService {

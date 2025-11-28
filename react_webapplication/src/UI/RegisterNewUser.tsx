@@ -1,27 +1,50 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type UserWeb from "../Domain/UserWeb";
+import WebUserService from "../Services/WebUserService";
 function RegisterNewUser() {
     const [fullName, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [repeatPassword, setRepeatPassword] = useState<string>("");
+    const [createdUser, setCreatedUser] = useState<UserWeb | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const navigateToSite = useNavigate();
 
-    function handleCreateUser() {
-        if (email.trim() === "" || password.trim() === "" || repeatPassword.trim() === "" || fullName.trim() === "") {
-            setError("Alle Felter Skal Udfyldes");
-            return
-        }
+    // Handles creating a new user, when user saves a profile and return a new UserWeb-object
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setError(null);
 
         if (password.includes(" ") || repeatPassword.includes(" ")) {
             setError("Password må ikke indholde mellemrum");
             return;
         }
-    }
 
+        if (password !== repeatPassword) {
+            setError("Password er ikke ens")
+            return;
+        }
 
+        setLoading(true);
+        setCreatedUser(null);
+
+        WebUserService.createUser(email, fullName, password)
+            .then((webUser) => {
+                setCreatedUser(webUser);
+                navigateToSite("/");
+            })
+            .catch(() => {
+                setError("Kunne ikke oprette bruger. Prøv igen");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    // If user cancels registration the user is send back to the homepage
     function handleCancelRegistration() {
         navigateToSite("/");
     }
@@ -32,58 +55,77 @@ function RegisterNewUser() {
             <h1>PictoPlanner</h1>
             <h3>Udfyld formular</h3>
 
-            {/* ===== Input fields ===== */}
+            {/* ===== Form And Input fields ===== */}
+            <form onSubmit={handleSubmit}>
 
-            {/* Name field */}
-            <div style={{ marginBottom: "0.5rem" }}>
-                <label style={{ marginRight: "4.9rem" }}>Fulde Navn</label>
-                <input type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                />
-            </div>
+                {/* ===== Name field ===== */}
+                <div style={{ marginBottom: "0.8rem"}}>
+                    <label style={{ marginRight: "4.9rem" }}>
+                        Fulde Navn
+                    </label>
+                    <input type="text"
+                        minLength={2}
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        required
+                    />
+                </div>
 
-            {/* E-mailaddress field */}
-            <div style={{ marginBottom: "0.5rem" }}>
-                <label style={{ marginRight: "3.9rem" }}>E-mailadresse</label>
-                <input type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
+                {/* E-mailaddress field */}
+                <div style={{ marginBottom: "0.8rem" }}>
+                    <label style={{ marginRight: "3.9rem" }}>
+                        E-mailadresse                       
+                    </label>
+                    <input type="email"
+                        minLength={3}
+                        maxLength={320}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
 
-            {/* Password field */}
-            <div style={{ marginBottom: "0.5rem" }}>
-                <label style={{ marginRight: "3.9rem" }}>Adgangskode</label>
-                <input type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </div>
+                {/* ===== Password field ===== */}
+                <div style={{ marginBottom: "0.8rem" }}>
+                    <label style={{ marginRight: "3.9rem" }}>
+                        Adgangskode                        
+                    </label>
+                    <input type="password"
+                        minLength={8}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
 
-            {/* Password field */}
-            <div style={{ marginBottom: "0.5rem" }}>
-                <label style={{ marginRight: "0.5rem" }}>Gentag Adgangskode</label>
-                <input type="password"
-                    required
-                    value={repeatPassword}
-                    onChange={(e) => setRepeatPassword(e.target.value)}
-                />
-            </div>
+                {/* ===== Password field ===== */}
+                <div style={{ marginBottom: "0.5rem" }}>
+                    <label style={{ marginRight: "0.5rem" }}>
+                        Gentag Adgangskode
+                    </label>
+                    <input type="password"
+                        value={repeatPassword}
+                        onChange={(e) => setRepeatPassword(e.target.value)}
+                        required
+                    />
+                </div>
 
-            {/* ===== Error handler ===== */}
+                {/* ===== Buttons ===== */}
+                <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginTop: "1rem" }}>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Sender..." :  "Opret Bruger"}
+                    </button>
 
-            {error && <p className="error-message">{error}</p>}
+                    <button onClick={handleCancelRegistration}>
+                        Annuller
+                    </button>
+                </div>
+          </form>
 
-            {/* ===== Buttons ===== */}
+                {/* ===== Error handler ===== */}
 
-            <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginTop: "1rem" }}>
-                <button onClick={handleCreateUser}>Gem Bruger</button>
-                <button onClick={handleCancelRegistration}>Annuller</button>
-            </div>
-
+                {error && <p className="error-message">{error}</p>}
         </div>
     )
 }
