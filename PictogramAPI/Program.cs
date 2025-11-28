@@ -32,7 +32,7 @@ namespace PictogramAPI
             });
 
             // Add services to the container.
-            builder.Services.AddAuthorization();
+            //builder.Services.AddAuthorization();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -52,7 +52,9 @@ namespace PictogramAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
+
+            app.UseCors(myCors);
 
             app.MapUserEndpoints();
             app.MapPictogramEndpoints();

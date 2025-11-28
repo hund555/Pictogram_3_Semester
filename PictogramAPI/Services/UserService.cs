@@ -22,6 +22,11 @@ namespace PictogramAPI.Services
             _usersCollection = _mongodb.GetCollection<User>(options.Value.UserCollectionName);
         }
 
+        /// <summary>
+        /// Get user display info by user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<UserDisplayInfoDTO> GetUserDisplayInfoById(string id)
         {
             User user = await _usersCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
@@ -32,6 +37,12 @@ namespace PictogramAPI.Services
             return user.MapUserDomainToUserDisplayInfoDTO();
         }
 
+        /// <summary>
+        /// create a new user in the system
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="UserExistsException"></exception>
         public async Task CreateUser(CreateUserDTO userDTO)
         {
             User existingUser = await _usersCollection.Find(user => user.Email == userDTO.Email).FirstOrDefaultAsync();
@@ -44,6 +55,31 @@ namespace PictogramAPI.Services
             string hashedPassword = Util.Cryptography.CreateHashedPassword(Encoding.UTF8.GetBytes(userDTO.Password), Convert.FromBase64String(salt));
 
             await _usersCollection.InsertOneAsync(userDTO.MapCreateUserDTOToUserDomain(salt, hashedPassword));
+        }
+
+        /// <summary>
+        /// Check user credentials and return user info if valid
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidCredentialsException"></exception>
+        public Lazy<Task<UserDisplayInfoDTO>> LoginUser(string email, string password)
+        {
+            return new Lazy<Task<UserDisplayInfoDTO>>(async () =>
+            {
+                User user = await _usersCollection.Find(user => user.Email == email).FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    throw new InvalidCredentialsException("Invalid email or password.");
+                }
+                string hashedPassword = Util.Cryptography.CreateHashedPassword(Encoding.UTF8.GetBytes(password), Convert.FromBase64String(user.Salt));
+                if (hashedPassword != user.PasswordHash)
+                {
+                    throw new InvalidCredentialsException("Invalid email or password.");
+                }
+                return user.MapUserDomainToUserDisplayInfoDTO();
+            });
         }
     }
 }
