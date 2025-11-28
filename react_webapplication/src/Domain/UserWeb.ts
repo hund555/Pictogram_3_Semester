@@ -1,5 +1,5 @@
 /*
-A Model class for the users
+* Represents a user object recieved from the API backend
 */
 export default interface UserWeb {
     userId: string;

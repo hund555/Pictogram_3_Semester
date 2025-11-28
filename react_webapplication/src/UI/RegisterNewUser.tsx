@@ -13,13 +13,13 @@ function RegisterNewUser() {
 
     const navigateToSite = useNavigate();
 
-    // Handles creating a new user, when user saves a profile and return a new UserWeb-object
+    // Handles user registration, validates input, calls the API and saves the returned UserWeb object
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setError(null);
 
         if (password.includes(" ") || repeatPassword.includes(" ")) {
-            setError("Password må ikke indholde mellemrum");
+            setError("Password må ikke indeholde mellemrum");
             return;
         }
 
@@ -44,7 +44,7 @@ function RegisterNewUser() {
             });
     };
 
-    // If user cancels registration the user is send back to the homepage
+    // If the user cancels registration they are sent back to the homepage
     function handleCancelRegistration() {
         navigateToSite("/");
     }
@@ -59,7 +59,7 @@ function RegisterNewUser() {
             <form onSubmit={handleSubmit}>
 
                 {/* ===== Name field ===== */}
-                <div style={{ marginBottom: "0.8rem"}}>
+                <div style={{ marginBottom: "0.8rem" }}>
                     <label style={{ marginRight: "4.9rem" }}>
                         Fulde Navn
                     </label>
@@ -74,7 +74,7 @@ function RegisterNewUser() {
                 {/* E-mailaddress field */}
                 <div style={{ marginBottom: "0.8rem" }}>
                     <label style={{ marginRight: "3.9rem" }}>
-                        E-mailadresse                       
+                        E-mailadresse
                     </label>
                     <input type="email"
                         minLength={3}
@@ -89,7 +89,7 @@ function RegisterNewUser() {
                 {/* ===== Password field ===== */}
                 <div style={{ marginBottom: "0.8rem" }}>
                     <label style={{ marginRight: "3.9rem" }}>
-                        Adgangskode                        
+                        Adgangskode
                     </label>
                     <input type="password"
                         minLength={8}
@@ -114,19 +114,28 @@ function RegisterNewUser() {
                 {/* ===== Buttons ===== */}
                 <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginTop: "1rem" }}>
                     <button type="submit" disabled={loading}>
-                        {loading ? "Sender..." :  "Opret Bruger"}
+                        {loading ? "Sender..." : "Opret Bruger"}
                     </button>
 
                     <button onClick={handleCancelRegistration}>
                         Annuller
                     </button>
                 </div>
-          </form>
+            </form>
 
-                {/* ===== Error handler ===== */}
+            {/* ===== Error handler ===== */}
 
-                {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>}
+
+            {/* If profile creation is a success, user data is shown */}
+            {createdUser && (
+                <div>
+                    <h2> BrugerProfil oprettet succesfuldt</h2>
+                    <div>Fulde navn: {createdUser.fullName}</div>
+                    <div>E-mail: {createdUser.email}</div>
+                </div>
+            )}
         </div>
-    )
+    );
 }
 export default RegisterNewUser;
