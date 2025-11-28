@@ -6,7 +6,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
 {
     public static class MapPictogramDTO
     {
-        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO, string userId, ObjectId gridFsId)
+        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO, ObjectId gridFsId)
         {
             return new Pictogram
             {
@@ -15,7 +15,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
                 Description = pictogramDTO.Description,
                 FileType = pictogramDTO.FileType,
                 IsPrivate = pictogramDTO.IsPrivate,
-                UserId = userId,
+                UserId = pictogramDTO.UserId,
                 GridFsId = gridFsId.ToString()
             };
         }

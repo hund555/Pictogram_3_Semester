@@ -7,5 +7,6 @@
         public string FileType { get; set; }
         public bool IsPrivate { get; set; }
         public IFormFile Picture { get; set; }
+        public string UserId { get; set; }
     }
 }

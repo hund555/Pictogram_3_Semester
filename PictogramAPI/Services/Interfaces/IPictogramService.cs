@@ -4,6 +4,6 @@ namespace PictogramAPI.Services.Interfaces
 {
     public interface IPictogramService
     {
-        Task CreatePictogram(CreatePictogramDTO createPictogramDTO, string userId);
+        Task CreatePictogram(CreatePictogramDTO createPictogramDTO);
     }
 }

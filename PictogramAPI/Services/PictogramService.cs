@@ -26,11 +26,11 @@ namespace PictogramAPI.Services
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);
         }
 
-        public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO, string userId)
+        public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO)
         {
-            if (await _userService.GetUserDisplayInfoById(userId) == null)
+            if (await _userService.GetUserDisplayInfoById(createPictogramDTO.UserId) == null)
             {
-                throw new NullReferenceException($"No user found with id: {userId}");
+                throw new NullReferenceException($"No user found with id: {createPictogramDTO.UserId}");
             }
 
             IGridFSBucket gridFSBucket = new GridFSBucket(_database, new GridFSBucketOptions() { BucketName = GRID_FS_BUCKET_NAME });
@@ -42,7 +42,7 @@ namespace PictogramAPI.Services
 
             ObjectId gridFsId = await gridFSBucket.UploadFromBytesAsync(createPictogramDTO.Title, memoryStream.ToArray());
 
-            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(userId, gridFsId);
+            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(gridFsId);
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
     }

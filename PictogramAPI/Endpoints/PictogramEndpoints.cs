@@ -8,11 +8,11 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO, string userId) =>
+            app.MapPost("/pictograms", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
-                    await pictogramService.CreatePictogram(createPictogramDTO, userId);
+                    await pictogramService.CreatePictogram(createPictogramDTO);
                     return Results.Created();
                 }
                 catch (NullReferenceException e)
