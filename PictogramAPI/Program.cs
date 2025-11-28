@@ -14,6 +14,7 @@ namespace PictogramAPI
             // Add services to the container.
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPictogramService, PictogramService>();
+            builder.Services.AddScoped<IDailyScheduleService, DailyScheduleService>();
 
             // Configure DatabaseInfo from appsettings.json
             builder.Services.Configure<DatabaseInfo>(builder.Configuration.GetSection("DatabaseSettings"));
@@ -55,6 +56,7 @@ namespace PictogramAPI
 
             app.MapUserEndpoints();
             app.MapPictogramEndpoints();
+            app.MapDailyScheduleEndpoints();
 
             app.Run();
         }
