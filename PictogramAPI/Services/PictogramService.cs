@@ -28,7 +28,7 @@ namespace PictogramAPI.Services
 
         public async Task CreatePictogram(CreatePictogramDTO createPictogramDTO, string userId)
         {
-            if (await _userService.GetUserById(userId) == null)
+            if (await _userService.GetUserDisplayInfoById(userId) == null)
             {
                 throw new NullReferenceException($"No user found with id: {userId}");
             }

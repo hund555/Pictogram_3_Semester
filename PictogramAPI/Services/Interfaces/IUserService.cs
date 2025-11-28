@@ -1,11 +1,11 @@
-﻿using PictogramAPI.Domain;
-using PictogramAPI.Services.DTO;
+﻿using PictogramAPI.Services.DTO;
+using PictogramAPI.Services.DTOCollection;
 
 namespace PictogramAPI.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUserById(string id);
+        Task<UserDisplayInfoDTO> GetUserDisplayInfoById(string id);
         Task CreateUser(CreateUserDTO userDTO);
     }
 }

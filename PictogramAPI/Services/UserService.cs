@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using PictogramAPI.Domain;
 using PictogramAPI.Exceptions;
 using PictogramAPI.Services.DTO;
+using PictogramAPI.Services.DTOCollection;
 using PictogramAPI.Services.Interfaces;
 using PictogramAPI.Services.MapUserDTOCollection;
 using System.Text;
@@ -21,9 +22,14 @@ namespace PictogramAPI.Services
             _usersCollection = _mongodb.GetCollection<User>(options.Value.UserCollectionName);
         }
 
-        public async Task<User> GetUserById(string id)
+        public async Task<UserDisplayInfoDTO> GetUserDisplayInfoById(string id)
         {
-            return await _usersCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+            User user = await _usersCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return null;
+            }
+            return user.MapUserDomainToUserDisplayInfoDTO();
         }
 
         public async Task CreateUser(CreateUserDTO userDTO)

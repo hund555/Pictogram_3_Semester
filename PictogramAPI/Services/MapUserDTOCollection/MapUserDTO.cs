@@ -1,4 +1,5 @@
 ﻿using PictogramAPI.Domain;
+using PictogramAPI.Services.DTOCollection;
 
 namespace PictogramAPI.Services.MapUserDTOCollection
 {
@@ -21,6 +22,22 @@ namespace PictogramAPI.Services.MapUserDTOCollection
                 Role = "User",
                 Salt = salt,
                 PasswordHash = hashedPassword
+            };
+        }
+
+        /// <summary>
+        /// map User domain object to UserDisplayInfoDTO
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static UserDisplayInfoDTO MapUserDomainToUserDisplayInfoDTO(this User user)
+        {
+            return new UserDisplayInfoDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Role = user.Role
             };
         }
     }
