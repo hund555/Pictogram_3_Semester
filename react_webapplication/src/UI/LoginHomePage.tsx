@@ -27,16 +27,13 @@ function LoginHomePage() {
         setLoading(true);
         setError(null);
 
-        console.log("logging in")
         WebUserService.login(email, password)
         .then((UserDisplayInfo) => {
-            console.log("will i hit?")
             setLogin(UserDisplayInfo);
             navigateToSite("");
         })
         .catch(e => {
             setError(e.message)
-            console.log("login failed")
         })
         .finally(() => {
             setLoading(false)
@@ -47,7 +44,6 @@ function LoginHomePage() {
     function registerNewUser() {
         navigateToSite("/registerUser");
     }
-
 
     return (
         <div>
@@ -84,11 +80,6 @@ function LoginHomePage() {
                     <button onClick={registerNewUser}>Opret Bruger</button>
                 </div>
             </form>
-            
-            <label >{login?.Name}</label>
-            
-
-            
         </div>
     )
 }
