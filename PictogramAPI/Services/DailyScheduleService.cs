@@ -43,7 +43,7 @@ namespace PictogramAPI.Services
             await _dailySchedulesCollection.InsertOneAsync(dailyTaskDTO.MapCreateDailyTaskDTOToDomainDailyScheduleTask());
         }
 
-        public Task<List<DisplayDayScheduleDTO>> GetDayScheduleByUserIdAndDay(string userId, string day)
+        public Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day)
         {
             var filter = Builders<DailyScheduleTask>.Filter.Eq("UserId", userId) & Builders<DailyScheduleTask>.Filter.Eq("Day", day);
             List<DailyScheduleTask> dailyTasks = _dailySchedulesCollection.Find(filter).ToList();
@@ -59,7 +59,8 @@ namespace PictogramAPI.Services
                 DisplayTaskDTO displayTaskDTO = task.MapDomainDailyScheduleTaskToDisplayTaskDTO(pictogram);
                 displayDayScheduleDTO.Tasks.Add(displayTaskDTO);
             }
-            return Task.FromResult(new List<DisplayDayScheduleDTO> { displayDayScheduleDTO });
+
+            return Task.FromResult(displayDayScheduleDTO);
         }
     }
 }

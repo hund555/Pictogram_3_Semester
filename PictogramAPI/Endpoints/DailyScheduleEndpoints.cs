@@ -32,7 +32,7 @@ namespace PictogramAPI.Endpoints
             {
                 try
                 {
-                    List<DisplayDayScheduleDTO> daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, DateTime.Today.ToString());
+                    DisplayDayScheduleDTO daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, DateTime.Today.ToString());
                     return Results.Ok(daySchedule);
                 }
                 catch (Exception e)
