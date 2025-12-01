@@ -31,7 +31,7 @@ function Navbar() {
         <nav className="navbar" id="test">
             
                 <img src={logo} className="logo"></img>
-                <button>home</button>
+            <button onClick={function () { currentView = null; } }>home</button>
                 <button onClick={function () { currentView = <ViewCreatePictogram></ViewCreatePictogram> }}  >Oprett Piktogramm</button>
             <button>test</button>
 
