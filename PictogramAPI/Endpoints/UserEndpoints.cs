@@ -30,7 +30,7 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateUser")
             .WithSummary("Create a new user in the system.");
 
-            app.MapGet("/users/login", async (IUserService userService, [FromQuery] string email, [FromQuery] string password) =>
+            app.MapPost("/users/login", async (IUserService userService, [FromQuery] string email, [FromQuery] string password) =>
             {
                 try
                 {
