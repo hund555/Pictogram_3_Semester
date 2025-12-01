@@ -10,7 +10,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapUserEndpoints(this WebApplication app)
         {
-            app.MapPost("/users", async (IUserService userService,[FromBody] CreateUserDTO userDTO) =>
+            app.MapPost("/users", async (IUserService userService, [FromBody] CreateUserDTO userDTO) =>
             {
                 try
                 {
@@ -30,11 +30,11 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateUser")
             .WithSummary("Create a new user in the system.");
 
-            app.MapPost("/users/login", async (IUserService userService, string email, string password) =>
+            app.MapPost("/users/login", async(IUserService userService,[FromBody] LoginDTO loginDTO) =>
             {
                 try
                 {
-                    Lazy<Task<UserDisplayInfoDTO>> lazyUserLogin = userService.LoginUser(email, password);
+                    Lazy<Task<UserDisplayInfoDTO>> lazyUserLogin = userService.LoginUser(loginDTO.Email, loginDTO.Password);
                     return Results.Ok(lazyUserLogin);
                 }
                 catch (InvalidCredentialsException e)
