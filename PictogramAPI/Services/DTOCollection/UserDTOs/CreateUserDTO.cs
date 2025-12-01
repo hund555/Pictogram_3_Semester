@@ -1,4 +1,4 @@
-﻿namespace PictogramAPI.Services.DTO
+﻿namespace PictogramAPI.Services.DTOCollection.UserDTOs
 {
     public class CreateUserDTO
     {

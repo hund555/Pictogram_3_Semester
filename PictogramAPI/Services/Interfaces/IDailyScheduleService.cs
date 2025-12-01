@@ -1,4 +1,4 @@
-﻿using PictogramAPI.Services.DTOCollection;
+﻿using PictogramAPI.Services.DTOCollection.DailyScheduleDTOs;
 
 namespace PictogramAPI.Services.Interfaces
 {

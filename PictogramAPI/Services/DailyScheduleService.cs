@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using PictogramAPI.Domain;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.DailyScheduleDTOs;
 using PictogramAPI.Services.Interfaces;
 using PictogramAPI.Services.MapDailyTaskDTOCollection;
 

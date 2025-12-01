@@ -1,5 +1,5 @@
 ﻿using PictogramAPI.Domain;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.PictogramDTOs;
 
 namespace PictogramAPI.Services.Interfaces
 {

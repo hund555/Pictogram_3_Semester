@@ -1,4 +1,4 @@
-﻿namespace PictogramAPI.Services.DTOCollection
+﻿namespace PictogramAPI.Services.DTOCollection.PictogramDTOs
 {
     public class CreatePictogramDTO
     {
@@ -6,7 +6,7 @@
         public string Description { get; set; }
         public string FileType { get; set; }
         public bool IsPrivate { get; set; }
-        public byte[] Picture { get; set; }
+        public byte[] PictureBytes { get; set; }
         public string UserId { get; set; }
     }
 }

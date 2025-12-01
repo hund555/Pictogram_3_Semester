@@ -2,8 +2,7 @@
 using MongoDB.Driver;
 using PictogramAPI.Domain;
 using PictogramAPI.Exceptions;
-using PictogramAPI.Services.DTO;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.UserDTOs;
 using PictogramAPI.Services.Interfaces;
 using PictogramAPI.Services.MapUserDTOCollection;
 using System.Text;

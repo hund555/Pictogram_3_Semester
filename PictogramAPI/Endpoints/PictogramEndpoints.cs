@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.PictogramDTOs;
 using PictogramAPI.Services.Interfaces;
 
 namespace PictogramAPI.Endpoints

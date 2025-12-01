@@ -6,7 +6,6 @@
         public string DatabaseName { get; set; }
         public string UserCollectionName { get; set; }
         public string PictogramCollectionName { get; set; }
-        public string PictureCollectionName { get; set; }
         public string DailyScheduleCollectionName { get; set; }
     }
 }

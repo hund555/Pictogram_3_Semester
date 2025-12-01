@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PictogramAPI.Exceptions;
-using PictogramAPI.Services.DTO;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.UserDTOs;
 using PictogramAPI.Services.Interfaces;
 
 namespace PictogramAPI.Endpoints

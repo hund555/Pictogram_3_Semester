@@ -1,6 +1,5 @@
-﻿using MongoDB.Bson;
-using PictogramAPI.Domain;
-using PictogramAPI.Services.DTOCollection;
+﻿using PictogramAPI.Domain;
+using PictogramAPI.Services.DTOCollection.PictogramDTOs;
 
 namespace PictogramAPI.Services.MapPictogramDTOCollection
 {
@@ -12,7 +11,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
         /// <param name="pictogramDTO"></param>
         /// <param name="gridFsId"></param>
         /// <returns></returns>
-        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO, ObjectId gridFsId)
+        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO)
         {
             return new Pictogram
             {
@@ -22,7 +21,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
                 FileType = pictogramDTO.FileType,
                 IsPrivate = pictogramDTO.IsPrivate,
                 UserId = pictogramDTO.UserId,
-                GridFsId = gridFsId.ToString()
+                PictureBytes = pictogramDTO.PictureBytes
             };
         }
     }

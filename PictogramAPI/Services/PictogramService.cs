@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using MongoDB.Bson;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
 using PictogramAPI.Domain;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.PictogramDTOs;
 using PictogramAPI.Services.Interfaces;
 using PictogramAPI.Services.MapPictogramDTOCollection;
 
@@ -12,7 +9,6 @@ namespace PictogramAPI.Services
 {
     public class PictogramService : IPictogramService
     {
-        private readonly string GRID_FS_BUCKET_NAME;
         private readonly IMongoDatabase _database;
         private readonly IMongoCollection<Pictogram> _pictogramsCollection;
         private readonly IUserService _userService;
@@ -20,7 +16,6 @@ namespace PictogramAPI.Services
         public PictogramService(IOptions<DatabaseInfo> options, IUserService userService)
         {
             this._userService = userService;
-            this.GRID_FS_BUCKET_NAME = options.Value.PictureCollectionName;
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _database = mongoClient.GetDatabase(options.Value.DatabaseName);
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);
@@ -39,16 +34,7 @@ namespace PictogramAPI.Services
                 throw new NullReferenceException($"No user found with id: {createPictogramDTO.UserId}");
             }
 
-            IGridFSBucket gridFSBucket = new GridFSBucket(_database, new GridFSBucketOptions() { BucketName = GRID_FS_BUCKET_NAME });
-
-            // thise two lines where found on stack overflow https://stackoverflow.com/questions/36432028/how-to-convert-a-file-into-byte-array-in-memory
-            // They convert the IFormFile to a byte array to be stored in MongoDB GridFS
-            //await using var memoryStream = new MemoryStream();
-            //await createPictogramDTO.Picture.CopyToAsync(memoryStream);
-
-            ObjectId gridFsId = await gridFSBucket.UploadFromBytesAsync(createPictogramDTO.Title, createPictogramDTO.Picture);
-
-            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(gridFsId);
+            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain();
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
 

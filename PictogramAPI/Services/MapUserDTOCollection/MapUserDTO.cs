@@ -1,5 +1,6 @@
 ﻿using PictogramAPI.Domain;
-using PictogramAPI.Services.DTOCollection;
+using PictogramAPI.Services.DTOCollection.DailyScheduleDTOs;
+using PictogramAPI.Services.DTOCollection.UserDTOs;
 
 namespace PictogramAPI.Services.MapUserDTOCollection
 {
@@ -12,7 +13,7 @@ namespace PictogramAPI.Services.MapUserDTOCollection
         /// <param name="salt"></param>
         /// <param name="hashedPassword"></param>
         /// <returns></returns>
-        public static User MapCreateUserDTOToUserDomain(this DTO.CreateUserDTO userDTO, string salt, string hashedPassword)
+        public static User MapCreateUserDTOToUserDomain(this CreateUserDTO userDTO, string salt, string hashedPassword)
         {
             return new User
             {

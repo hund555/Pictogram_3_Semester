@@ -1,5 +1,4 @@
-﻿using PictogramAPI.Services.DTO;
-using PictogramAPI.Services.DTOCollection;
+﻿using PictogramAPI.Services.DTOCollection.UserDTOs;
 
 namespace PictogramAPI.Services.Interfaces
 {
