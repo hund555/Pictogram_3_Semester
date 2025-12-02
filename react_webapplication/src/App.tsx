@@ -1,11 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import LoginHomePage from "./UI/LoginHomePage";
 import RegisterNewUser from "./UI/RegisterNewUser";
 import './App.css'
-import ViewCreatePictogram from './CA/UI/CreatePictogram';
+import CreatePictogram from "./CA/UI/CreatePictogram";
 import LandingPage from './CA/UI/LandingPage'
 import logo from "./assets/pictoplanner_logo.svg"
 let currentView = <LandingPage></LandingPage>
+
 window.addEventListener("resize", function () {
     const test = document.getElementById("test");
     if (test) {
@@ -16,12 +17,21 @@ function App() {
 
     {/* SPA */}
     return (
-        <BrowserRouter>
+        <>
+            <div>
+                <nav>
+                    <Link to={"/"}></Link>
+                    <Link to={"/registerUser"}></Link>
+                </nav>
+            </div>
             <Routes>
                 <Route path="/" element={<LoginHomePage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
             </Routes>
-        </BrowserRouter>   
+            <div style={{ marginBottom: 15 }}><Navbar></Navbar></div>
+            {currentView}
+        </>
+           
     );
 }
 
@@ -34,7 +44,7 @@ function Navbar() {
 
             <img src={logo} className="logo"></img>
             <button onClick={function () { currentView = <LandingPage></LandingPage>; }}>home</button>
-            <button onClick={function () { currentView = <ViewCreatePictogram></ViewCreatePictogram> }}  >Oprett Piktogramm</button>
+            <button onClick={function () { currentView = <CreatePictogram></CreatePictogram> }}  >Oprett Piktogramm</button>
             <button>test</button>
 
         </nav>

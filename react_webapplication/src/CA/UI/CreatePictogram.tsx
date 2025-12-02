@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import Pictogram from '../Domain/Pictogram';
+import type Pictogram from '../Domain/Pictogram';
 import './StyleSheet/UI_Module_Template.css';
+import PictogramService from "../Services/PictogramService";
 
 
 
-export default function ViewCreatePictogram() {
+function CreatePictogram() 
+{
     //Data
     let [errorMessage, setErrorMessage] = useState<string>("");
     const [title, setTitle] = useState<string>("");
@@ -15,39 +17,46 @@ export default function ViewCreatePictogram() {
     const acceptedFileEndingList: String[] = [ ".jpg", ".png", ".svg" ];
     
     //Eventhandler to process fileupload
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length !== 0) {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => 
+    {
+        if (e.target.files && e.target.files.length !== 0) 
+        {
             setFile(e.target.files[0])
             const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-            if (fileInput.files != null && fileInput != null) {
+            if (fileInput.files != null && fileInput != null) 
+            {
                 setFile(fileInput.files[0]);
             }
         }
     }
 
-    const handleSubmit = () => { //handleSubmit
+    const handleSubmit = () => 
+    { //handleSubmit
         if (file == null) { setErrorMessage("No File Selected")}
         if (title == "") { setErrorMessage("Title Empty") }
-        if (descripion == "") { setErrorMessage("Description empty"); }
-        if (title != "" && file != null && descripion != "") {
-            const pictogram = new Pictogram(null, title, descripion, false, file, "7423c0e6-fbee-4165-aec2-02dfa60016ea",);
+        if (title != "" && file != null && descripion != "") 
+        {
+            //const pictogram = new Pictogram(null, title, descripion, false, file, "7423c0e6-fbee-4165-aec2-02dfa60016ea",);
 
-    }
-
-    const acceptableFileEndings = () => {
-        var result:string = "";
-        for (var i = 0; i < acceptedFileEndingList.length; i++) {
-            result += acceptedFileEndingList[i] + ", "
         }
-        return result;
-    }
+    
+
+        const acceptableFileEndings = () => 
+        {
+            var result:string = "";
+            for (var i = 0; i < acceptedFileEndingList.length; i++) 
+            {
+                result += acceptedFileEndingList[i] + ", "
+            }
+            return result;
+        }
 
 
 
 
 
-    //HTML
-    return (<>
+        //HTML
+        return (
 
         <div className="module">
             <div ><ImagePreview file={file} /></div>
@@ -69,32 +78,24 @@ export default function ViewCreatePictogram() {
             <label style={{color:'red', fontWeight:'bold'} }>{errorMessage}</label><br/>
             <button onClick={handleSubmit}>Opret</button>
         </div>
+        );
 
 
-
-
-    </>);
-
-
-}
-//Create own property to pass the file;
-type ImagePreviewProps = {
+    }
+    //Create own property to pass the file;
+    type ImagePreviewProps = {
     file: File | undefined
 
-}
+    }
 
 
-//Custom Previewer
+    //Custom Previewer
   const ImagePreview = ({ file }: ImagePreviewProps) => {
     if (!file) { return null };
       return (<img className="imagePreview" style={{ height: 300, width: 300 } } src={URL.createObjectURL(file)} />)
 
-}
-
-
-
-
-
+    }
 
     //return [];
 }
+export default CreatePictogram;
