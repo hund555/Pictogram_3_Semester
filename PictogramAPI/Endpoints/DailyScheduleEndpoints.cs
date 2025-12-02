@@ -28,7 +28,7 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateDailyTask")
             .WithSummary("Create a new daily schedule task in the system.");
 
-            app.MapGet("/dailyschedule/today", async (IDailyScheduleService dailyScheduleService, string userId) =>
+            app.MapGet("/dailyschedule/today", async (IDailyScheduleService dailyScheduleService,[FromBody] string userId) =>
             {
                 try
                 {
@@ -44,7 +44,7 @@ namespace PictogramAPI.Endpoints
             .WithName("GetCurrentDaySchedule")
             .WithSummary("Get schedule tasks for the current day");
 
-            app.MapGet("/dailyschedule/day", async (IDailyScheduleService dailyScheduleService, GetDailyScheduleDayDTO getDailyScheduleDayDTO) =>
+            app.MapGet("/dailyschedule/day", async (IDailyScheduleService dailyScheduleService,[FromBody] GetDailyScheduleDayDTO getDailyScheduleDayDTO) =>
             {
                 try
                 {
