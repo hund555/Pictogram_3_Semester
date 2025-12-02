@@ -107,6 +107,7 @@ function RegisterNewUser() {
                         Gentag Adgangskode
                     </label>
                     <input type="password"
+                        minLength={8}
                         value={repeatPassword}
                         onChange={(e) => setRepeatPassword(e.target.value)}
                         required
