@@ -48,6 +48,22 @@ namespace PictogramAPI.Endpoints
             .WithTags("Users")
             .WithName("LoginUser")
             .WithSummary("Login a user with email and password.");
+
+            app.MapGet("/Users", async (IUserService userService) =>
+            {
+                try
+                {
+                    Lazy<Task<List<UserDisplayInfoDTO>>> lazyUsers = userService.GetAllUsers();
+                    return Results.Ok(lazyUsers);
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+            })
+            .WithTags("Users")
+            .WithName("GetAllUsers")
+            .WithSummary("Get a list of all users in the system.");
         }
     }
 }

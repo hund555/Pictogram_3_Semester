@@ -7,5 +7,6 @@ namespace PictogramAPI.Services.Interfaces
         Task<UserDisplayInfoDTO> GetUserDisplayInfoById(string id);
         Task CreateUser(CreateUserDTO userDTO);
         Lazy<Task<UserDisplayInfoDTO>> LoginUser(string email, string password);
+        Lazy<Task<List<UserDisplayInfoDTO>>> GetAllUsers();
     }
 }
