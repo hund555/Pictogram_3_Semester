@@ -36,8 +36,8 @@ function CreatePictogram()
         if (title == "") { setErrorMessage("Title Empty"); return; }
        
         const buffer = await file.arrayBuffer();
-        const bytes = new Uint8Array(buffer);
-        PictogramService.createPictogram(title, descripion, file.name.split('.')[1], isPrivate, Array.from(bytes), "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
+        const b64 = await fileToBase64(file)
+        PictogramService.createPictogram(title, descripion, file.name.split('.')[1], isPrivate, b64, "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
 
         
 
@@ -81,7 +81,7 @@ function CreatePictogram()
         </div>
         );
 
-
+        
     }
     //Create own property to pass the file;
     type ImagePreviewProps = {
@@ -100,9 +100,39 @@ function CreatePictogram()
     //return [];
 
 export default CreatePictogram;
-async function fileToByteArray(file: File): Promise<number[]> {
 
 
-    const buffer = await file.arrayBuffer();
-    return Array.from(new Uint8Array(buffer));
+
+
+
+//simple file to base64 string converter ==> Used for simple file transfer <==
+const fileToBase64 = (file:File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file); //includes data:image/..;base64
+        reader.onload = () => {
+            const buffer = reader.result as string;
+            const clearString = buffer.split(",")[1];
+            resolve(clearString)
+        }
+        reader.onerror = (error) => reject(error)
+        
+    })
+    
+    
+
 }
+
+
+/*
+    new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file); //includes data:image/..;base64
+        reader.onload = () => {
+            const buffer = reader.result as string;
+            const clearString = buffer.split(",").pop();
+            resolve(clearString)
+        }
+        reader.onerror = (error) => reject(error)
+    })
+    */
