@@ -2,12 +2,13 @@
 using PictogramAPI.Exceptions;
 using PictogramAPI.Services.DTOCollection.UserDTOs;
 using PictogramAPI.Services.Interfaces;
+using System.Security.Claims;
 
 namespace PictogramAPI.Endpoints
 {
     public static class UserEndpoints
     {
-        public static void MapUserEndpoints(this WebApplication app)
+        public static void MapUserEndpoints(this WebApplication app, string authscheme)
         {
             app.MapPost("/users", async (IUserService userService, [FromBody] CreateUserDTO userDTO) =>
             {
@@ -29,11 +30,22 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateUser")
             .WithSummary("Create a new user in the system.");
 
-            app.MapPost("/users/login", async(IUserService userService,[FromBody] LoginDTO loginDTO) =>
+            app.MapPost("/users/login", async(IUserService userService,[FromBody] LoginDTO loginDTO, HttpContext ctx) =>
             {
                 try
                 {
                     Lazy<Task<UserDisplayInfoDTO>> lazyUserLogin = userService.LoginUser(loginDTO.Email, loginDTO.Password);
+                    if (lazyUserLogin == null)
+                    {
+                        return Results.Unauthorized();
+                    }
+                    
+                    var claims = new List<Claim>
+                    {
+                        new Claim("user_id", (await lazyUserLogin.Value).Id),
+                        new Claim("user_type", "standard")
+                    };
+
                     return Results.Ok(lazyUserLogin);
                 }
                 catch (InvalidCredentialsException e)

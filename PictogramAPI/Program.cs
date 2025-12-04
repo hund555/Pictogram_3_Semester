@@ -86,7 +86,7 @@ namespace PictogramAPI
             app.UseAntiforgery();
 
 
-            app.MapUserEndpoints();
+            app.MapUserEndpoints(authScheme);
             app.MapPictogramEndpoints();
             app.MapDailyScheduleEndpoints();
 
