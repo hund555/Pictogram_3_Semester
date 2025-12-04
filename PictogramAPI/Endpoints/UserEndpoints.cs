@@ -11,7 +11,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapUserEndpoints(this WebApplication app, string authscheme)
         {
-            app.MapPost("/users", async (IUserService userService, [FromBody] CreateUserDTO userDTO) =>
+            app.MapPost("/users/create", async (IUserService userService, [FromBody] CreateUserDTO userDTO) =>
             {
                 try
                 {
@@ -79,7 +79,7 @@ namespace PictogramAPI.Endpoints
             .WithSummary("Logout the current user.")
             .RequireAuthorization();
 
-            app.MapGet("/Users", async (IUserService userService) =>
+            app.MapGet("/users/getusers", async (IUserService userService) =>
             {
                 try
                 {
