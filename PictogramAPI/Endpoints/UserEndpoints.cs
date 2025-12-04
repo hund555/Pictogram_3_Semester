@@ -31,7 +31,7 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateUser")
             .WithSummary("Create a new user in the system.");
 
-            app.MapPost("/users/login", async(IUserService userService,[FromBody] LoginDTO loginDTO, HttpContext ctx) =>
+            app.MapPost("/users/login", async (IUserService userService, [FromBody] LoginDTO loginDTO, HttpContext ctx) =>
             {
                 try
                 {
@@ -40,14 +40,16 @@ namespace PictogramAPI.Endpoints
                     {
                         return Results.Unauthorized();
                     }
-                    
+
                     var claims = new List<Claim>
                     {
                         new Claim("user_id", (await lazyUserLogin.Value).Id),
-                        new Claim("user_type", "standard")
+                        new Claim(ClaimTypes.Name, (await lazyUserLogin.Value).Name),
+                        new Claim(ClaimTypes.Email, (await lazyUserLogin.Value).Email),
+                        new Claim("user_type", (await lazyUserLogin.Value).Role)
                     };
 
-                    ClaimsIdentity identity = new (claims, authscheme);
+                    ClaimsIdentity identity = new(claims, authscheme);
                     ClaimsPrincipal userIdentity = new ClaimsPrincipal(identity);
 
                     await ctx.SignInAsync(authscheme, userIdentity);
@@ -64,7 +66,15 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("LoginUser")
-            .WithSummary("Login a user with email and password.");
+            .WithSummary("Login a user with email and password.")
+            .AllowAnonymous();
+
+            app.MapGet("/users/logout", async (HttpContext ctx) =>
+            {
+                await ctx.SignOutAsync(authscheme);
+                return Results.Ok("Logout success");
+            })
+            .RequireAuthorization();
 
             app.MapGet("/Users", async (IUserService userService) =>
             {

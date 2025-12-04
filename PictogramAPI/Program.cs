@@ -24,6 +24,7 @@ namespace PictogramAPI
 
             //Auth settings
             const string authScheme = "token";
+
             builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>
             {
                 options.Cookie.Name = "AuthCookie";
@@ -35,12 +36,20 @@ namespace PictogramAPI
 
             builder.Services.AddAuthorization(builder =>
             {
-                builder.AddPolicy("AuthenticatedUser", policy =>
+                builder.AddPolicy("user", policy =>
                 {
                     policy.RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(authScheme)
                     .AddRequirements()
-                    .RequireClaim("user_type", "standard");
+                    .RequireClaim("user_type", "User");
+                });
+
+                builder.AddPolicy("admin", policy =>
+                {
+                    policy.RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(authScheme)
+                    .AddRequirements()
+                    .RequireClaim("user_type", "Admin");
                 });
             });
 
