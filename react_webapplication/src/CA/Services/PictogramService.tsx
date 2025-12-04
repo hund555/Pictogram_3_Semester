@@ -1,19 +1,18 @@
 import type Pictogram from "../Domain/Pictogram";
-import react from "react";
 import axios from 'axios';
 
 class PictogramService {
-    static async createPictogram(title: string, description:string, fileType:string, isPrivate:boolean, picture:File, userId:string) 
+    static async createPictogram(pictogram: Pictogram) 
     {
 
         const formData = new FormData();
 
-        formData.append("Title", title);
-        formData.append("Description", description);
-        formData.append("FileType", picture.name.split('.')[1]);
-        formData.append("IsPrivate", String(isPrivate)); // must be string
-        formData.append("Picture", JSON.stringify(fileToByteArray(picture)));
-        formData.append("UserId", userId);
+        formData.append("Title", pictogram.title);
+        formData.append("Description", pictogram.description);
+        formData.append("FileType", pictogram.file.name.split('.')[1]);
+        formData.append("IsPrivate", String(pictogram.isPrivate)); // must be string
+        formData.append("Picture", JSON.stringify(fileToByteArray(pictogram.file)));
+        formData.append("UserId", pictogram.userId);
 
         const response = axios.post("http://10.176.160.124:8080/pictograms", formData)
             .then(function () { console.log(response) })

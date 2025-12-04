@@ -13,6 +13,7 @@ function CreatePictogram()
     const [title, setTitle] = useState<string>("");
     const [file, setFile] = useState<File>();
     const [descripion, setDescription] = useState<string>("");
+    const [isPrivate, setisPrivate] = useState<boolean>(false)
     //restrict, what Filetypes can be uploaded by the user;
     const acceptedFileEndingList: String[] = [ ".jpg", ".png", ".svg" ];
     
@@ -30,29 +31,34 @@ function CreatePictogram()
         }
     }
 
-    const handleSubmit = () => 
-    { //handleSubmit
-        if (file == null) { setErrorMessage("No File Selected")}
-        if (title == "") { setErrorMessage("Title Empty") }
-        if (title != "" && file != null && descripion != "") 
-        {
-            //const pictogram = new Pictogram(null, title, descripion, false, file, "7423c0e6-fbee-4165-aec2-02dfa60016ea",);
-
+    const handleSubmit = () => { //handleSubmit
+        if (file == null) { setErrorMessage("No File Selected"); return; }
+        if (title == "") { setErrorMessage("Title Empty"); return; }
+        
+        const pictogram: Pictogram = {
+            pictogramID: 0,
+            title: title,
+            description: descripion,
+            fileType: file.name.split('.')[0],
+            isPrivate: isPrivate,
+            file: file,
+            userId: "7423c0e6-fbee-4165-aec2-02dfa60016ea"
         }
-    
+            PictogramService.createPictogram(pictogram);                
 
-        const acceptableFileEndings = () => 
-        {
-            var result:string = "";
-            for (var i = 0; i < acceptedFileEndingList.length; i++) 
-            {
-                result += acceptedFileEndingList[i] + ", "
-            }
-            return result;
+        
+
+        
+
+
+    }
+    const acceptableFileEndings = () => {
+        var result: string = "";
+        for (var i = 0; i < acceptedFileEndingList.length; i++) {
+            result += acceptedFileEndingList[i] + ", "
         }
-
-
-
+        return result;
+    }
 
 
         //HTML
@@ -74,7 +80,9 @@ function CreatePictogram()
             <label>
                 File:    
                 <input id="fileInput" accept={ acceptableFileEndings()} type="file" onChange={handleFileChange}></input>
-            </label> <br />
+                </label> <br />
+                <input type="checkbox" onChange={() => setisPrivate(!isPrivate) } checked={isPrivate}></input>
+            
             <label style={{color:'red', fontWeight:'bold'} }>{errorMessage}</label><br/>
             <button onClick={handleSubmit}>Opret</button>
         </div>
@@ -97,5 +105,5 @@ function CreatePictogram()
     }
 
     //return [];
-}
+
 export default CreatePictogram;
