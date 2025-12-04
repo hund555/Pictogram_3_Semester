@@ -34,14 +34,14 @@ namespace PictogramAPI.Services
                 throw new NullReferenceException($"No user found with id: {createPictogramDTO.UserId}");
             }
 
-            byte[] imageData;
-            using (var memoryStream = new MemoryStream())
-            {
-                await createPictogramDTO.Picture.CopyToAsync(memoryStream);
-                imageData = memoryStream.ToArray();
-            }
+            //byte[] imageData;
+            //using (var memoryStream = new MemoryStream())
+            //{
+            //    await createPictogramDTO.Picture.CopyToAsync(memoryStream);
+            //    imageData = memoryStream.ToArray();
+            //}
 
-            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(imageData);
+            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain();
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
 
