@@ -62,5 +62,25 @@ namespace PictogramAPI.Services
 
             return Task.FromResult(displayDayScheduleDTO);
         }
+
+        /// <summary>
+        /// Deletes daily schedule tasks associated with the specified pictogram ID.
+        /// </summary>
+        /// <param name="pictogramId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTaskByPictogramId(string pictogramId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.PictogramId == pictogramId);
+        }
+
+        /// <summary>
+        /// Deletes daily schedule tasks associated with the specified user ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTasksByUserId(string userId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.UserId == userId);
+        }
     }
 }

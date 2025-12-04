@@ -13,12 +13,16 @@ namespace PictogramAPI.Services
     {
         private readonly IMongoDatabase _mongodb;
         private readonly IMongoCollection<User> _usersCollection;
-        public UserService(IOptions<DatabaseInfo> options)
+        private readonly IPictogramService _pictogramService;
+        private readonly IDailyScheduleService _dailyScheduleService;
+        public UserService(IOptions<DatabaseInfo> options, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService)
         {
             // Initialize MongoDB client and get the database and user collection
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _mongodb = mongoClient.GetDatabase(options.Value.DatabaseName);
             _usersCollection = _mongodb.GetCollection<User>(options.Value.UserCollectionName);
+            this._dailyScheduleService = dailyScheduleService;
+            this._pictogramService = pictogramService;
         }
 
         /// <summary>
@@ -79,6 +83,18 @@ namespace PictogramAPI.Services
                 }
                 return user.MapUserDomainToUserDisplayInfoDTO();
             });
+        }
+
+        /// <summary>
+        /// Delete user by id and all associated data
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task DeleteUserById(string userId)
+        {
+            await _dailyScheduleService.DeleteDailyScheduleTasksByUserId(userId);
+            await _pictogramService.DeleteUsersPrivatePictogramsByUserId(userId);
+            await _usersCollection.DeleteOneAsync(user => user.Id == userId);
         }
 
         /// <summary>

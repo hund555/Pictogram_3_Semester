@@ -7,5 +7,6 @@ namespace PictogramAPI.Services.Interfaces
     {
         Task CreatePictogram(CreatePictogramDTO createPictogramDTO);
         Task<Pictogram> GetPictogramById(string pictogramId, string userId);
+        Task DeleteUsersPrivatePictogramsByUserId(string userId);
     }
 }
