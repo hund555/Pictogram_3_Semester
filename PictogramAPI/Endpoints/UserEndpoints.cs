@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using PictogramAPI.Domain;
 using PictogramAPI.Exceptions;
+using PictogramAPI.Services;
 using PictogramAPI.Services.DTOCollection.UserDTOs;
 using PictogramAPI.Services.Interfaces;
 using System.Security.Claims;
@@ -95,10 +97,18 @@ namespace PictogramAPI.Endpoints
             .WithName("GetAllUsers")
             .WithSummary("Get a list of all users in the system.");
 
-            app.MapDelete("/users/delete/{userId}", async (IUserService userService, string userId) =>
+            app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService,[FromBody] string userId) =>
             {
                 try
                 {
+                    List<Pictogram> pictograms = await pictogramService.GetAllPictogramsByUserId(userId);
+                    pictograms.RemoveAll(p => p.IsPrivate == false);
+                    foreach (var pictogram in pictograms)
+                    {
+                        await dailyScheduleService.DeleteDailyScheduleTaskByPictogramId(pictogram.PictogramId);
+                    }
+                    await dailyScheduleService.DeleteDailyScheduleTasksByUserId(userId);
+                    await pictogramService.DeleteUsersPrivatePictogramsByUserId(userId);
                     await userService.DeleteUserById(userId);
                     return Results.Ok();
                 }

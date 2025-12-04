@@ -17,7 +17,6 @@ namespace PictogramAPI.Services
         public DailyScheduleService(IOptions<DatabaseInfo> options, IUserService userService, IPictogramService pictogramService)
         {
             this._userService = userService;
-            this._pictogramService = pictogramService;
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _database = mongoClient.GetDatabase(options.Value.DatabaseName);
             _dailySchedulesCollection = _database.GetCollection<DailyScheduleTask>(options.Value.DailyScheduleCollectionName);

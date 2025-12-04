@@ -12,12 +12,10 @@ namespace PictogramAPI.Services
         private readonly IMongoDatabase _database;
         private readonly IMongoCollection<Pictogram> _pictogramsCollection;
         private readonly IUserService _userService;
-        private readonly IDailyScheduleService _dailyScheduleService;
 
-        public PictogramService(IOptions<DatabaseInfo> options, IUserService userService, IDailyScheduleService dailyScheduleService)
+        public PictogramService(IOptions<DatabaseInfo> options, IUserService userService)
         {
             this._userService = userService;
-            this._dailyScheduleService = dailyScheduleService;
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _database = mongoClient.GetDatabase(options.Value.DatabaseName);
             _pictogramsCollection = _database.GetCollection<Pictogram>(options.Value.PictogramCollectionName);
@@ -86,12 +84,13 @@ namespace PictogramAPI.Services
         /// <returns></returns>
         public async Task DeleteUsersPrivatePictogramsByUserId(string userId)
         {
-            List<Pictogram> userPictograms = await _pictogramsCollection.Find(pictogram => pictogram.UserId == userId && pictogram.IsPrivate).ToListAsync();
-            foreach (var pictogram in userPictograms)
-            {
-                await _dailyScheduleService.DeleteDailyScheduleTaskByPictogramId(pictogram.PictogramId);
-            }
             await _pictogramsCollection.DeleteManyAsync(pictogram => pictogram.UserId == userId && pictogram.IsPrivate);
+        }
+
+        public async Task<List<Pictogram>> GetAllPictogramsByUserId(string userId)
+        {
+            List<Pictogram> pictograms = await _pictogramsCollection.Find(pictogram => pictogram.UserId == userId).ToListAsync();
+            return pictograms;
         }
     }
 }
