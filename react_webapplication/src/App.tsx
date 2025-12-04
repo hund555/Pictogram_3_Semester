@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import LoginPage from "./UI/LoginPage";
 import RegisterNewUser from "./UI/RegisterNewUser";
 import './App.css'
-import CreatePictogram from "./CA/UI/CreatePictogram";
-import LandingPage from './CA/UI/LandingPage'
+import CreatePictogram from "./UI/CreatePictogram";
+import LandingPage from './UI/LandingPage'
 import logo from "./assets/pictoplanner_logo.svg"
 let currentView = <LandingPage></LandingPage>
 

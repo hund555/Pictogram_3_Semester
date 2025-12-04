@@ -81,7 +81,7 @@ function CreatePictogram()
                 File:    
                 <input id="fileInput" accept={ acceptableFileEndings()} type="file" onChange={handleFileChange}></input>
                 </label> <br />
-                <input type="checkbox" onChange={() => setisPrivate(!isPrivate) } checked={isPrivate}></input>
+                <input type="checkbox" onChange={() => setisPrivate(!isPrivate) } checked={isPrivate}>Kun synligt for mig</input>
             
             <label style={{color:'red', fontWeight:'bold'} }>{errorMessage}</label><br/>
             <button onClick={handleSubmit}>Opret</button>
