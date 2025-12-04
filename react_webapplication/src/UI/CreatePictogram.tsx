@@ -31,20 +31,13 @@ function CreatePictogram()
         }
     }
 
-    const handleSubmit = () => { //handleSubmit
+    const handleSubmit = async () => { //handleSubmit
         if (file == null) { setErrorMessage("No File Selected"); return; }
         if (title == "") { setErrorMessage("Title Empty"); return; }
-        
-        const pictogram: Pictogram = {
-            pictogramID: 0,
-            title: title,
-            description: descripion,
-            fileType: file.name.split('.')[0],
-            isPrivate: isPrivate,
-            file: file,
-            userId: "7423c0e6-fbee-4165-aec2-02dfa60016ea"
-        }
-            PictogramService.createPictogram(pictogram);                
+       
+        const buffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        PictogramService.createPictogram(title, descripion, file.name.split('.')[1], isPrivate, Array.from(bytes), "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
 
         
 
@@ -81,7 +74,7 @@ function CreatePictogram()
                 File:    
                 <input id="fileInput" accept={ acceptableFileEndings()} type="file" onChange={handleFileChange}></input>
                 </label> <br />
-                <input type="checkbox" onChange={() => setisPrivate(!isPrivate) } checked={isPrivate}>Kun synligt for mig</input>
+                <label>Kun synligt for mig: <input type="checkbox" onChange={() => setisPrivate(!isPrivate) } checked={isPrivate}></input> </label>
             
             <label style={{color:'red', fontWeight:'bold'} }>{errorMessage}</label><br/>
             <button onClick={handleSubmit}>Opret</button>
@@ -107,3 +100,9 @@ function CreatePictogram()
     //return [];
 
 export default CreatePictogram;
+async function fileToByteArray(file: File): Promise<number[]> {
+
+
+    const buffer = await file.arrayBuffer();
+    return Array.from(new Uint8Array(buffer));
+}
