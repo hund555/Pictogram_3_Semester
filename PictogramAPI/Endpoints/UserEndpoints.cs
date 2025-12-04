@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using PictogramAPI.Exceptions;
 using PictogramAPI.Services.DTOCollection.UserDTOs;
 using PictogramAPI.Services.Interfaces;
@@ -46,6 +47,10 @@ namespace PictogramAPI.Endpoints
                         new Claim("user_type", "standard")
                     };
 
+                    ClaimsIdentity identity = new (claims, authscheme);
+                    ClaimsPrincipal userIdentity = new ClaimsPrincipal(identity);
+
+                    await ctx.SignInAsync(authscheme, userIdentity);
                     return Results.Ok(lazyUserLogin);
                 }
                 catch (InvalidCredentialsException e)
