@@ -94,6 +94,22 @@ namespace PictogramAPI.Endpoints
             .WithTags("Users")
             .WithName("GetAllUsers")
             .WithSummary("Get a list of all users in the system.");
+
+            app.MapDelete("/users/delete/{userId}", async (IUserService userService, string userId) =>
+            {
+                try
+                {
+                    await userService.DeleteUserById(userId);
+                    return Results.Ok();
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+            })
+            .WithTags("Users")
+            .WithName("DeleteUser")
+            .WithSummary("Delete user with given id");
         }
     }
 }

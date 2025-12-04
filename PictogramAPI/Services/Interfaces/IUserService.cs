@@ -8,5 +8,6 @@ namespace PictogramAPI.Services.Interfaces
         Task CreateUser(CreateUserDTO userDTO);
         Lazy<Task<UserDisplayInfoDTO>> LoginUser(string email, string password);
         Lazy<Task<List<UserDisplayInfoDTO>>> GetAllUsers();
+        Task DeleteUserById(string userId);
     }
 }
