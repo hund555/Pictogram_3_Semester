@@ -74,6 +74,9 @@ namespace PictogramAPI.Endpoints
                 await ctx.SignOutAsync(authscheme);
                 return Results.Ok("Logout success");
             })
+            .WithTags("Users")
+            .WithName("LogoutUser")
+            .WithSummary("Logout the current user.")
             .RequireAuthorization();
 
             app.MapGet("/Users", async (IUserService userService) =>
