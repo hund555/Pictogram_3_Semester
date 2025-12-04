@@ -1,5 +1,5 @@
-import { Link, Routes, Route } from "react-router-dom";
-import LoginHomePage from "./UI/LoginHomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./UI/LoginPage";
 import RegisterNewUser from "./UI/RegisterNewUser";
 import './App.css'
 import CreatePictogram from "./CA/UI/CreatePictogram";
@@ -25,7 +25,7 @@ function App() {
                 </nav>
             </div>
             <Routes>
-                <Route path="/" element={<LoginHomePage />} />
+                <Route path="/" element={<LoginPage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
                 <Route path="/createPictogram" element={<CreatePictogram />} />
             </Routes>

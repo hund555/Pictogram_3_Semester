@@ -1,24 +1,33 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WebUserService from "../Services/WebUserService";
 import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 
-// Component for the Homepage with login and create new user
-function LoginHomePage() {
+// Component for the LoginPage with login and create new user
+function LoginPage() {
     const [email, setEmail] = useState<string>("");
+    const emailRef = useRef<HTMLInputElement>(null);
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [login, setLogin] = useState<UserDisplayInfo | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const navigateToSite = useNavigate();
 
-    // If 
+   //Sets Focus to the Email input field when rendered first time or remounted
+    useEffect(() => {
+        emailRef.current?.focus();
+    }, []);
+
+
+    // Checks if user input is empty. If not logs user into HomePage.
     function handleLogin(event: React.FormEvent<HTMLFormElement>) 
     {
         event.preventDefault();
         if (email === "") 
         {
-            return setError("E-mail skal udfyldes");
+            setError("E-mail skal udfyldes");
+            emailRef.current?.focus();  //Sets focus again after input error
+            return;
         }
         if (password === "") 
         {
@@ -30,7 +39,7 @@ function LoginHomePage() {
         WebUserService.login(email, password)
         .then((UserDisplayInfo) => {
             setLogin(UserDisplayInfo);
-            navigateToSite("");
+            navigateToSite(""); //Sæt Homepage siden her senere!!!!!!!!!!!!!!!!!
         })
         .catch(e => {
             setError(e.message)
@@ -54,6 +63,7 @@ function LoginHomePage() {
                 <div style={{ marginBottom: "0.5rem" }}>
                     <label style={{ marginRight: "0.5rem"}}>E-mailadresse</label>
                     <input type="email"
+                        ref={emailRef}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -83,4 +93,4 @@ function LoginHomePage() {
         </div>
     )
 }
-export default LoginHomePage;
+export default LoginPage;
