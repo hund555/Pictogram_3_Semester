@@ -9,7 +9,7 @@ class WebUserService {
     static async createUser(name: string, email: string, password: string): Promise<CreateUserWeb> {
         const payload = { name, email, password };
 
-        return axios.post(baseURL + "/users", payload).then((response: AxiosResponse<CreateUserWeb>) => response.data);
+        return axios.post(baseURL + "/users/create", payload).then((response: AxiosResponse<CreateUserWeb>) => response.data);
     }
 
     static async login(email: string, password: string): Promise<UserDisplayInfo>
