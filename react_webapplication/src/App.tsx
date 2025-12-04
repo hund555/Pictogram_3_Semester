@@ -27,9 +27,11 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginHomePage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
+                <Route path="/createPictogram" element={<CreatePictogram />} />
             </Routes>
-            <div style={{ marginBottom: 15 }}><Navbar></Navbar></div>
-            {currentView}
+            
+            {/*<div style={{ marginBottom: 15 }}><Navbar></Navbar></div>*/}
+
         </>
            
     );
@@ -40,7 +42,7 @@ function Navbar() {
 
     return (
 
-        <nav className="navbar" id="test">
+        <nav className="navbar" id="test" style={{ position: "absolute", left:"0px", top:"0px" } }>
 
             <img src={logo} className="logo"></img>
             <button onClick={function () { currentView = <LandingPage></LandingPage>; }}>home</button>
