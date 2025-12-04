@@ -17,12 +17,30 @@ namespace WPF_PictoPlanner_Admin.Services
             _httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Sends Get-request to API to fetch all users from MongoDB
+        /// </summary>
+        /// <returns> A list of user objects </returns>
         public async Task<ICollection<User>> GetAllUsersAsync()
         {
             var url = new Uri(baseURL + "/users/getusers");
 
-            HttpResponseMessage
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
 
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync();
+
+            var userList = System.Text.Json.JsonSerializer.Deserialize<User[]>(json);
+
+            if (userList == null)
+            {
+                throw new Exception("No users found");
+            }
+            else { 
+                return userList;
+            }
+            
         }
     }
 }
