@@ -23,7 +23,22 @@ export default function LandingPage() {
      }*/
 //HTML
     return (<>
-       
+        {/* <h1>{schedule.day}</h1>
+        <ul style={{ placeItems: "center" }}>
+            <div style={{ borderColor: "red", borderStyle: "solid" }} id="taskDiv" onClick={function () { const taskdiv = document.getElementById("taskDiv"); if (taskdiv.style.opacity = "1") { taskdiv.style.opacity = "0.1" } else { taskdiv.style.opacity = "1" } }} ><h3>Test</h3>
+                <div>
+                    <img src={logo} style={{ borderColor: "green", height: "120px", width: "120px" }} />
+
+
+
+
+                </div> <br /><p>test</p>
+            </div>
+
+
+
+        </ul>
+        */}
 
     </>)
 }
