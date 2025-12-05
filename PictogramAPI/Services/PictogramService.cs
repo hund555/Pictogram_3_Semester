@@ -92,5 +92,20 @@ namespace PictogramAPI.Services
             List<Pictogram> pictograms = await _pictogramsCollection.Find(pictogram => pictogram.UserId == userId).ToListAsync();
             return pictograms;
         }
-    }
+
+        public async Task<List<DisplayAllPictogramsDTO>> GetAllPictogramsAsync(string userId)
+        {
+            List<Pictogram> allNonPirvatePictogramsAndUserOwnPrivatePictograms =
+                await _pictogramsCollection.Find(allPictograms => !allPictograms.IsPrivate
+                || (allPictograms.IsPrivate && allPictograms.UserId == userId)).ToListAsync();
+
+            List<DisplayAllPictogramsDTO> dtoResultsToBeDisplayedInUI = new List<DisplayAllPictogramsDTO>();
+
+            foreach (var pictograms in allNonPirvatePictogramsAndUserOwnPrivatePictograms)
+            {
+                dtoResultsToBeDisplayedInUI.Add(pictograms.MapAllPictogramsDTO());
+            }
+            return dtoResultsToBeDisplayedInUI;
+        }
+    } 
 }
