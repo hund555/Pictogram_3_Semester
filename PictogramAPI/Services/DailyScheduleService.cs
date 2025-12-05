@@ -17,6 +17,7 @@ namespace PictogramAPI.Services
         public DailyScheduleService(IOptions<DatabaseInfo> options, IUserService userService, IPictogramService pictogramService)
         {
             this._userService = userService;
+            this._pictogramService = pictogramService;
             MongoClient mongoClient = new MongoClient(options.Value.ConnectionString);
             _database = mongoClient.GetDatabase(options.Value.DatabaseName);
             _dailySchedulesCollection = _database.GetCollection<DailyScheduleTask>(options.Value.DailyScheduleCollectionName);
@@ -39,7 +40,8 @@ namespace PictogramAPI.Services
                 throw new NullReferenceException($"No pictogram found with id: {dailyTaskDTO.PictogramId}");
             }
 
-            await _dailySchedulesCollection.InsertOneAsync(dailyTaskDTO.MapCreateDailyTaskDTOToDomainDailyScheduleTask());
+            DailyScheduleTask dailyScheduleTask = dailyTaskDTO.MapCreateDailyTaskDTOToDomainDailyScheduleTask();
+            await _dailySchedulesCollection.InsertOneAsync(dailyScheduleTask);
         }
 
         public Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day)
