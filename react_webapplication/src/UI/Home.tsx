@@ -62,7 +62,7 @@ const TaskView = (tasks: TaskViewProps) => {
                     <h2>{t.pictogram.title}</h2>
                     <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.pictureBytes} style={{height:"120px", width:"120px"}} />
                     <p>{t.pictogram.description}</p>
-                    <input type="checkbox" style={{ height: "50px", width: "50px"} }/>
+                    <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
                 </div>
             
             
