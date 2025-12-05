@@ -93,6 +93,11 @@ namespace PictogramAPI.Services
             return pictograms;
         }
 
+        /// <summary>
+        /// Gets all non-private pictograms including the private pictures associated with the specified user ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns> a list of DisplayAllPictogramsDTO </returns>
         public async Task<List<DisplayAllPictogramsDTO>> GetAllPictogramsAsync(string userId)
         {
             List<Pictogram> allNonPirvatePictogramsAndUserOwnPrivatePictograms =
@@ -103,7 +108,7 @@ namespace PictogramAPI.Services
 
             foreach (var pictograms in allNonPirvatePictogramsAndUserOwnPrivatePictograms)
             {
-                dtoResultsToBeDisplayedInUI.Add(pictograms.MapAllPictogramsDTO());
+                dtoResultsToBeDisplayedInUI.Add(pictograms.MapPictogramDomainToDisplayAllPictogramsDTO());
             }
             return dtoResultsToBeDisplayedInUI;
         }
