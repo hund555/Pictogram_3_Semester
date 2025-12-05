@@ -7,6 +7,13 @@ namespace WPF_PictoPlanner_Admin.Commands
     /// </summary>
     public class RelayCommand : ICommand
     {
+        private Func<object, Task> value;
+
+        public RelayCommand(Func<object, Task> value)
+        {
+            this.value = value;
+        }
+
         public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object? parameter)

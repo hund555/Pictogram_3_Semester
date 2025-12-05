@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text.Json;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
 
@@ -10,7 +11,7 @@ namespace WPF_PictoPlanner_Admin.Services
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
-        const string baseURL = "http://10.176.160.150:8080";
+        const string baseURL = "http://10.176.160.133:8080";
 
         public UserService()
         {
@@ -30,17 +31,11 @@ namespace WPF_PictoPlanner_Admin.Services
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();
+            List<User> userList = new List<User>();
 
-            var userList = System.Text.Json.JsonSerializer.Deserialize<User[]>(json);
+            userList = JsonSerializer.Deserialize<List<User>>(json);
 
-            if (userList == null)
-            {
-                throw new Exception("No users found");
-            }
-            else { 
-                return userList;
-            }
-            
+            return userList;
         }
     }
 }
