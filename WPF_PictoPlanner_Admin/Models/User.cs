@@ -3,11 +3,34 @@
     /// <summary>
     /// A class to hold all information of a user from the MongoDB
     /// </summary>
-    public class User
+    public class User : Bindable
     {
-        public string UserId { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
+        private string id;
+        public string Id
+        {
+            get { return id; }
+            set { id = value; propertyIsChanged(); }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; propertyIsChanged(); }
+        }
+
+        private string email;
+        public string Email
+        {
+            get { return email; }
+            set { email = value; propertyIsChanged(); }
+        }
+
+        private string role;
+        public string Role
+        {
+            get { return role; }
+            set { role = value; propertyIsChanged(); }
+        }
     }
 }

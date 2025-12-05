@@ -7,7 +7,7 @@ using WPF_PictoPlanner_Admin.Services.Interfaces;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
-    public class UsersViewModel
+    public class UsersViewModel : Bindable
     {
         public ObservableCollection<User> Users {  get; set; } = new ObservableCollection<User>();
         private IUserService _userService = new UserService();
@@ -18,15 +18,26 @@ namespace WPF_PictoPlanner_Admin.ViewModels
         }
 
         private ICommand? _loadUsersCommand;
-
-        public ICommand LoadUsersCommand => _loadUsersCommand ??= new RelayCommand(async _ =>
+        public ICommand LoadUsersCommand
         {
-            var users = await _userService.GetAllUsersAsync();
-            Users.Clear();
-            foreach (var user in users)
+            get
             {
-                Users.Add(user);
+                if (_loadUsersCommand == null)
+                {
+                    _loadUsersCommand = new RelayCommand(
+                        param => true,
+                        async param =>
+                        {
+                            var users = await _userService.GetAllUsersAsync();
+                            Users.Clear();
+                            foreach (var user in users)
+                            {
+                                Users.Add(user);
+                            }
+                        });
+                }
+                return _loadUsersCommand;
             }
-        });
+        }
     }
 }

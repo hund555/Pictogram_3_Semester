@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using WPF_PictoPlanner_Admin.Commands;
 using WPF_PictoPlanner_Admin.ViewModels;
 
 namespace WPF_PictoPlanner_Admin.View
@@ -18,23 +8,18 @@ namespace WPF_PictoPlanner_Admin.View
     /// <summary>
     /// Interaction logic for Users.xaml
     /// </summary>
-    public partial class Users : Window
+    public partial class Users : UserControl
     {
         private readonly UsersViewModel _viewModel;
         public Users()
         {
             DataContext = _viewModel = new UsersViewModel();
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
+            _viewModel.LoadUsersCommand.Execute(this);
         }
 
         private void UsersList_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            _viewModel.LoadUsersCommand.Execute(null);
         }
     }
 }

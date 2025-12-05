@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
 
@@ -31,6 +32,10 @@ namespace WPF_PictoPlanner_Admin.Services
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();
+            json = json.Split('[')[1];
+            json = json.Split(']')[0];
+            json = "[" + json + "]";
+            json = json.Replace(@"\", "");
             List<User> userList = new List<User>();
 
             userList = JsonSerializer.Deserialize<List<User>>(json);

@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_PictoPlanner_Admin.Models;
+using WPF_PictoPlanner_Admin.ViewModels;
 
 namespace WPF_PictoPlanner_Admin
 {
@@ -16,9 +18,13 @@ namespace WPF_PictoPlanner_Admin
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Bindable _users;
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = _users = _users?? new UsersViewModel();
         }
+
+        
     }
 }
