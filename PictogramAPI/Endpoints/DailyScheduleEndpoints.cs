@@ -28,11 +28,12 @@ namespace PictogramAPI.Endpoints
             .WithName("CreateDailyTask")
             .WithSummary("Create a new daily schedule task in the system.");
 
-            app.MapGet("/dailyschedule/today", async (IDailyScheduleService dailyScheduleService,[FromBody] string userId) =>
+            app.MapGet("/dailyschedule/today/{userId}", async (IDailyScheduleService dailyScheduleService, string userId) =>
             {
                 try
                 {
-                    DisplayDayScheduleDTO daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, DateTime.Today.ToString());
+                    string day = DateTime.Today.DayOfWeek.ToString();
+                    DisplayDayScheduleDTO daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, day);
                     return Results.Ok(daySchedule);
                 }
                 catch (Exception e)
@@ -44,11 +45,11 @@ namespace PictogramAPI.Endpoints
             .WithName("GetCurrentDaySchedule")
             .WithSummary("Get schedule tasks for the current day");
 
-            app.MapGet("/dailyschedule/day", async (IDailyScheduleService dailyScheduleService,[FromBody] GetDailyScheduleDayDTO getDailyScheduleDayDTO) =>
+            app.MapGet("/dailyschedule/{day}/{userId}", async (IDailyScheduleService dailyScheduleService, string day, string userId) =>
             {
                 try
                 {
-                    DisplayDayScheduleDTO daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(getDailyScheduleDayDTO.UserId, getDailyScheduleDayDTO.Day);
+                    DisplayDayScheduleDTO daySchedule = await dailyScheduleService.GetDayScheduleByUserIdAndDay(userId, day);
                     return Results.Ok(daySchedule);
                 }
                 catch (Exception e)
