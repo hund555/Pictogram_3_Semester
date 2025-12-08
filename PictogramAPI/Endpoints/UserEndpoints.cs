@@ -55,7 +55,7 @@ namespace PictogramAPI.Endpoints
                     ClaimsPrincipal userIdentity = new ClaimsPrincipal(identity);
 
                     await ctx.SignInAsync(authscheme, userIdentity);
-                    return Results.Ok(lazyUserLogin);
+                    return Results.Ok(ctx);
                 }
                 catch (InvalidCredentialsException e)
                 {
