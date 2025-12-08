@@ -22,6 +22,37 @@ namespace PictogramAPI
                 options.HeaderName = "X-XSRF-TOKEN";
             });
 
+            //Auth settings
+            const string authScheme = "token";
+
+            builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>
+            {
+                options.Cookie.Name = "AuthCookie";
+                options.LoginPath = "/users/login";
+                options.AccessDeniedPath = "/users/denied";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+            });
+
+            builder.Services.AddAuthorization(builder =>
+            {
+                builder.AddPolicy("user", policy =>
+                {
+                    policy.RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(authScheme)
+                    .AddRequirements()
+                    .RequireClaim("user_type", "User");
+                });
+
+                builder.AddPolicy("admin", policy =>
+                {
+                    policy.RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(authScheme)
+                    .AddRequirements()
+                    .RequireClaim("user_type", "Admin");
+                });
+            });
+
             // Configure DatabaseInfo from appsettings.json
             builder.Services.Configure<DatabaseInfo>(builder.Configuration.GetSection("DatabaseSettings"));
 
@@ -38,7 +69,6 @@ namespace PictogramAPI
             });
 
             // Add services to the container.
-            //builder.Services.AddAuthorization();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -58,13 +88,14 @@ namespace PictogramAPI
 
             app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors(myCors);
             app.UseAntiforgery();
 
 
-            app.MapUserEndpoints();
+            app.MapUserEndpoints(authScheme);
             app.MapPictogramEndpoints();
             app.MapDailyScheduleEndpoints();
 

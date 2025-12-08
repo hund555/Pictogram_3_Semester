@@ -40,7 +40,8 @@ namespace PictogramAPI.Services
                 throw new NullReferenceException($"No pictogram found with id: {dailyTaskDTO.PictogramId}");
             }
 
-            await _dailySchedulesCollection.InsertOneAsync(dailyTaskDTO.MapCreateDailyTaskDTOToDomainDailyScheduleTask());
+            DailyScheduleTask dailyScheduleTask = dailyTaskDTO.MapCreateDailyTaskDTOToDomainDailyScheduleTask();
+            await _dailySchedulesCollection.InsertOneAsync(dailyScheduleTask);
         }
 
         public Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day)
@@ -61,6 +62,26 @@ namespace PictogramAPI.Services
             }
 
             return Task.FromResult(displayDayScheduleDTO);
+        }
+
+        /// <summary>
+        /// Deletes daily schedule tasks associated with the specified pictogram ID.
+        /// </summary>
+        /// <param name="pictogramId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTaskByPictogramId(string pictogramId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.PictogramId == pictogramId);
+        }
+
+        /// <summary>
+        /// Deletes daily schedule tasks associated with the specified user ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTasksByUserId(string userId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.UserId == userId);
         }
     }
 }

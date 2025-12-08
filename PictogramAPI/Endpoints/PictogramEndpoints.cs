@@ -8,7 +8,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService,[FromForm] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms/create", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
@@ -27,7 +27,8 @@ namespace PictogramAPI.Endpoints
             .WithTags("Pictogram")
             .WithName("CreatePictogram")
             .WithSummary("Create a new pictogram in the system")
-            .WithMetadata(new IgnoreAntiforgeryTokenAttribute());
+            .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
+            .AllowAnonymous();
         }
     }
 }

@@ -80,5 +80,28 @@ namespace PictogramAPI.Services
                 return user.MapUserDomainToUserDisplayInfoDTO();
             });
         }
+
+        /// <summary>
+        /// Delete user by id and all associated data
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task DeleteUserById(string userId)
+        {
+            await _usersCollection.DeleteOneAsync(user => user.Id == userId);
+        }
+
+        /// <summary>
+        /// Get all users in the system
+        /// </summary>
+        /// <returns></returns>
+        public Lazy<Task<List<UserDisplayInfoDTO>>> GetAllUsers()
+        {
+            return new Lazy<Task<List<UserDisplayInfoDTO>>>(async () =>
+            {
+                List<User> users = await _usersCollection.Find(_ => true).ToListAsync();
+                return users.ConvertAll(user => user.MapUserDomainToUserDisplayInfoDTO());
+            });
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
         /// <param name="pictogramDTO"></param>
         /// <param name="gridFsId"></param>
         /// <returns></returns>
-        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO)
+        public static Pictogram MapCreatePictogramDTOToPictogramDomain(this CreatePictogramDTO pictogramDTO, byte[] pictureBytes)
         {
             return new Pictogram
             {
@@ -21,7 +21,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
                 FileType = pictogramDTO.FileType,
                 IsPrivate = pictogramDTO.IsPrivate,
                 UserId = pictogramDTO.UserId,
-                PictureBytes = pictogramDTO.PictureBytes
+                PictureBytes = pictureBytes
             };
         }
     }

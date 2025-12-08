@@ -1,7 +1,10 @@
-﻿namespace PictogramAPI.Domain
+﻿using MongoDB.Bson;
+
+namespace PictogramAPI.Domain
 {
     public class Pictogram
     {
+        public ObjectId _id { get; set; }
         public string PictogramId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

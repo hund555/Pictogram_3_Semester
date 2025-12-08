@@ -34,7 +34,15 @@ namespace PictogramAPI.Services
                 throw new NullReferenceException($"No user found with id: {createPictogramDTO.UserId}");
             }
 
-            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain();
+            byte[] imageData;
+            imageData = Convert.FromBase64String(createPictogramDTO.Picture);
+            //using (var memoryStream = new MemoryStream())
+            //{
+            //    await createPictogramDTO.Picture.CopyToAsync(memoryStream);
+            //    imageData = memoryStream.ToArray();
+            //}
+
+            Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(imageData);
             await _pictogramsCollection.InsertOneAsync(pictogram);
         }
 
@@ -67,6 +75,22 @@ namespace PictogramAPI.Services
             }
 
             return pictogram;
+        }
+
+        /// <summary>
+        /// Deletes all private pictograms associated with the specified user ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task DeleteUsersPrivatePictogramsByUserId(string userId)
+        {
+            await _pictogramsCollection.DeleteManyAsync(pictogram => pictogram.UserId == userId && pictogram.IsPrivate);
+        }
+
+        public async Task<List<Pictogram>> GetAllPictogramsByUserId(string userId)
+        {
+            List<Pictogram> pictograms = await _pictogramsCollection.Find(pictogram => pictogram.UserId == userId).ToListAsync();
+            return pictograms;
         }
     }
 }
