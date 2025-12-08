@@ -62,7 +62,7 @@ function CreatePictogram()
             <br/>
             <label>
                 Title:
-                <input type="text" value={title} name="Title" placeholder="Enter your title" onChange={e => setTitle(e.target.value)}></input>
+                <input type="text" value={title} name="Title" placeholder="Indtast titel" onChange={e => setTitle(e.target.value)}></input>
             </label>
             
             <br />

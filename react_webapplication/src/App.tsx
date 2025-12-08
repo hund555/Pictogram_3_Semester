@@ -15,7 +15,7 @@ window.addEventListener("resize", function () {
 })//check for window resize
 function App() {
 
-    {/* SPA */}
+    {/* ===== SPA ===== */}
     return (
         <>
             <div>
@@ -27,7 +27,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
-                <Route path="/createPictogram" element={<CreatePictogram />} />
+                <Route path="/createpictogram" element={<CreatePictogram />} />
+                <Route path="/landingpage" element={<LandingPage/>} />
             </Routes>
             
             {/*<div style={{ marginBottom: 15 }}><Navbar></Navbar></div>*/}

@@ -39,7 +39,7 @@ function LoginPage() {
         WebUserService.login(email, password)
         .then((UserDisplayInfo) => {
             setLogin(UserDisplayInfo);
-            navigateToSite(""); //Sæt Homepage siden her senere!!!!!!!!!!!!!!!!!
+            navigateToSite("/landingpage");
         })
         .catch(e => {
             setError(e.message)

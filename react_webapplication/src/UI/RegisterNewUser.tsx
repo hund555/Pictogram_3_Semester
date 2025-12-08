@@ -71,7 +71,7 @@ function RegisterNewUser() {
                     />
                 </div>
 
-                {/* E-mailaddress field */}
+                {/* ===== E-mailaddress field ===== */}
                 <div style={{ marginBottom: "0.8rem" }}>
                     <label style={{ marginRight: "3.9rem" }}>
                         E-mailadresse
@@ -99,7 +99,7 @@ function RegisterNewUser() {
                     />
                 </div>
 
-                {/* ===== Password field ===== */}
+                {/* ===== Repeat password field ===== */}
                 <div style={{ marginBottom: "0.5rem" }}>
                     <label style={{ marginRight: "0.5rem" }}>
                         Gentag Adgangskode
@@ -128,7 +128,7 @@ function RegisterNewUser() {
 
             {error && <p className="error-message">{error}</p>}
 
-            {/* If profile creation is a success, user data is shown */}
+            {/* ===== If profile creation is a success, user data is shown ===== */}
             {createdUser && (
                 <div>
                     <h2> BrugerProfil oprettet succesfuldt</h2>
