@@ -47,8 +47,8 @@ namespace PictogramAPI.Endpoints
             })
                 .WithTags("Pictogram")
                 .WithName("GetAllPictograms")
-                .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
-                .RequireAuthorization();
+                .WithSummary("Gets all no-private pictograms and the user's own private pictograms");
+                //.RequireAuthorization();
         }
     }
 }
