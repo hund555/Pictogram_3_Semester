@@ -86,7 +86,7 @@ namespace PictogramAPI.Endpoints
                 try
                 {
                     Lazy<Task<List<UserDisplayInfoDTO>>> lazyUsers = userService.GetAllUsers();
-                    return Results.Ok(lazyUsers);
+                    return Results.Ok(await lazyUsers.Value);
                 }
                 catch (Exception e)
                 {
