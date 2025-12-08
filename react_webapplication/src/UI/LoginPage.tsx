@@ -54,6 +54,7 @@ function LoginPage() {
         navigateToSite("/registerUser");
     }
 
+    {/* ===== JSX ===== */ }
     return (
         <div>
             <h1>PictoPlanner</h1>

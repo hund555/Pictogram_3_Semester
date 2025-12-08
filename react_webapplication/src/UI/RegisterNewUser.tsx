@@ -51,7 +51,7 @@ function RegisterNewUser() {
         navigateToSite("/");
     }
 
-
+    {/* ===== JSX ===== */ }
     return (
         <div>
             <h1>PictoPlanner</h1>
