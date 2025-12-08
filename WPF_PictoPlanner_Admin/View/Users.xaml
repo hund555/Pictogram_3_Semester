@@ -14,8 +14,7 @@
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="200"/>
                         <TextBlock Text="{Binding Email}" Width="300"/>
-                        <TextBlock Text="{Binding Role}" Width="100"/>
-
+                        <ComboBox Width="100" ItemsSource="{Binding DataContext.Roles, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" SelectedItem="{Binding Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Button Content="slet" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>

@@ -10,11 +10,13 @@ namespace WPF_PictoPlanner_Admin.ViewModels
     public class UsersViewModel : Bindable
     {
         public ObservableCollection<User> UsersList { get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<string> Roles { get; set; } = new ObservableCollection<string>();
         private IUserService _userService = new UserService();
 
         public UsersViewModel()
         {
-
+            Roles.Add("Admin");
+            Roles.Add("User");
         }
 
         private ICommand? _loadUsersCommand;
