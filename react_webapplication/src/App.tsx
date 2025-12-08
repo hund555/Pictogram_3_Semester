@@ -5,6 +5,7 @@ import './App.css'
 import CreatePictogram from "./UI/CreatePictogram";
 import LandingPage from './UI/LandingPage'
 import logo from "./assets/pictoplanner_logo.svg"
+import DisplayAllPictograms from "./UI/DisplayAllPictograms";
 let currentView = <LandingPage></LandingPage>
 
 window.addEventListener("resize", function () {
@@ -28,7 +29,8 @@ function App() {
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
                 <Route path="/createpictogram" element={<CreatePictogram />} />
-                <Route path="/landingpage" element={<LandingPage/>} />
+                <Route path="/landingpage" element={<LandingPage />} />
+                <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
             </Routes>
             
             {/*<div style={{ marginBottom: 15 }}><Navbar></Navbar></div>*/}

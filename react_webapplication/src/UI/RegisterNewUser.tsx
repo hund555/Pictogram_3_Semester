@@ -50,6 +50,8 @@ function RegisterNewUser() {
     function handleCancelRegistration() {
         navigateToSite("/");
     }
+
+
     return (
         <div>
             <h1>PictoPlanner</h1>
