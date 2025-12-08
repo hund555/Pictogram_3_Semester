@@ -44,6 +44,7 @@ namespace PictogramAPI.Services
         /// <exception cref="UserExistsException"></exception>
         public async Task CreateUser(CreateUserDTO userDTO)
         {
+            userDTO.Email = userDTO.Email.ToLower();
             User existingUser = await _usersCollection.Find(user => user.Email == userDTO.Email).FirstOrDefaultAsync();
             if (existingUser != null)
             {
@@ -67,7 +68,7 @@ namespace PictogramAPI.Services
         {
             return new Lazy<Task<UserDisplayInfoDTO>>(async () =>
             {
-                User user = await _usersCollection.Find(user => user.Email == email).FirstOrDefaultAsync();
+                User user = await _usersCollection.Find(user => user.Email == email.ToLower()).FirstOrDefaultAsync();
                 if (user == null)
                 {
                     throw new InvalidCredentialsException("Invalid email or password.");
