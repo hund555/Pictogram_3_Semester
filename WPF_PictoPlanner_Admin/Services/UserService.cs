@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
 
@@ -12,7 +11,7 @@ namespace WPF_PictoPlanner_Admin.Services
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
-        const string baseURL = "http://10.176.160.133:8080";
+        const string baseURL = "http://10.176.160.131:8080";
 
         public UserService()
         {
@@ -38,7 +37,7 @@ namespace WPF_PictoPlanner_Admin.Services
             json = json.Replace(@"\", "");
             List<User> userList = new List<User>();
 
-            userList = JsonSerializer.Deserialize<List<User>>(json);
+            userList = JsonConvert.DeserializeObject<List<User>>(json);
 
             return userList;
         }
