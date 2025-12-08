@@ -97,7 +97,7 @@ namespace PictogramAPI.Endpoints
             .WithName("GetAllUsers")
             .WithSummary("Get a list of all users in the system.");
 
-            app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService,[FromBody] string userId) =>
+            app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService, string userId) =>
             {
                 try
                 {
