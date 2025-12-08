@@ -9,10 +9,10 @@ namespace WPF_PictoPlanner_Admin.ViewModels
 {
     public class UsersViewModel : Bindable
     {
-        public ObservableCollection<User> Users {  get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<User> UsersList { get; set; } = new ObservableCollection<User>();
         private IUserService _userService = new UserService();
 
-        public UsersViewModel() 
+        public UsersViewModel()
         {
 
         }
@@ -29,14 +29,36 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                         async param =>
                         {
                             var users = await _userService.GetAllUsersAsync();
-                            Users.Clear();
+                            UsersList.Clear();
                             foreach (var user in users)
                             {
-                                Users.Add(user);
+                                UsersList.Add(user);
                             }
                         });
                 }
                 return _loadUsersCommand;
+            }
+        }
+
+        private ICommand? _deleteUserCommand;
+        public ICommand DeleteUserCommand
+        {
+            get
+            {
+                if (_deleteUserCommand == null)
+                {
+                    _deleteUserCommand = new RelayCommand(
+                        param => param is User,
+                        async param =>
+                        {
+                            if (param is User user)
+                            {
+                                await _userService.DeleteUserByIdAsync(user.Id);
+                                UsersList.Remove(user);
+                            }
+                        });
+                }
+                return _deleteUserCommand;
             }
         }
     }

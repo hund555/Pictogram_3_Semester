@@ -8,5 +8,6 @@ namespace WPF_PictoPlanner_Admin.Services.Interfaces
     public interface IUserService
     {
         Task<ICollection<User>> GetAllUsersAsync();
+        Task DeleteUserByIdAsync(string userId);
     }
 }

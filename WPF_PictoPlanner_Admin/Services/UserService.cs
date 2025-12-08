@@ -38,5 +38,12 @@ namespace WPF_PictoPlanner_Admin.Services
 
             return userList;
         }
+
+        public async Task DeleteUserByIdAsync(string userId)
+        {
+            var url = new Uri(baseURL + $"/users/delete/{userId}");
+            HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

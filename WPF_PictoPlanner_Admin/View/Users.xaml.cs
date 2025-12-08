@@ -17,9 +17,5 @@ namespace WPF_PictoPlanner_Admin.View
             InitializeComponent();
             _viewModel.LoadUsersCommand.Execute(this);
         }
-
-        private void UsersList_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-        }
     }
 }
