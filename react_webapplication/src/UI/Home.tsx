@@ -76,22 +76,65 @@ const TaskView = (tasks: TaskViewProps) => {
     
 }
 
-/*function base64ToImg(base64: string, title:string, fileSuffix:string): File {
-    const acceptedFileEndingList: string[] = [".jpg", ".png", ".svg"];
-    if (acceptedFileEndingList.includes("." + fileSuffix)) {
+function EditScheduel() {
+    const [schedule, setSchedule] = useState<DailySchedule | null>(null);
+    useEffect(() => {
+        DailyScheduleService.fetchDailyScheduleToday("7423c0e6-fbee-4165-aec2-02dfa60016ea")
+            .then((DailySchedule) => {
+                setSchedule(DailySchedule);
 
-        const byteChars = atob(base64);
-        const byteNumbers = new Array(byteChars.length);
 
-        for (let i = 0; i < byteChars.length; i++) {
-            byteNumbers[i] = byteChars.charCodeAt(i);
+
+
+            })
+            .catch(e => { console.log(e); return (<p>An Error Occured</p>); })
+    }, [])
+    if (!schedule) { return (<><h2 style={{ color: "red" }}></h2></>) }
+    const tasks: Task[] = schedule.tasks;
+
+    return (<>
+        {
+            <>
+                <h2>{schedule.day}</h2>
+                <TaskEdit tasks={tasks}></TaskEdit>
+            </>
         }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: "image/" + fileSuffix });
-        return new File([blob], title + "." + fileSuffix, { type: "image/" + fileSuffix })
 
+    </>);
+
+
+
+
+
+}   
+const TaskEdit = (tasks: TaskViewProps) => {
+    if (!tasks.tasks || tasks.tasks.length === 0) {
+        return (<h3>An Error Occured</h3>)
     }
-    
-}*/
+    return (
+        <div style={{ borderStyle: "solid", borderColor: "black", display:"inline" }}>
+            {tasks.tasks.map((t, index) => (
+                <div style={{ borderStyle: "solid", borderColor: "gray", display: "block" }} key={index}>
+                    <div>
+                        <button>&#8593</button>
+                        <button>-</button>
+                        <button>&#8595</button>
+                    </div>
+                    <div>
+                    <h2>{t.pictogram.title}</h2>
+                    <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.pictureBytes} style={{ height: "120px", width: "120px" }} />
+                    <p>{t.pictogram.description}</p>
+                    <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
+                </div>
+                </div>
 
-    
+
+            ))}
+
+
+
+
+        </div>
+    )
+
+}
