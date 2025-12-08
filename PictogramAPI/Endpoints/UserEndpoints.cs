@@ -48,7 +48,7 @@ namespace PictogramAPI.Endpoints
                         new Claim("user_id", (await lazyUserLogin.Value).Id),
                         new Claim(ClaimTypes.Name, (await lazyUserLogin.Value).Name),
                         new Claim(ClaimTypes.Email, (await lazyUserLogin.Value).Email),
-                        new Claim("user_type", (await lazyUserLogin.Value).Role)
+                        new Claim(ClaimTypes.Role, (await lazyUserLogin.Value).Role)
                     };
 
                     ClaimsIdentity identity = new(claims, authscheme);
