@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Component to see all pictograms from MongoDB. Includes all non-private pictograms
+// and the logged-in users own private pictograms.
 function DisplayAllPictograms() {
     const navigateToSite = useNavigate();
-
+    
     function displayAllPictograms() {
         navigateToSite("/displayallpictograms");
     }
-
-   
 
     return (
         <div>

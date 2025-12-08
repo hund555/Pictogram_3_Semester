@@ -32,8 +32,8 @@ function CreatePictogram()
     }
 
     const handleSubmit = async () => { //handleSubmit
-        if (file == null) { setErrorMessage("No File Selected"); return; }
-        if (title == "") { setErrorMessage("Title Empty"); return; }
+        if (file == null) { setErrorMessage("Der er ikke valgt en fil"); return; }
+        if (title == "") { setErrorMessage("Titel skal udfyldes"); return; }
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
