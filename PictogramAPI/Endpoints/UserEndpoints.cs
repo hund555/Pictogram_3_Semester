@@ -73,6 +73,13 @@ namespace PictogramAPI.Endpoints
 
             app.MapMethods("/users/logout", new[] { "POST", "OPTIONS" }, async (HttpContext ctx) =>
             {
+                if (ctx.Request.Method == HttpMethods.Options)
+                {
+                    Console.WriteLine(HttpMethod.Options);
+                    return Results.Ok();
+                }    
+                    
+
                 await ctx.SignOutAsync(authscheme);
                 return Results.Ok("Logout success");
             })
