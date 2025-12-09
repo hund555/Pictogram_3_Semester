@@ -39,7 +39,7 @@ function LoginPage() {
         WebUserService.login(email, password)
         .then((UserDisplayInfo) => {
             setLogin(UserDisplayInfo);
-            navigateToSite("/displayallpictograms");
+            navigateToSite("/createpictogram");
         })
         .catch(e => {
             setError(e.message)
