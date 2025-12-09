@@ -3,12 +3,23 @@ import {useState,useEffect } from "react"
 import type DailySchedule from "../Domain/DailySchedule"
 import DailyScheduleService from "../Services/DailyScheduleService"
 export default function Home() {
-
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
     
 
 
 
-    return (<ViewScheduel></ViewScheduel>)
+    return (<>
+        <div style={{display:"flex", placeContent:"center"} }>
+            <h2>{new Date().toLocaleString('da-DK', { weekday: 'long' })}</h2>
+            <button
+                
+                style={{ fontSize: "10px" }}
+                onClick={() => setIsEditMode(!isEditMode)}
+            >{isEditMode ? "Gem" : "Ret"}</button></div>
+        {isEditMode ? <EditScheduel /> : <ViewScheduel />}
+
+
+    </>)
             
            
 
@@ -35,7 +46,7 @@ function ViewScheduel() {
     return (<>
         {
             <>
-                <h2>{schedule.day}</h2>
+                
                 <TaskView tasks={tasks}></TaskView>
             </>
         }
@@ -95,7 +106,7 @@ function EditScheduel() {
     return (<>
         {
             <>
-                <h2>{schedule.day}</h2>
+                
                 <TaskEdit tasks={tasks}></TaskEdit>
             </>
         }
@@ -114,7 +125,7 @@ const TaskEdit = (tasks: TaskViewProps) => {
     return (
         <div style={{ borderStyle: "solid", borderColor: "black", display:"inline" }}>
             {tasks.tasks.map((t, index) => (
-                <div style={{ borderStyle: "solid", borderColor: "gray", display: "block" }} key={index}>
+                <div style={{ borderStyle: "solid", borderColor: "gray", display: "flex" }} key={index}>
                     <div>
                         <button>&#8593</button>
                         <button>-</button>
