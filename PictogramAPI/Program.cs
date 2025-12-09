@@ -12,13 +12,6 @@ namespace PictogramAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.WebHost.ConfigureKestrel(options =>
-            {
-                // Uses automatically generated dev cert
-                options.ListenAnyIP(5247, listen => listen.UseHttps());
-                options.ListenAnyIP(7247, listen => listen.UseHttps());
-            });
-
             // Add services to the container.
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPictogramService, PictogramService>();
