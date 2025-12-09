@@ -52,7 +52,6 @@ function RegisterNewUser() {
     }
 
     return (
-        {/* ===== JSX ===== */ }
         <div>
             <h1>PictoPlanner</h1>
             <h3>Udfyld formular</h3>

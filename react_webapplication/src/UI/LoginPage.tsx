@@ -55,7 +55,6 @@ function LoginPage() {
     }
 
     return (
-        {/* ===== JSX ===== */ }
         <div>
             <h1>PictoPlanner</h1>
 

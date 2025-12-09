@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AllPictograms from "../Domain/AllPictograms";
-import PictogramService from "../Services/PictorgramService";
+import PictogramService from "../Services/PictogramService";
 
 // Component to see all pictograms from MongoDB. Includes all non-private pictograms
 // and the logged-in users own private pictograms.
@@ -26,13 +26,12 @@ function DisplayAllPictograms() {
     }
 
     return (
-        {/* ===== JSX ===== */ }
         <div>
             <h1>PictoPlanner</h1>
 
             <div>
                 {allPictograms.map(p => (
-                    <div key={p.pictogramID}}>
+                    <div key={p.pictogramID}>
                         <h4>{p.title}</h4>
 
                         <img
