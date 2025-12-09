@@ -71,15 +71,14 @@ namespace PictogramAPI.Endpoints
             .WithSummary("Login a user with email and password.")
             .AllowAnonymous();
 
-            app.MapMethods("/users/logout", new[] { "POST", "OPTIONS" }, async (HttpContext ctx) =>
-            {
-                if (ctx.Request.Method == HttpMethods.Options)
-                {
-                    Console.WriteLine(HttpMethod.Options);
-                    return Results.Ok();
-                }    
-                    
+            // OPTIONS preflight — allow anonymous
+            app.MapMethods("/users/logout", new[] { "OPTIONS" }, () => Results.Ok())
+               .WithTags("Users")
+               .WithName("LogoutUserOptions");
 
+            // POST logout — require authorization
+            app.MapMethods("/users/logout", new[] { "POST" }, async (HttpContext ctx) =>
+            {
                 await ctx.SignOutAsync(authscheme);
                 return Results.Ok("Logout success");
             })
