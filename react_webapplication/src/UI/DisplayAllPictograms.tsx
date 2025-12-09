@@ -30,17 +30,17 @@ function DisplayAllPictograms() {
             <h1>PictoPlanner</h1>
 
             <div>
-                {allPictograms.map(p => (
-                    <div key={p.pictogramID}>
-                        <h4>{p.title}</h4>
+                {allPictograms.map(pictogram => (
+                    <div key= {pictogram.pictogramId}>
+                        <h4>{pictogram.title}</h4>
 
                         <img
-                            src={`data:${p.fileType};base64,${p.picture}`}
-                            alt={p.title}
+                            src={`data:${pictogram.fileType};base64,${pictogram.picture}`}
+                            alt={pictogram.title}
                             style={{ width: "100%", height: "150px", objectFit: "cover" }}
                         />
 
-                        <p>{p.description}</p>
+                        <p>{pictogram.description}</p>
                     </div>
                 ))}
             </div>
