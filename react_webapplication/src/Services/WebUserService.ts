@@ -16,7 +16,7 @@ class WebUserService {
     {
         const payload = {email, password };
 
-        return axios.post<UserDisplayInfo>(baseURL + "/users/login", payload)
+        return axios.post<UserDisplayInfo>(baseURL + "/users/login", payload, {withCredentials: true})
         .then((response: AxiosResponse<UserDisplayInfo>) => response.data);
     }
 }

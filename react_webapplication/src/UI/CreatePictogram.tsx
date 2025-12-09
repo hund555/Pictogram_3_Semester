@@ -37,9 +37,8 @@ function CreatePictogram()
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
-        PictogramService.createPictogram(title, descripion, file.name.split('.')[1], isPrivate, b64, "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
-
-        
+        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
+                
 
         
 
@@ -97,7 +96,7 @@ function CreatePictogram()
 
     }
 
-    //return [];
+    
 
 export default CreatePictogram;
 
@@ -112,7 +111,7 @@ const fileToBase64 = (file:File): Promise<string> => {
         reader.readAsDataURL(file); //includes data:image/..;base64
         reader.onload = () => {
             const buffer = reader.result as string;
-            const clearString = buffer.split(",")[1];
+            const clearString = buffer.split(",")[1]; // data:<filetype>;base64, is removed
             resolve(clearString)
         }
         reader.onerror = (error) => reject(error)
@@ -123,16 +122,3 @@ const fileToBase64 = (file:File): Promise<string> => {
 
 }
 
-
-/*
-    new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file); //includes data:image/..;base64
-        reader.onload = () => {
-            const buffer = reader.result as string;
-            const clearString = buffer.split(",").pop();
-            resolve(clearString)
-        }
-        reader.onerror = (error) => reject(error)
-    })
-    */
