@@ -29,6 +29,26 @@ namespace PictogramAPI.Endpoints
             .WithSummary("Create a new pictogram in the system")
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
             .AllowAnonymous();
+
+            app.MapGet("/pictograms/allpictograms", async (IPictogramService pictogramService, HttpContext infoOfAuthUser) =>
+            {
+                try
+                {
+                    string userID = infoOfAuthUser.User.FindFirst("user_id")?.Value;
+
+                    //if (userID == null) return Results.Unauthorized();
+
+                    var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userID);
+
+                    return Results.Ok(getAllPictograms);
+
+                }
+                catch (Exception exception) { return Results.Problem(detail: exception.Message); }
+            })
+                .WithTags("Pictogram")
+                .WithName("GetAllPictograms")
+                .WithSummary("Gets all no-private pictograms and the user's own private pictograms");
+                //.RequireAuthorization();
         }
     }
 }

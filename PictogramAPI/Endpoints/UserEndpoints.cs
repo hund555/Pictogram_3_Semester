@@ -48,14 +48,14 @@ namespace PictogramAPI.Endpoints
                         new Claim("user_id", (await lazyUserLogin.Value).Id),
                         new Claim(ClaimTypes.Name, (await lazyUserLogin.Value).Name),
                         new Claim(ClaimTypes.Email, (await lazyUserLogin.Value).Email),
-                        new Claim("user_type", (await lazyUserLogin.Value).Role)
+                        new Claim(ClaimTypes.Role, (await lazyUserLogin.Value).Role)
                     };
 
                     ClaimsIdentity identity = new(claims, authscheme);
                     ClaimsPrincipal userIdentity = new ClaimsPrincipal(identity);
 
                     await ctx.SignInAsync(authscheme, userIdentity);
-                    return Results.Ok(lazyUserLogin);
+                    return Results.Ok(await lazyUserLogin.Value);
                 }
                 catch (InvalidCredentialsException e)
                 {
@@ -86,7 +86,7 @@ namespace PictogramAPI.Endpoints
                 try
                 {
                     Lazy<Task<List<UserDisplayInfoDTO>>> lazyUsers = userService.GetAllUsers();
-                    return Results.Ok(lazyUsers);
+                    return Results.Ok(await lazyUsers.Value);
                 }
                 catch (Exception e)
                 {
@@ -97,7 +97,7 @@ namespace PictogramAPI.Endpoints
             .WithName("GetAllUsers")
             .WithSummary("Get a list of all users in the system.");
 
-            app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService,[FromBody] string userId) =>
+            app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService, string userId) =>
             {
                 try
                 {
