@@ -80,7 +80,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("LogoutUser")
-            .WithSummary("Logout the current user.");
+            .WithSummary("Logout the current user.")
+            .RequireAuthorization();
 
             app.MapGet("/users/getusers", async (IUserService userService) =>
             {
