@@ -2,7 +2,7 @@ import type CreateUserWeb from "../Domain/UserWeb";
 import axios, { type AxiosResponse } from "axios";
 import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 
-const baseURL = "http://10.176.160.131:8080";
+const baseURL = "http://10.176.160.184:8080";
 // Service class to handle API-requests from the users
 class WebUserService {
     // Creates a new user in the system
@@ -18,6 +18,16 @@ class WebUserService {
 
         return axios.post<UserDisplayInfo>(baseURL + "/users/login", payload, {withCredentials: true})
         .then((response: AxiosResponse<UserDisplayInfo>) => response.data);
+    }
+
+    static async logout(): Promise<void>
+    {
+        return axios.post<void>(baseURL + "/users/logout", {withCredentials: true})
+            .then((response: AxiosResponse<void>) =>
+            {
+                response.data
+                console.log(response.data)
+            });
     }
 }
 export default WebUserService;
