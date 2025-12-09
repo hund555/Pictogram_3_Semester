@@ -28,7 +28,7 @@ namespace PictogramAPI
             builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>
             {
                 options.Cookie.SameSite = SameSiteMode.None; 
-                options.Cookie.SecurePolicy = CookieSecurePolicy.None; // set to always in production
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // set to always in production
                 options.Cookie.HttpOnly = true; 
 
                 options.Cookie.Name = "AuthCookie";
@@ -96,15 +96,6 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
-            app.Use(async (ctx, next) =>
-            {
-                if (ctx.Request.Method == HttpMethods.Options)
-                {
-                    ctx.Response.StatusCode = StatusCodes.Status200OK;
-                    return;
-                }
-                await next();
-            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAntiforgery();
