@@ -6,6 +6,7 @@ import CreatePictogram from "./UI/CreatePictogram";
 import Home from './UI/Home'
 import logo from "./assets/pictoplanner_logo.svg"
 import DisplayAllPictograms from "./UI/DisplayAllPictograms";
+let currentView = <Home></Home>
 
 window.addEventListener("resize", function () {
     const test = document.getElementById("test");

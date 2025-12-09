@@ -1,4 +1,5 @@
 import type Pictogram from "../Domain/Pictogram";
+import type AllPictograms from "../Domain/AllPictograms";
 import axios, { type AxiosResponse } from 'axios';
 
 class PictogramService {
@@ -9,7 +10,7 @@ class PictogramService {
         const payload = { title, description, fileType, isPrivate, picture, userId };
 
         console.log(JSON.stringify(picture));
-        return axios.post<Pictogram>("http://10.176.160.131:8080/pictograms/create", payload, {withCredentials: true})
+        return axios.post<Pictogram>("http://10.176.160.184:8080/pictograms/create", payload, {withCredentials: true})
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
             //.catch(function (error) { console.log(error) })
@@ -17,7 +18,7 @@ class PictogramService {
 
     static async displayAllPictograms(): Promise<AllPictograms[]>
         {
-        return axios.get<AllPictograms[]>("http://10.176.160.131:8080/pictograms/allpictograms", { withCredentials: true })
+        return axios.get<AllPictograms[]>("http://10.176.160.184:8080/pictograms/allpictograms", { withCredentials: true })
             .then((response: AxiosResponse<AllPictograms[]>) => response.data)
         }
 

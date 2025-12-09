@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AllPictograms from "../Domain/AllPictograms";
+import type AllPictograms from "../Domain/AllPictograms";
 import PictogramService from "../Services/PictogramService";
 
 // Component to see all pictograms from MongoDB. Includes all non-private pictograms
