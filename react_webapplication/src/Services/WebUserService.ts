@@ -20,14 +20,41 @@ class WebUserService {
         .then((response: AxiosResponse<UserDisplayInfo>) => response.data);
     }
 
-    static async logout(): Promise<void>
-    {
-        return axios.post<void>(baseURL + "/users/logout", {withCredentials: true})
-            .then((response: AxiosResponse<void>) =>
-            {
-                response.data
-                console.log(response.data)
+    static async logout(): Promise<void> {
+        try {
+            const response = await fetch(baseURL + "/users/logout", {
+                method: "POST",
+                credentials: "include", // send cookies
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({}) // empty body, optional
             });
+
+            if (!response.ok) {
+                throw new Error(`Logout failed: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.text(); // or response.json() if your API returns JSON
+            console.log("Logout success:", data);
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
+    //static async logout(): Promise<void>
+    //{
+    //    return axios.post<void>(baseURL + "/users/logout",
+    //        {
+                
+    //            withCredentials: true,
+    //            Credentials: 'include'
+    //        })
+    //        .then((response: AxiosResponse<void>) =>
+    //        {
+    //            response.data
+    //            console.log(response.data)
+    //        });
+    //}
 }
 export default WebUserService;
