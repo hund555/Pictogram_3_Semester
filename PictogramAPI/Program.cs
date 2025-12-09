@@ -28,7 +28,7 @@ namespace PictogramAPI
             builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>
             {
                 options.Cookie.SameSite = SameSiteMode.None; 
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+                options.Cookie.SecurePolicy = CookieSecurePolicy.None; // set to always in production
                 options.Cookie.HttpOnly = true; 
 
                 options.Cookie.Name = "AuthCookie";

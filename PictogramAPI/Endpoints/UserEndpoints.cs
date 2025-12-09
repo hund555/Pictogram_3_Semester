@@ -71,7 +71,7 @@ namespace PictogramAPI.Endpoints
             .WithSummary("Login a user with email and password.")
             .AllowAnonymous();
 
-            app.MapPost("/users/logout", async (HttpContext ctx) =>
+            app.MapMethods("/users/logout", new[] { "POST", "OPTIONS" }, async (HttpContext ctx) =>
             {
                 await ctx.SignOutAsync(authscheme);
                 return Results.Ok("Logout success");
