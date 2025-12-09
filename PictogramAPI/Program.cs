@@ -96,6 +96,15 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
+            app.Use(async (ctx, next) =>
+            {
+                if (ctx.Request.Method == HttpMethods.Options)
+                {
+                    ctx.Response.StatusCode = StatusCodes.Status200OK;
+                    return;
+                }
+                await next();
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAntiforgery();
