@@ -8,10 +8,16 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx, [FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
+                    string userId = httpCtx.User.FindFirst("user_id")?.Value;
+                    if (userId == null)
+                        return Results.Unauthorized();
+
+                    createPictogramDTO.UserId = userId;
+
                     await pictogramService.CreatePictogram(createPictogramDTO);
                     return Results.Created();
                 }
@@ -28,7 +34,7 @@ namespace PictogramAPI.Endpoints
             .WithName("CreatePictogram")
             .WithSummary("Create a new pictogram in the system")
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
-            .AllowAnonymous();
+            .RequireAuthorization();
 
             app.MapGet("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
             {
