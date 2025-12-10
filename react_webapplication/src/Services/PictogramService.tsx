@@ -16,11 +16,10 @@ class PictogramService {
             //.catch(function (error) { console.log(error) })
     } 
 
-    static async displayAllPictograms(userId:string): Promise<AllPictograms[]>
+    static async displayAllPictograms() : Promise<AllPictograms[]>
         {
-        return axios
-            .get<AllPictograms[]>(`http://192.168.50.214:8080/pictograms/allpictograms/${userId}`,
-                { withCredentials: true })
+            return axios
+            .get<AllPictograms[]>(`http://192.168.50.214:8080/pictograms`, { withCredentials: true })
             .then((response: AxiosResponse<AllPictograms[]>) => response.data)
         }
 
