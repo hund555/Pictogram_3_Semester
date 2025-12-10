@@ -9,7 +9,6 @@ function LoginPage() {
     const emailRef = useRef<HTMLInputElement>(null);
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
-    const [login, setLogin] = useState<UserDisplayInfo | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const navigateToSite = useNavigate();
 
@@ -37,9 +36,13 @@ function LoginPage() {
         setError(null);
 
         WebUserService.login(email, password)
-        .then((UserDisplayInfo) => {
-            setLogin(UserDisplayInfo);
-            navigateToSite("/createpictogram");
+            .then((UserDisplayInfo) =>
+            {
+                localStorage.setItem("loggedInUserId", UserDisplayInfo.id);
+                localStorage.setItem("loggedInUserEmail", UserDisplayInfo.email);
+                localStorage.setItem("loggedInUserName", UserDisplayInfo.name);
+                localStorage.setItem("loggedInUserRole", UserDisplayInfo.role);
+                navigateToSite("/"); //Sæt Homepage siden her senere!!!!!!!!!!!!!!!!!
         })
         .catch(e => {
             setError(e.message)
