@@ -11,7 +11,10 @@ function DisplayAllPictograms() {
 
     //Fetches all pictograms from the API when the component is mounted
     useEffect(() => {
-        PictogramService.displayAllPictograms()
+        const userId = localStorage.getItem("loggedInUserId");
+        if (!userId) return;
+
+        PictogramService.displayAllPictograms(userId)
             .then(data => {
                 setAllPictograms(data);
             })
