@@ -10,7 +10,7 @@ class PictogramService {
         const payload = { title, description, fileType, isPrivate, picture, userId};
 
         console.log(JSON.stringify(picture));
-        return axios.post<Pictogram>("http://192.168.50.214:8080/pictograms/create", payload, {withCredentials: true})
+        return axios.post<Pictogram>("http://192.168.50.214:8080/pictograms", payload, {withCredentials: true})
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
             //.catch(function (error) { console.log(error) })
