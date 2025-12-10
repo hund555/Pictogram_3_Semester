@@ -6,7 +6,7 @@ export default interface Pictogram {
     description: string,
     fileType: string,
     isPrivate: boolean,
-    pictureBytes: string,
+    picture: string,
     userId: string
 
 

@@ -1,8 +1,9 @@
 import axios, { type AxiosResponse } from "axios";
 import type DailySchedule from "../Domain/DailySchedule";
-const baseurl = "http://10.176.160.133:8080";
+import Environment from "../Utillity";
+const baseurl = Environment.getBackendAddress();
 export default class DailyScheduleService {
-
+    
     
     static async fetchDailyScheduleToday(userId: string): Promise<DailySchedule> {
 
