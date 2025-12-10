@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using WPF_PictoPlanner_Admin.Commands;
 using WPF_PictoPlanner_Admin.Models;
-using WPF_PictoPlanner_Admin.Services;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
@@ -11,7 +10,7 @@ namespace WPF_PictoPlanner_Admin.ViewModels
     {
         public ObservableCollection<User> UsersList { get; set; } = new ObservableCollection<User>();
         public ObservableCollection<string> Roles { get; set; } = new ObservableCollection<string>();
-        private IUserService _userService = new UserService();
+        private IUserService _userService = App.UserService;
 
         public UsersViewModel()
         {

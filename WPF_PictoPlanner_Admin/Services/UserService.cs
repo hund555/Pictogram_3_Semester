@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
 
@@ -11,11 +13,22 @@ namespace WPF_PictoPlanner_Admin.Services
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
+        private CookieContainer _cookieContainer;
         const string baseURL = "http://10.176.160.117:8080";
 
         public UserService()
         {
-            _httpClient = new HttpClient();
+            _cookieContainer = new CookieContainer();
+
+            var handler = new HttpClientHandler
+            {
+                CookieContainer = _cookieContainer,
+                UseCookies = true,
+            };
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(baseURL)
+            };
         }
 
         /// <summary>
@@ -24,7 +37,7 @@ namespace WPF_PictoPlanner_Admin.Services
         /// <returns> A list of user objects </returns>
         public async Task<ICollection<User>> GetAllUsersAsync()
         {
-            var url = new Uri(baseURL + "/users/getusers");
+            var url = new Uri("/users/getusers");
 
             HttpResponseMessage response = await _httpClient.GetAsync(url);
 
@@ -41,17 +54,40 @@ namespace WPF_PictoPlanner_Admin.Services
 
         public async Task DeleteUserByIdAsync(string userId)
         {
-            var url = new Uri(baseURL + $"/users/delete/{userId}");
+            var url = new Uri($"/users/delete/{userId}");
             HttpResponseMessage response = await _httpClient.DeleteAsync(url);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateUserRoleAsync(string userId, string newRole)
         {
-            var url = new Uri(baseURL + $"/users/updateRole");
+            var url = new Uri($"/users/updateRole");
             var content = new StringContent(JsonConvert.SerializeObject(new { Id = userId, Role = newRole }), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _httpClient.PutAsync(url, content);
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<User?> Login(Login login)
+        {
+            var url = new Uri($"/users/login");
+            var data = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
+
+
+            HttpResponseMessage response = await _httpClient.PostAsync(url, data);
+            response.EnsureSuccessStatusCode();
+
+            string json = await response.Content.ReadAsStringAsync();
+            User? user = JsonConvert.DeserializeObject<User>(json);
+            return user;
+        }
+
+        public async Task Logout()
+        {
+            HttpResponseMessage response = await _httpClient.PostAsync("/users/logout", null);
+            response.EnsureSuccessStatusCode();
+
+            // Clear cookies locally
+            _cookieContainer = new CookieContainer();
         }
     }
 }

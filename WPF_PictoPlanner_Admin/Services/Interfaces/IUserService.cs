@@ -10,5 +10,6 @@ namespace WPF_PictoPlanner_Admin.Services.Interfaces
         Task<ICollection<User>> GetAllUsersAsync();
         Task DeleteUserByIdAsync(string userId);
         Task UpdateUserRoleAsync(string userId, string newRole);
+        Task<User> Login(Login login);
     }
 }
