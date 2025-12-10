@@ -97,6 +97,10 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
+            // TILFØJ DEN HER LINJE LIGE HER:
+            app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok())
+               .AllowAnonymous();
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAntiforgery();
