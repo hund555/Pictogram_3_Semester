@@ -42,7 +42,7 @@ function LoginPage() {
                 localStorage.setItem("loggedInUserEmail", UserDisplayInfo.email);
                 localStorage.setItem("loggedInUserName", UserDisplayInfo.name);
                 localStorage.setItem("loggedInUserRole", UserDisplayInfo.role);
-                navigateToSite("/");
+                navigateToSite("/createPictogram");
         })
         .catch(e => {
             setError(e.message)
