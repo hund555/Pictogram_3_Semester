@@ -13,7 +13,7 @@ function CreatePictogram()
     const [title, setTitle] = useState<string>("");
     const [file, setFile] = useState<File>();
     const [descripion, setDescription] = useState<string>("");
-    const [isPrivate, setisPrivate] = useState<boolean>(false)
+    const [isPrivate, setisPrivate] = useState<boolean>(false);
     //restrict, what Filetypes can be uploaded by the user;
     const acceptedFileEndingList: String[] = [ ".jpg", ".png", ".svg" ];
     
@@ -34,10 +34,16 @@ function CreatePictogram()
     const handleSubmit = async () => { //handleSubmit
         if (file == null) { setErrorMessage("Der er ikke valgt en fil"); return; }
         if (title == "") { setErrorMessage("Titel skal udfyldes"); return; }
+
+        const userId = localStorage.getItem("loggedInUserId");
+        if (!userId) {
+            setErrorMessage("Du er ikke logget ind");
+            return;
+        }
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
-        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
+        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, userId);                
                 
 
         
