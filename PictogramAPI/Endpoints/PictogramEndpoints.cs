@@ -30,20 +30,21 @@ namespace PictogramAPI.Endpoints
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
             .AllowAnonymous();
 
-            app.MapGet("/pictograms/allpictograms", async (IPictogramService pictogramService, HttpContext infoOfAuthUser) =>
+            app.MapGet("/pictograms/allpictograms/{userId}", async (IPictogramService pictogramService, string userId) =>
             {
                 try
                 {
-                    string userID = infoOfAuthUser.User.FindFirst("user_id")?.Value;
-
                     //if (userID == null) return Results.Unauthorized();
 
-                    var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userID);
+                    var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
                     return Results.Ok(getAllPictograms);
 
                 }
-                catch (Exception exception) { return Results.Problem(detail: exception.Message); }
+                catch (Exception exception) 
+                { 
+                    return Results.Problem(detail: exception.Message); 
+                }
             })
                 .WithTags("Pictogram")
                 .WithName("GetAllPictograms")
