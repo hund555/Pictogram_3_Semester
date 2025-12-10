@@ -23,8 +23,8 @@ class WebUserService {
     static async logout(): Promise<void> {
         try {
             const response = await fetch(baseURL + "/users/logout", {
-                method: "POST",
                 credentials: "include", // send cookies
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
