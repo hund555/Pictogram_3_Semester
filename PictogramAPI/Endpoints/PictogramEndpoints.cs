@@ -8,7 +8,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms/create", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms/create", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
@@ -30,26 +30,27 @@ namespace PictogramAPI.Endpoints
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
             .AllowAnonymous();
 
-            app.MapGet("/pictograms/allpictograms/{userId}", async (IPictogramService pictogramService, string userId) =>
+            app.MapGet("/pictograms/allpictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
             {
                 try
                 {
-                    //if (userID == null) return Results.Unauthorized();
+                    string userId = httpCtx.User.FindFirst("user_id")?.Value;
+                    if (userId == null) return Results.Unauthorized();
 
                     var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
                     return Results.Ok(getAllPictograms);
 
                 }
-                catch (Exception exception) 
-                { 
-                    return Results.Problem(detail: exception.Message); 
+                catch (Exception exception)
+                {
+                    return Results.Problem(detail: exception.Message);
                 }
             })
                 .WithTags("Pictogram")
                 .WithName("GetAllPictograms")
-                .WithSummary("Gets all no-private pictograms and the user's own private pictograms");
-                //.RequireAuthorization();
+                .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
+                .RequireAuthorization();
         }
     }
 }
