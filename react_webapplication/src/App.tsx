@@ -33,7 +33,6 @@ function App() {
                 <Route path="/registerUser" element={<RegisterNewUser />} />
                 <Route path="/createPictogram" element={<CreatePictogram />} />
                 <Route path="/home" element={<Home />}/>
-                <Route path="/createpictogram" element={<CreatePictogram />} />
                 <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
             </Routes>
             
