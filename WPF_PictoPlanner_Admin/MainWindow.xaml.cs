@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_PictoPlanner_Admin.Models;
+using WPF_PictoPlanner_Admin.Util;
 using WPF_PictoPlanner_Admin.ViewModels;
 
 namespace WPF_PictoPlanner_Admin
@@ -23,6 +24,18 @@ namespace WPF_PictoPlanner_Admin
         public MainWindow()
         {
             InitializeComponent();
+
+            SessionManager.LoginStateChanged += () =>
+            {
+                // Forces XAML to re-evaluate all bindings
+                Dispatcher.Invoke(() =>
+                {
+                    BindingOperations.GetBindingExpressionBase(btn_login, Button.VisibilityProperty)?.UpdateTarget();
+                    BindingOperations.GetBindingExpressionBase(btn_users, Button.VisibilityProperty)?.UpdateTarget();
+                    BindingOperations.GetBindingExpressionBase(btn_logout, Button.VisibilityProperty)?.UpdateTarget();
+                });
+            };
+
             DataContext = _login = _login?? new LoginViewModel();
         }
 
@@ -38,6 +51,7 @@ namespace WPF_PictoPlanner_Admin
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
+            SessionManager.SetUser(null);
             DataContext = _login = _login?? new LoginViewModel();
         }
     }

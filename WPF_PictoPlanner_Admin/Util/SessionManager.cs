@@ -4,13 +4,18 @@ namespace WPF_PictoPlanner_Admin.Util
 {
     public static class SessionManager
     {
-        public static User? CurrentUser { get; private set; }
-        public static event Action? UserChanged;
+        private static User? _currentUser;
+        public static User? CurrentUser { get => _currentUser; private set 
+            { 
+                _currentUser = value;
+                LoginStateChanged?.Invoke();
+            } 
+        }
+        public static event Action? LoginStateChanged;
 
         public static void SetUser(User? user)
         {
             CurrentUser = user;
-            UserChanged?.Invoke();
         }
 
         public static bool IsLoggedIn => CurrentUser != null;

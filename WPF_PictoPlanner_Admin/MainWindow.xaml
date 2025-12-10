@@ -20,9 +20,9 @@
 
     <StackPanel Orientation="Horizontal">
         <StackPanel>
-            <Button Click="Login_Click" Content="Login" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
-            <Button Click="Users_Click" Content="Users" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
-            <Button Click="Logout_Click" Content="Logout" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
+            <Button Click="Login_Click"  Content="Login" x:Name="btn_login" />
+            <Button Click="Users_Click" Content="Users" x:Name="btn_users"/>
+            <Button Click="Logout_Click" Content="Logout" x:Name="btn_logout"/>
         </StackPanel>
         <StackPanel>
             <ContentControl Content="{Binding}"></ContentControl>
