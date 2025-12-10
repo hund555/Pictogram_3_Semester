@@ -8,7 +8,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms/create", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
@@ -35,7 +35,8 @@ namespace PictogramAPI.Endpoints
                 try
                 {
                     string userId = httpCtx.User.FindFirst("user_id")?.Value;
-                    if (userId == null) return Results.Unauthorized();
+                    if (userId == null) 
+                        return Results.Unauthorized();
 
                     var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
