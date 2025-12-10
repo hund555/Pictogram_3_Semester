@@ -37,9 +37,7 @@ namespace WPF_PictoPlanner_Admin.Services
         /// <returns> A list of user objects </returns>
         public async Task<ICollection<User>> GetAllUsersAsync()
         {
-            var url = new Uri("/users/getusers");
-
-            HttpResponseMessage response = await _httpClient.GetAsync(url);
+            HttpResponseMessage response = await _httpClient.GetAsync("/users/getusers");
 
             response.EnsureSuccessStatusCode();
 
@@ -54,26 +52,23 @@ namespace WPF_PictoPlanner_Admin.Services
 
         public async Task DeleteUserByIdAsync(string userId)
         {
-            var url = new Uri($"/users/delete/{userId}");
-            HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"/users/delete/{userId}");
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateUserRoleAsync(string userId, string newRole)
         {
-            var url = new Uri($"/users/updateRole");
             var content = new StringContent(JsonConvert.SerializeObject(new { Id = userId, Role = newRole }), System.Text.Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PutAsync(url, content);
+            HttpResponseMessage response = await _httpClient.PutAsync("/users/updateRole", content);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task<User?> Login(Login login)
         {
-            var url = new Uri($"/users/login");
             var data = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
 
 
-            HttpResponseMessage response = await _httpClient.PostAsync(url, data);
+            HttpResponseMessage response = await _httpClient.PostAsync("/users/login", data);
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();

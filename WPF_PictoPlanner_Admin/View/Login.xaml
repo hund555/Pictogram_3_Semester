@@ -9,6 +9,6 @@
     <StackPanel>
         <TextBox Text="{Binding Login.Email}"/>
         <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" />
-        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding }"/>
+        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding Login}" Content="Login"/>
     </StackPanel>
 </UserControl>

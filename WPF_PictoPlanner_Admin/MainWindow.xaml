@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_PictoPlanner_Admin"
+        xmlns:session="clr-namespace:WPF_PictoPlanner_Admin.Util"
         xmlns:viewmodels="clr-namespace:WPF_PictoPlanner_Admin.ViewModels"
         xmlns:views="clr-namespace:WPF_PictoPlanner_Admin.View"
         mc:Ignorable="d"
@@ -12,8 +13,21 @@
         <DataTemplate x:Name="usersViewTemplate" DataType="{x:Type viewmodels:UsersViewModel}">
             <views:Users/>
         </DataTemplate>
+        <DataTemplate x:Name="loginViewTemplate" DataType="{x:Type viewmodels:LoginViewModel}">
+            <views:Login/>
+        </DataTemplate>
     </Window.Resources>
 
-    <ContentControl Content="{Binding}"></ContentControl>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel>
+            <Button Click="Login_Click" Content="Login" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
+            <Button Click="Users_Click" Content="Users" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
+            <Button Click="Logout_Click" Content="Logout" Visibility="{Binding Source={x:Static session:SessionManager.IsLoggedIn}}"/>
+        </StackPanel>
+        <StackPanel>
+            <ContentControl Content="{Binding}"></ContentControl>
+        </StackPanel>
+    </StackPanel>
+    
 </Window>
     

@@ -8,7 +8,7 @@ namespace WPF_PictoPlanner_Admin.ViewModels
 {
     public class LoginViewModel : Bindable
     {
-        public Login Login { get; set; }
+        public Login Login { get; set; } = new Login();
         private readonly IUserService _userService = App.UserService;
         private ICommand? _loginCommand;
         public ICommand LoginCommand
@@ -29,6 +29,25 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                         });
                 }
                 return _loginCommand;
+            }
+        }
+
+        private ICommand? _logoutCommand;
+        public ICommand LogoutCommand
+        {
+            get
+            {
+                if (_logoutCommand == null)
+                {
+                    _logoutCommand = new RelayCommand(
+                        param => true,
+                        param =>
+                        {
+                            _userService.Logout();
+                            SessionManager.SetUser(null);
+                        });
+                }
+                return _logoutCommand;
             }
         }
     }

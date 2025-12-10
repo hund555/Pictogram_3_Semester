@@ -19,12 +19,26 @@ namespace WPF_PictoPlanner_Admin
     public partial class MainWindow : Window
     {
         private Bindable _users;
+        private Bindable _login;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _users = _users?? new UsersViewModel();
+            DataContext = _login = _login?? new LoginViewModel();
         }
 
-        
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = _login = _login?? new UsersViewModel();
+        }
+
+        private void Users_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = _users = _users ?? new UsersViewModel();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = _login = _login?? new LoginViewModel();
+        }
     }
 }
