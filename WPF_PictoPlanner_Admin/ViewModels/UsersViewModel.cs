@@ -63,5 +63,26 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                 return _deleteUserCommand;
             }
         }
+
+        private ICommand? _updateUserRoleCommand;
+        public ICommand UpdateUserRoleCommand
+        {
+            get
+            {
+                if (_updateUserRoleCommand == null)
+                {
+                    _updateUserRoleCommand = new RelayCommand(
+                        param => param is User,
+                        async param =>
+                        {
+                            if (param is User user)
+                            {
+                                await _userService.UpdateUserRoleAsync(user.Id, user.Role);
+                            }
+                        });
+                }
+                return _updateUserRoleCommand;
+            }
+        }
     }
 }

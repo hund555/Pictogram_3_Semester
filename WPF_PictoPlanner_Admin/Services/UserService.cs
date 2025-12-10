@@ -11,7 +11,7 @@ namespace WPF_PictoPlanner_Admin.Services
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
-        const string baseURL = "http://10.176.160.131:8080";
+        const string baseURL = "http://10.176.160.117:8080";
 
         public UserService()
         {
@@ -31,7 +31,7 @@ namespace WPF_PictoPlanner_Admin.Services
             response.EnsureSuccessStatusCode();
 
             string json = await response.Content.ReadAsStringAsync();
-            
+
             List<User> userList = new List<User>();
 
             userList = JsonConvert.DeserializeObject<List<User>>(json);
@@ -43,6 +43,14 @@ namespace WPF_PictoPlanner_Admin.Services
         {
             var url = new Uri(baseURL + $"/users/delete/{userId}");
             HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task UpdateUserRoleAsync(string userId, string newRole)
+        {
+            var url = new Uri(baseURL + $"/users/updateRole");
+            var content = new StringContent(JsonConvert.SerializeObject(new { Id = userId, Role = newRole }), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _httpClient.PutAsync(url, content);
             response.EnsureSuccessStatusCode();
         }
     }
