@@ -28,7 +28,7 @@ namespace PictogramAPI
 
             builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>
             {
-                options.Cookie.SameSite = SameSiteMode.None; 
+                options.Cookie.SameSite = SameSiteMode.Lax; 
                 options.Cookie.SecurePolicy = CookieSecurePolicy.None; // set to always in production
                 options.Cookie.HttpOnly = true; 
 
@@ -97,10 +97,6 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
-            // TILFØJ DEN HER LINJE LIGE HER:
-            app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok())
-               .AllowAnonymous();
-
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAntiforgery();
