@@ -50,10 +50,10 @@ namespace PictogramAPI.Endpoints
                     var jsonResult = Results.Json(getAllPictograms);
 
                     // The browser can cache the response for 60 seconds
-                    httpCtx.Response.Headers["Cache-Constrol"] = "public, max-age=60";
+                    httpCtx.Response.Headers["Cache-Control"] = "public, max-age=60";
 
-                    //
-                    httpCtx.Response.Headers["ETag"] = $"pictogram-{userId}-{DateTime.UtcNow:yyyyMMHHmmss}"
+                    // ETag to check if data has changed or not.
+                    httpCtx.Response.Headers["ETag"] = $"pictogram-{userId}-{DateTime.UtcNow:yyyyMMddHHmmss}";
 
                     return Results.Ok(getAllPictograms);
 
