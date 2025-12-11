@@ -71,7 +71,9 @@ namespace PictogramAPI.Endpoints
             .WithSummary("Login a user with email and password.")
             .AllowAnonymous();
 
-            app.MapGet("/users/logout", async (HttpContext ctx) =>
+
+            // POST logout — require authorization
+            app.MapPost("/users/logout", async (HttpContext ctx) =>
             {
                 await ctx.SignOutAsync(authscheme);
                 return Results.Ok("Logout success");
@@ -95,7 +97,7 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("GetAllUsers")
-            .WithSummary("Get a list of all users in the system.");
+            .WithSummary("Get a list of all users in the system."); // add admin policy when works
 
             app.MapDelete("/users/delete/{userId}", async (IUserService userService, IPictogramService pictogramService, IDailyScheduleService dailyScheduleService, string userId) =>
             {
@@ -119,7 +121,23 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("DeleteUser")
-            .WithSummary("Delete user with given id");
+            .WithSummary("Delete user with given id"); // add admin policy when works
+
+            app.MapPut("/users/updateRole", async (IUserService userService, [FromBody] EditUserRoleDTO editUserRoleDTO) =>
+            {
+                try
+                {
+                    await userService.UpdateUserRole(editUserRoleDTO);
+                    return Results.Ok();
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+            })
+            .WithTags("Users")
+            .WithName("UpdateUserRole")
+            .WithSummary("Updates users role with given id, this is only done from admin client");//add admin policy when works
         }
     }
 }

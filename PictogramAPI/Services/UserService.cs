@@ -104,5 +104,16 @@ namespace PictogramAPI.Services
                 return users.ConvertAll(user => user.MapUserDomainToUserDisplayInfoDTO());
             });
         }
+
+        public async Task UpdateUserRole(EditUserRoleDTO editUserRoleDTO)
+        {
+            User user = _usersCollection.Find(u => u.Id == editUserRoleDTO.Id).FirstOrDefault();
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            user.Role = editUserRoleDTO.Role;
+            await _usersCollection.ReplaceOneAsync(u => u.Id == editUserRoleDTO.Id, user);
+        }
     }
 }

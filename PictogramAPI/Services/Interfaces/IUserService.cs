@@ -9,5 +9,6 @@ namespace PictogramAPI.Services.Interfaces
         Lazy<Task<UserDisplayInfoDTO>> LoginUser(string email, string password);
         Lazy<Task<List<UserDisplayInfoDTO>>> GetAllUsers();
         Task DeleteUserById(string userId);
+        Task UpdateUserRole(EditUserRoleDTO editUserRoleDTO);
     }
 }
