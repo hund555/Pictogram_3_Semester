@@ -67,7 +67,7 @@ namespace PictogramAPI
             {
                 options.AddPolicy(myCors, policy =>
                 {
-                    policy.WithOrigins("http://localhost:49732", "http://localhost:5247") // React dev server
+                    policy.WithOrigins("http://localhost:49732") // React dev server
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -81,8 +81,11 @@ namespace PictogramAPI
 
             var app = builder.Build();
 
+            app.UseCors(myCors);
+
             app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok())
-            .AllowAnonymous();
+              .AllowAnonymous();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -98,8 +101,6 @@ namespace PictogramAPI
             //app.UseHttpsRedirection();
              
             
-
-            app.UseCors(myCors);
             app.UseAuthentication();
             app.UseAuthorization();
             //app.UseAntiforgery();
