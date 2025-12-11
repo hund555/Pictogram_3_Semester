@@ -37,7 +37,7 @@ function DisplayAllPictograms() {
                         <img
                             src={`data:${pictogram.fileType};base64,${pictogram.picture}`}
                             alt={pictogram.title}
-                            style={{ width: "100%", height: "150px", objectFit: "cover" }}
+                            style={{ width: "60", height: "60px", objectFit: "cover" }}
                         />
 
                         <p>{pictogram.description}</p>
