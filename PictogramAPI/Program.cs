@@ -92,14 +92,14 @@ namespace PictogramAPI
                 options.SwaggerEndpoint("/openapi/v1.json", app.Environment.ApplicationName);
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
              
             
 
             app.UseCors(myCors);
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAntiforgery();
+            //app.UseAntiforgery();
 
 
             app.MapUserEndpoints(authScheme);
