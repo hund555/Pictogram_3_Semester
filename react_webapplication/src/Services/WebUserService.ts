@@ -2,7 +2,7 @@ import type CreateUserWeb from "../Domain/UserWeb";
 import axios, { type AxiosResponse } from "axios";
 import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 
-const baseURL = "http://localhost:8080";
+const baseURL = "http://localhost:5247";
 // Service class to handle API-requests from the users
 class WebUserService {
     // Creates a new user in the system
