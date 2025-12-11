@@ -18,8 +18,7 @@ class PictogramService {
 
     static async displayAllPictograms() : Promise<AllPictograms[]>
         {
-            return axios
-                .get<AllPictograms[]>(`http://localhost:8080/pictograms`, { withCredentials: true })
+            return axios.get<AllPictograms[]>(`http://localhost:8080/pictograms`, { withCredentials: true })
             .then((response: AxiosResponse<AllPictograms[]>) => response.data)
         }
 
