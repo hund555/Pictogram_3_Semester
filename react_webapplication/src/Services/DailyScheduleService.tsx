@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
 import type DailySchedule from "../Domain/DailySchedule";
-const baseurl = "http://192.168.160.1:8080";
+const baseurl = "http://localhost:5247";
 export default class DailyScheduleService {
 
     
