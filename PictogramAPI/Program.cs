@@ -18,10 +18,10 @@ namespace PictogramAPI
             builder.Services.AddScoped<IDailyScheduleService, DailyScheduleService>();
 
             // Configure Antiforgery
-            builder.Services.AddAntiforgery(options =>
+            /*builder.Services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-XSRF-TOKEN";
-            });
+            });*/
 
             //Auth settings
             const string authScheme = "AuthCookie";
@@ -67,7 +67,7 @@ namespace PictogramAPI
             {
                 options.AddPolicy(myCors, policy =>
                 {
-                    policy.WithOrigins("http://localhost:49732") // React dev server
+                    policy.WithOrigins("http://localhost:49732", "http://localhost:5247") // React dev server
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -97,6 +97,9 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
+            app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok()).AllowAnonymous();
+
+
             app.UseAuthentication();
             app.UseAuthorization();
             //app.UseAntiforgery();
