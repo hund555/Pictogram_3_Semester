@@ -81,6 +81,9 @@ namespace PictogramAPI
 
             var app = builder.Build();
 
+            app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok())
+            .AllowAnonymous();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -97,9 +100,6 @@ namespace PictogramAPI
             
 
             app.UseCors(myCors);
-            app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok()).AllowAnonymous();
-
-
             app.UseAuthentication();
             app.UseAuthorization();
             //app.UseAntiforgery();
