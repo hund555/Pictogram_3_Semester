@@ -46,6 +46,15 @@ namespace PictogramAPI.Endpoints
 
                     var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
+                    // Creates a Json-response object
+                    var jsonResult = Results.Json(getAllPictograms);
+
+                    // The browser can cache the response for 60 seconds
+                    httpCtx.Response.Headers["Cache-Constrol"] = "public, max-age=60";
+
+                    //
+                    httpCtx.Response.Headers["ETag"] = $"pictogram-{userId}-{DateTime.UtcNow:yyyyMMHHmmss}"
+
                     return Results.Ok(getAllPictograms);
 
                 }
