@@ -24,6 +24,7 @@ namespace WPF_PictoPlanner_Admin.Services
             {
                 CookieContainer = _cookieContainer,
                 UseCookies = true,
+                AllowAutoRedirect = true
             };
             _httpClient = new HttpClient(handler)
             {
