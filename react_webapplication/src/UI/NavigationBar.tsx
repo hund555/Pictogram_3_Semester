@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/pictoplanner_logo.svg";
+import { Outlet } from "react-router-dom";
 
 /* Component for the navigationbar for some of the sites */
-function NavBarLayout()
+function NavigationBar()
 {
     const navigate = useNavigate();
 
     return (
         <nav className="navbar">
-            <img scr={logo} className="logo" />
+            <img src={logo} className="logo" />
 
             {/* ===== NavBar Buttons ===== */}
             <button onClick={() => navigate("/home")}>Hjem</button>
@@ -19,4 +20,4 @@ function NavBarLayout()
         </nav>
     );
 }
-export default NavBarLayout;
+export default NavigationBar;
