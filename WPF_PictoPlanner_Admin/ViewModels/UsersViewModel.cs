@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 using WPF_PictoPlanner_Admin.Commands;
@@ -16,8 +17,6 @@ namespace WPF_PictoPlanner_Admin.ViewModels
 
         public UsersViewModel()
         {
-            
-
             Roles.Add("Admin");
             Roles.Add("User");
         }
@@ -33,11 +32,18 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                         param => true,
                         async param =>
                         {
-                            var users = await _userService.GetAllUsersAsync();
-                            UsersList.Clear();
-                            foreach (var user in users)
+                            try
                             {
-                                UsersList.Add(user);
+                                var users = await _userService.GetAllUsersAsync();
+                                UsersList.Clear();
+                                foreach (var user in users)
+                                {
+                                    UsersList.Add(user);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show(e.Message);
                             }
                         });
                 }
@@ -58,8 +64,15 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                         {
                             if (param is User user)
                             {
-                                await _userService.DeleteUserByIdAsync(user.Id);
-                                UsersList.Remove(user);
+                                try
+                                {
+                                    await _userService.DeleteUserByIdAsync(user.Id);
+                                    UsersList.Remove(user);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message);
+                                }
                             }
                         });
                 }
@@ -80,7 +93,14 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                         {
                             if (param is User user)
                             {
-                                await _userService.UpdateUserRoleAsync(user.Id, user.Role);
+                                try
+                                {
+                                    await _userService.UpdateUserRoleAsync(user.Id, user.Role);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message);
+                                }
                             }
                         });
                 }

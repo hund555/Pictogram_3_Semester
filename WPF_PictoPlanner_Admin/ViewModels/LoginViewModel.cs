@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using WPF_PictoPlanner_Admin.Commands;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
@@ -46,7 +47,14 @@ namespace WPF_PictoPlanner_Admin.ViewModels
 
         public void OnLogout()
         {
-            _userService.Logout();
+            try
+            {
+                _userService.Logout();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }
