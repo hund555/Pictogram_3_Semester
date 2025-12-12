@@ -90,13 +90,8 @@ const TaskView = (tasks: TaskProps) => {
                     <p>{t.pictogram.description}</p>
                     <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
                 </div>
-
-
+            
             ))}
-
-
-
-
         </div>
     )
 
