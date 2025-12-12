@@ -46,8 +46,7 @@ namespace PictogramAPI
                     policy.RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(authScheme)
                     .AddRequirements()
-                    .RequireRole("User")
-                    .RequireClaim("user_type", "User");
+                    .RequireRole("User");
                 });
 
                 builder.AddPolicy("Admin", policy =>
@@ -55,8 +54,7 @@ namespace PictogramAPI
                     policy.RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(authScheme)
                     .AddRequirements()
-                    .RequireRole("Admin")
-                    .RequireClaim("user_type", "Admin");
+                    .RequireRole("Admin");
                 });
             });
 
