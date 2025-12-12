@@ -137,7 +137,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("UpdateUserRole")
-            .WithSummary("Updates users role with given id, this is only done from admin client");//add admin policy when works
+            .WithSummary("Updates users role with given id, this is only done from admin client")
+            .RequireAuthorization("Admin");
         }
     }
 }

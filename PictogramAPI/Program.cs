@@ -41,19 +41,21 @@ namespace PictogramAPI
 
             builder.Services.AddAuthorization(builder =>
             {
-                builder.AddPolicy("user", policy =>
+                builder.AddPolicy("User", policy =>
                 {
                     policy.RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(authScheme)
                     .AddRequirements()
+                    .RequireRole("User")
                     .RequireClaim("user_type", "User");
                 });
 
-                builder.AddPolicy("admin", policy =>
+                builder.AddPolicy("Admin", policy =>
                 {
                     policy.RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(authScheme)
                     .AddRequirements()
+                    .RequireRole("Admin")
                     .RequireClaim("user_type", "Admin");
                 });
             });
