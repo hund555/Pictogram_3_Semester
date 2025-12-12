@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export default interface Pictogram {
+export default interface PictogramDTO {
 
-    pictogramId:number
+    pictogramId: number
     title: string,
     description: string,
     fileType: string,
     isPrivate: boolean,
-    picture: string,
+    pictureBytes: string,
     userId: string
 
 
