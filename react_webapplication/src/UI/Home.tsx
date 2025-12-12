@@ -1,7 +1,7 @@
 ﻿/* eslint-disable @typescript-eslint/no-unused-expressions */
 import type Task from "../Domain/Task";
 import { useState, useEffect, type CSSProperties } from "react"
-
+import { useNavigate } from "react-router-dom";
 import DailyScheduleService from "../Services/DailyScheduleService"
 import PictogramService from "../Services/PictogramService";
 import type Pictogram from "../Domain/Pictogram"
@@ -10,10 +10,12 @@ import Environment from "../Utillity"
 
 
 export default function Home() {
+    const navigate = useNavigate();
+    if (localStorage.getItem("loggedInUserId") == null) { () => navigate("/login") }
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [tasks, setTasks] = useState<Task[]>([])
     useEffect(() => {
-        DailyScheduleService.fetchDailyScheduleToday(Environment.debugUserId)
+        DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
             .then((DailySchedule) => {
                 setTasks(DailyScheduleService.mapDTODailyScheduleToDomain(DailySchedule).tasks)
                 Tasklist.addMany(DailyScheduleService.mapDTODailyScheduleToDomain(DailySchedule).tasks);
