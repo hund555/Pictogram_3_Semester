@@ -5,7 +5,10 @@ import NavigationBar from "./NavigationBar";
 function NavBarLayoutSites()
 {
     return (
-
-
+        <>
+            <NavigationBar />
+            <Outlet />
+        </>
     );
 }
+export default NavBarLayoutSites;
