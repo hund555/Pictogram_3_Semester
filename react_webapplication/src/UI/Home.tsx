@@ -196,7 +196,7 @@ function PictogramLibrary() {
 
         <div style={{ display: "flex", borderStyle: "solid", borderColor: "grey", backgroundColor: "rgba(48, 48, 48, 128)" }}>
             {PictogramLib.map((pictogram, index) => (
-                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskID: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(Environment.debugUserId, new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
+                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskID: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
                     <h4>{pictogram.title}</h4>
                     <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.picture}></img>
                     <p>{pictogram.description}</p>
