@@ -8,7 +8,7 @@ using WPF_PictoPlanner_Admin.Util;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
-    public class UsersViewModel : Bindable
+    public class UsersViewModel : BaseViewModel
     {
         public ObservableCollection<User> UsersList { get; set; } = new ObservableCollection<User>();
         public ObservableCollection<string> Roles { get; set; } = new ObservableCollection<string>();

@@ -6,11 +6,18 @@ using WPF_PictoPlanner_Admin.Util;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
-    public class LoginViewModel : Bindable
+    public class LoginViewModel : BaseViewModel
     {
         public Login Login { get; set; } = new Login();
         private readonly IUserService _userService = App.UserService;
         private ICommand? _loginCommand;
+
+        private readonly MainViewModel _main;
+        public LoginViewModel(MainViewModel main)
+        {
+            _main = main;
+        }
+
         public ICommand LoginCommand
         {
             get
@@ -24,7 +31,12 @@ namespace WPF_PictoPlanner_Admin.ViewModels
                             if (param is Login login)
                             {
                                 User user = await _userService.Login(login);
-                                SessionManager.SetUser(user);
+                                if (user != null)
+                                {
+                                    _main.CurrentUser = user;
+                                    _main.IsLoggedIn = true;
+                                    _main.CurrentPage = new UsersViewModel();
+                                }
                             }
                         });
                 }
@@ -32,23 +44,9 @@ namespace WPF_PictoPlanner_Admin.ViewModels
             }
         }
 
-        private ICommand? _logoutCommand;
-        public ICommand LogoutCommand
+        public void OnLogout()
         {
-            get
-            {
-                if (_logoutCommand == null)
-                {
-                    _logoutCommand = new RelayCommand(
-                        param => true,
-                        param =>
-                        {
-                            _userService.Logout();
-                            SessionManager.SetUser(null);
-                        });
-                }
-                return _logoutCommand;
-            }
+            _userService.Logout();
         }
     }
 }

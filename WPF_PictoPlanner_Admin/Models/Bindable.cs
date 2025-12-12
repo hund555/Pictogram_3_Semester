@@ -7,9 +7,19 @@ namespace WPF_PictoPlanner_Admin.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void propertyIsChanged([CallerMemberName] string memberName = "")
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value))
+                return false;
+
+            storage = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

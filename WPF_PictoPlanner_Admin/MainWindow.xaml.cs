@@ -1,15 +1,4 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WPF_PictoPlanner_Admin.Models;
-using WPF_PictoPlanner_Admin.Util;
+﻿using System.Windows;
 using WPF_PictoPlanner_Admin.ViewModels;
 
 namespace WPF_PictoPlanner_Admin
@@ -19,40 +8,23 @@ namespace WPF_PictoPlanner_Admin
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Bindable _users;
-        private Bindable _login;
+        private MainViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
 
-            SessionManager.LoginStateChanged += () =>
-            {
-                // Forces XAML to re-evaluate all bindings
-                Dispatcher.Invoke(() =>
-                {
-                    BindingOperations.GetBindingExpressionBase(btn_login, Button.VisibilityProperty)?.UpdateTarget();
-                    BindingOperations.GetBindingExpressionBase(btn_users, Button.VisibilityProperty)?.UpdateTarget();
-                    BindingOperations.GetBindingExpressionBase(btn_logout, Button.VisibilityProperty)?.UpdateTarget();
-                });
-            };
-
-            DataContext = _login = _login?? new LoginViewModel();
+            DataContext = _viewModel = new MainViewModel();
+            _viewModel.CurrentPage = new LoginViewModel(_viewModel);
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = _login = _login?? new UsersViewModel();
+            _viewModel.CurrentPage = new UsersViewModel();
         }
 
         private void Users_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = _users = _users ?? new UsersViewModel();
-        }
-
-        private void Logout_Click(object sender, RoutedEventArgs e)
-        {
-            SessionManager.SetUser(null);
-            DataContext = _login = _login?? new LoginViewModel();
+            _viewModel.CurrentPage = new UsersViewModel();
         }
     }
 }

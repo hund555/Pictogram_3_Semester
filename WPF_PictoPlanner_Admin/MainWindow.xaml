@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_PictoPlanner_Admin"
-        xmlns:session="clr-namespace:WPF_PictoPlanner_Admin.Util"
         xmlns:viewmodels="clr-namespace:WPF_PictoPlanner_Admin.ViewModels"
         xmlns:views="clr-namespace:WPF_PictoPlanner_Admin.View"
         mc:Ignorable="d"
@@ -20,12 +19,23 @@
 
     <StackPanel Orientation="Horizontal">
         <StackPanel>
-            <Button Click="Login_Click"  Content="Login" x:Name="btn_login" />
-            <Button Click="Users_Click" Content="Users" x:Name="btn_users"/>
-            <Button Click="Logout_Click" Content="Logout" x:Name="btn_logout"/>
+            <Button Click="Login_Click"  Content="Login" x:Name="btn_login"
+                    Visibility="{Binding DataContext.IsLoggedIn,
+                        RelativeSource={RelativeSource AncestorType=Window},
+                        Converter={StaticResource BoolToInvisibilityConverter}}"/>
+            
+            <Button Click="Users_Click" Content="Users" x:Name="btn_users" 
+                    Visibility="{Binding DataContext.IsLoggedIn,
+                        RelativeSource={RelativeSource AncestorType=Window},
+                        Converter={StaticResource BoolToVisibilityConverter}}"/>
+            
+            <Button Command="{Binding LogoutCommand}" Content="Logout"
+                    Visibility="{Binding DataContext.IsLoggedIn,
+                        RelativeSource={RelativeSource AncestorType=Window},
+                        Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
         <StackPanel>
-            <ContentControl Content="{Binding}"></ContentControl>
+            <ContentControl Content="{Binding CurrentPage}"></ContentControl>
         </StackPanel>
     </StackPanel>
     

@@ -9,28 +9,28 @@
         public string Id
         {
             get { return id; }
-            set { id = value; propertyIsChanged(); }
+            set => SetProperty(ref id, value);
         }
 
         private string name;
         public string Name
         {
             get { return name; }
-            set { name = value; propertyIsChanged(); }
+            set => SetProperty(ref name, value);
         }
 
         private string email;
         public string Email
         {
             get { return email; }
-            set { email = value; propertyIsChanged(); }
+            set => SetProperty(ref email, value);
         }
 
         private string role;
         public string Role
         {
             get { return role; }
-            set { role = value; propertyIsChanged(); }
+            set => SetProperty(ref role, value);
         }
     }
 }
