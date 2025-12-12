@@ -101,8 +101,19 @@ namespace PictogramAPI.Services
         /// <returns></returns>
         public async Task UpdateDailyScheduleTaskIndex(UpdateDailyScheduleTaskIndexDTO taskUpdateIndexDTO)
         {
+            DailyScheduleTask occupandDst = _dailySchedulesCollection.Find(task=> task.Id == taskUpdateIndexDTO.OccupandTaskId).FirstOrDefault();
             DailyScheduleTask dst = _dailySchedulesCollection.Find(task => task.Id == taskUpdateIndexDTO.TaskId).FirstOrDefault();
-            if (dst == null) { throw new Exception("Task not found");}
+            if (dst == null) { throw new Exception("Task not found"); }
+            if (occupandDst != null)
+            {
+                int dstOldIndex = dst.Index;
+                occupandDst.Index = dstOldIndex;
+                dst.Index = taskUpdateIndexDTO.Index;
+                await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId, dst);
+                await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.OccupandTaskId, occupandDst);
+            }
+            
+            
             dst.Index = taskUpdateIndexDTO.Index;
             await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId,dst);
         }

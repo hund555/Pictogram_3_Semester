@@ -82,9 +82,9 @@ const TaskView = (tasks:TaskProps) => {
 
 
     return (
-        <div style={{ borderStyle: "solid", borderColor: "black", height: "flex", width: "500px", backgroundColor: "rgba(48, 48, 48, 128)" } }>
+        <div style={{ borderStyle: "solid", borderColor: "black", height: "flex", width: "500px",  } }>
             {tasks.tasks.map((t, index) => (
-                <div style={{ borderStyle: "solid", borderColor: "gray", display: "block" }} key={index}>
+                <div style={{ borderStyle: "solid", borderColor: "gray", display: "block", marginBottom: "5px", backgroundColor: "rgba(48, 48, 48, 128)" }} key={index}>
                     <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.picture} style={{ height: "120px", width: "120px" }} />
                     <h2>{t.pictogram.title}</h2>
                     <p>{t.pictogram.description}</p>
@@ -109,7 +109,13 @@ function EditScheduel(tasks: TaskProps) {
     //defines if 
     const [buttonState, setButtonState] = useState<boolean>(false)
     const [addButtonChar, setAddButtonChar] = useState<string>("+")
-
+    useEffect(() => {
+        Tasklist.onChange(() => {
+                setLibraryVisibility("hidden");
+                setAddButtonChar("+");
+            
+        })
+    }, [])
         
     return (<>
         {
@@ -132,8 +138,8 @@ function EditScheduel(tasks: TaskProps) {
 
 }   
 const TaskEdit = (tasks: TaskProps) => {
-    const [taskList, setTaskList] = useState<Task[]>(tasks.tasks)
-    const [updateBool, setUpdateBool] = useState<boolean>(false);
+    
+    
     
 
     return (
@@ -141,15 +147,15 @@ const TaskEdit = (tasks: TaskProps) => {
         <div style={{ borderStyle: "solid", borderColor: "black", display:"inline" }}>
             {tasks.tasks.map((t, index) => (
                 
-                <div style={{ borderStyle: "solid", borderColor: "gray", display: "flex", backgroundColor: "rgba(48, 48, 48, 128)" }} key={index}>
+                <div style={{ borderStyle: "solid", borderColor: "gray", display: "flex", backgroundColor: "rgba(48, 48, 48, 128)", marginBottom:"20px" }} key={index}>
                     <div style={{display:"grid", height:"100px", width:"100px", marginTop:"35px"} }>
-                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { Tasklist.moveUp(index); } }>↑</button>
-                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskID); Tasklist.remove(index); setUpdateBool(!updateBool) } }>-</button>
-                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { Tasklist.moveDown(index) }}>↓</button>
+                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index > 0) { DailyScheduleService.updateIndex(t, t.index -1, Tasklist.Tasks[t.index-1]) } Tasklist.moveUp(t.index);  } }>↑</button>
+                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskID); Tasklist.remove(index); } }>-</button>
+                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index < Tasklist.Tasks.length) { DailyScheduleService.updateIndex(t, t.index +1, Tasklist.Tasks[t.index+1]) } Tasklist.moveDown(t.index) }}>↓</button>
                     </div>
                     <div style={{display:"flex"} }>
                         <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.picture} style={{ height: "200px", width: "200px" }} />
-                        <div><h2>{t.pictogram.title}</h2><br/>
+                        <div><h2>{t.index } {t.pictogram.title}</h2><br/>
                             <p>{t.pictogram.description}</p>
                             
                         </div>
@@ -168,7 +174,7 @@ const TaskEdit = (tasks: TaskProps) => {
 }
 
 function PictogramLibrary() { 
-    //const [PictogramDTOLib, setPictogramDTOLib] = useState<PictogramDTO[]>();
+    
     const [PictogramLib, setPictogramLib] = useState<Pictogram[]>(new Array<Pictogram>);
     useEffect(() => {
         PictogramService.getAllPictograms(Environment.debugUserId)
