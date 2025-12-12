@@ -8,16 +8,10 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx, [FromBody] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms/create", async (IPictogramService pictogramService,[FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
-                    string userId = httpCtx.User.FindFirst("user_id")?.Value;
-                    if (userId == null)
-                        return Results.Unauthorized();
-
-                    createPictogramDTO.UserId = userId;
-
                     await pictogramService.CreatePictogram(createPictogramDTO);
                     return Results.Created();
                 }
@@ -34,39 +28,27 @@ namespace PictogramAPI.Endpoints
             .WithName("CreatePictogram")
             .WithSummary("Create a new pictogram in the system")
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
-            .RequireAuthorization();
+            .AllowAnonymous();
 
-            app.MapGet("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
+            app.MapGet("/pictograms/allpictograms", async (IPictogramService pictogramService, HttpContext infoOfAuthUser) =>
             {
                 try
                 {
-                    string userId = httpCtx.User.FindFirst("user_id")?.Value;
-                    if (userId == null) 
-                        return Results.Unauthorized();
+                    string userID = infoOfAuthUser.User.FindFirst("user_id")?.Value;
 
-                    var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
+                    //if (userID == null) return Results.Unauthorized();
 
-                    // Creates a Json-response object
-                    var jsonResult = Results.Json(getAllPictograms);
-
-                    // The browser can cache the response for 60 seconds
-                    httpCtx.Response.Headers["Cache-Control"] = "public, max-age=60";
-
-                    // ETag to check if data has changed or not.
-                    httpCtx.Response.Headers["ETag"] = $"pictogram-{userId}-{DateTime.UtcNow:yyyyMMddHHmmss}";
+                    var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userID);
 
                     return Results.Ok(getAllPictograms);
 
                 }
-                catch (Exception exception)
-                {
-                    return Results.Problem(detail: exception.Message);
-                }
+                catch (Exception exception) { return Results.Problem(detail: exception.Message); }
             })
                 .WithTags("Pictogram")
                 .WithName("GetAllPictograms")
-                .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
-                .RequireAuthorization();
+                .WithSummary("Gets all no-private pictograms and the user's own private pictograms");
+                //.RequireAuthorization();
         }
     }
 }

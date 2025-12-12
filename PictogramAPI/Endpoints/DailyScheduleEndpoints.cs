@@ -60,6 +60,45 @@ namespace PictogramAPI.Endpoints
             .WithTags("DailySchedule")
             .WithName("GetRequestedDaySchedule")
             .WithSummary("Get schedule tasks for requested day");
+
+
+
+            app.MapPut("/dailyschedule/updateIndex", async(IDailyScheduleService dailyScheduleService, [FromBody] UpdateDailyScheduleTaskIndexDTO updateDailyScheduleTaskIndexDTO) =>
+            {
+                try
+                {
+                    await dailyScheduleService.UpdateDailyScheduleTaskIndex(updateDailyScheduleTaskIndexDTO);
+                    return Results.Ok();
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+            
+            })
+            .WithTags("DailySchedule")
+            .WithName("UpdateDailyScheduleTaskIndex")
+            .WithSummary("Updates the Index of the Task with given id to the provided new id");
+
+
+            app.MapDelete("/dailyschedule/deleteTaskById/{taskId}", async (IDailyScheduleService dailyScheduleService, string taskId) =>
+            {
+                try
+                {
+                    await dailyScheduleService.DeleteDailyScheduleTasksByTaskId(taskId);
+                    return Results.Ok();
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem(detail: e.Message);
+                }
+
+            })
+            .WithTags("DailySchedule")
+            .WithName("DeleteDailyScheduleTaskbyId")
+            .WithSummary("Deletes the task with given id");
+
+
         }
     }
 }

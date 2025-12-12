@@ -83,5 +83,39 @@ namespace PictogramAPI.Services
         {
             await _dailySchedulesCollection.DeleteManyAsync(task => task.UserId == userId);
         }
+
+        /// <summary>
+        /// Deletes the schedules task associated with the specified task ID
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTasksByTaskId(string taskId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.Id == taskId);
+        }
+
+        /// <summary>
+        /// Updates the schedules task associated with the specified task ID
+        /// </summary>
+        /// <param name="taskUpdateIndexDTO"></param>
+        /// <returns></returns>
+        public async Task UpdateDailyScheduleTaskIndex(UpdateDailyScheduleTaskIndexDTO taskUpdateIndexDTO)
+        {
+            DailyScheduleTask occupandDst = _dailySchedulesCollection.Find(task=> task.Id == taskUpdateIndexDTO.OccupandTaskId).FirstOrDefault();
+            DailyScheduleTask dst = _dailySchedulesCollection.Find(task => task.Id == taskUpdateIndexDTO.TaskId).FirstOrDefault();
+            if (dst == null) { throw new Exception("Task not found"); }
+            if (occupandDst != null)
+            {
+                int dstOldIndex = dst.Index;
+                occupandDst.Index = dstOldIndex;
+                dst.Index = taskUpdateIndexDTO.Index;
+                await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId, dst);
+                await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.OccupandTaskId, occupandDst);
+            }
+            
+            
+            dst.Index = taskUpdateIndexDTO.Index;
+            await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId,dst);
+        }
     }
 }
