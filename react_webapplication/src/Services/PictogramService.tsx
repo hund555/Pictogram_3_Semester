@@ -1,6 +1,7 @@
 import type Pictogram from "../Domain/Pictogram";
 import axios, {type AxiosResponse } from 'axios';
 import Environment from "../Utillity";
+import type PictogramDTO from "../Domain/PictogramDTO";
 const baseurl = Environment.getBackendAddress();
 class PictogramService {
     
@@ -10,7 +11,7 @@ class PictogramService {
 
         const payload = { title, description, fileType, isPrivate, picture, userId };
 
-        console.log(JSON.stringify(picture));
+        console.log(JSON.stringify(payload));
        return axios.post<Pictogram>(baseurl + "/pictograms/create", payload)
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
@@ -24,6 +25,21 @@ class PictogramService {
                 .catch(err => reject(err));
         });
             
+
+    }
+    static mapPictogramDTOToDomainPictogram(pictogramDTO:PictogramDTO):Pictogram {
+        return {
+            pictogramId: pictogramDTO.pictogramId,
+            title: pictogramDTO.title,
+            description: pictogramDTO.description,
+            fileType: pictogramDTO.fileType,
+            isPrivate: pictogramDTO.isPrivate,
+            picture: pictogramDTO.pictureBytes,
+            userId: pictogramDTO.userId
+        }
+
+
+
 
     }
 

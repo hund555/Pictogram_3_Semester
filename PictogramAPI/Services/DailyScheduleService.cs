@@ -83,5 +83,28 @@ namespace PictogramAPI.Services
         {
             await _dailySchedulesCollection.DeleteManyAsync(task => task.UserId == userId);
         }
+
+        /// <summary>
+        /// Deletes the schedules task associated with the specified task ID
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task DeleteDailyScheduleTasksByTaskId(string taskId)
+        {
+            await _dailySchedulesCollection.DeleteManyAsync(task => task.Id == taskId);
+        }
+
+        /// <summary>
+        /// Updates the schedules task associated with the specified task ID
+        /// </summary>
+        /// <param name="taskUpdateIndexDTO"></param>
+        /// <returns></returns>
+        public async Task UpdateDailyScheduleTaskIndex(UpdateDailyScheduleTaskIndexDTO taskUpdateIndexDTO)
+        {
+            DailyScheduleTask dst = _dailySchedulesCollection.Find(task => task.Id == taskUpdateIndexDTO.TaskId).FirstOrDefault();
+            if (dst == null) { throw new Exception("Task not found");}
+            dst.Index = taskUpdateIndexDTO.Index;
+            await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId,dst);
+        }
     }
 }

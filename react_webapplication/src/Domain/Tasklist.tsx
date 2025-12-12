@@ -103,7 +103,9 @@ class TaskList {
     }
 
 
-
+    clear = () => {
+        this.Tasks = new Array<Task>;
+    }
     private  verifyIndex = (): boolean => {
         let checksum = 0;
         this.sort();

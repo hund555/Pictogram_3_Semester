@@ -3,6 +3,7 @@ import { useState } from "react";
 import type Pictogram from '../Domain/Pictogram';
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
+import Environment from "../Utillity";
 
 
 
@@ -37,7 +38,7 @@ function CreatePictogram()
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
-        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, "7423c0e6-fbee-4165-aec2-02dfa60016ea");                
+        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, Environment.debugUserId);                
                 
 
         

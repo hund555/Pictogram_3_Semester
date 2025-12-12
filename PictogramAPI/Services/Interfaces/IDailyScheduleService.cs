@@ -8,5 +8,7 @@ namespace PictogramAPI.Services.Interfaces
         Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day);
         Task DeleteDailyScheduleTaskByPictogramId(string pictogramId);
         Task DeleteDailyScheduleTasksByUserId(string userId);
+        Task UpdateDailyScheduleTaskIndex(UpdateDailyScheduleTaskIndexDTO updateDailyScheduleTaskIndexDTO);
+        Task DeleteDailyScheduleTasksByTaskId(string taskId);
     }
 }

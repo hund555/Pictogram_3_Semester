@@ -7,6 +7,6 @@ export default class Environment {
 
 
     }
-    static debugUserId = "162b01d1-1dbb-46c5-82e9-ed2af0c43c77";
+    static debugUserId = "b0802d7a-2fb0-42d0-bac9-345248a00bb8";
 
 }
