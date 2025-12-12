@@ -2,30 +2,17 @@ import type Task from "../Domain/Task";
 import {useState,useEffect } from "react"
 import type DailySchedule from "../Domain/DailySchedule"
 import DailyScheduleService from "../Services/DailyScheduleService"
-export default function Home() {
-
-    
-
-
-
+export default function Home()
+{
     return (<ViewScheduel></ViewScheduel>)
-            
-           
-
-       
-    
 }
 
 function ViewScheduel() {
     const [schedule, setSchedule] = useState<DailySchedule | null>(null);
     useEffect(() => {
-        DailyScheduleService.fetchDailyScheduleToday("7423c0e6-fbee-4165-aec2-02dfa60016ea")
+        DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
             .then((DailySchedule) => {
                 setSchedule (DailySchedule);
-                
-                
-
-
             })
             .catch(e => { console.log(e); return (<p>An Error Occured</p>); })
     }, [])
@@ -53,7 +40,7 @@ type TaskViewProps = {
 }
 const TaskView = (tasks: TaskViewProps) => {
     if (!tasks.tasks || tasks.tasks.length === 0) {
-        return (<h3>An Error Occured</h3>)
+        return (<h3>Du har ingen piktogrammer at vise</h3>)
     }
     return (
         <div style={{borderStyle:"solid", borderColor:"black"} }>
@@ -65,12 +52,7 @@ const TaskView = (tasks: TaskViewProps) => {
                     <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
                 </div>
             
-            
             ))}
-
-
-
-
         </div>
     )
     

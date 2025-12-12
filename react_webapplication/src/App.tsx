@@ -6,23 +6,23 @@ import CreatePictogram from "./UI/CreatePictogram";
 import Home from './UI/Home'
 import WebUserService from "./Services/WebUserService";
 import DisplayAllPictograms from "./UI/DisplayAllPictograms";
-import NavBarLayout from "./UI/NavBarLayout";
+import NavigationBar from "./UI/NavigationBar";
 
 function App() {
 
     {/* SPA */}
     return (
         <>
+            <NavigationBar />
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
 
-              {/* ===== Sites where navbar will be shown ===== */}
-              <Route element={<NavBarLayout />}>
+                {/* ===== Sites where navbar will be shown ===== */}
                 <Route path="/home" element={<Home />} />
                 <Route path="/createPictogram" element={<CreatePictogram />} />
                 <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
-              </Route>
+              
             </Routes>
         </>           
     );
