@@ -78,8 +78,8 @@ namespace PictogramAPI.Endpoints
             
             })
                 .WithTags("Pictogram")
-                .WithName("DeletePic")
-                .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
+                .WithName("DeletePictograms")
+                .WithSummary("Deletes pictogram with given PictogramId")
                 .RequireAuthorization();
             app.MapPost("/pictogram/update", async (IPictogramService pictogramService, [FromBody] UpdatePictogramDTO pictogramDTO) =>
             {
@@ -91,8 +91,8 @@ namespace PictogramAPI.Endpoints
                 catch (Exception exc) { return Results.Problem(detail: exc.Message);}
             })
                 .WithTags("Pictogram")
-                .WithName("GetAllPictograms")
-                .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
+                .WithName("UpdatePictogram")
+                .WithSummary("Updates Pictogram with given data")
                 .RequireAuthorization();
         }
         
