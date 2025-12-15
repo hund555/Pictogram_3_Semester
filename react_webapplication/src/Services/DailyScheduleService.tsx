@@ -2,26 +2,26 @@ import axios, { type AxiosResponse } from "axios";
 import type DailySchedule from "../Domain/DailySchedule";
 import Environment from "../Utillity";
 import type Task from "../Domain/Task";
-import type DailyScheduleDTO from "../Domain/DailyScheduleDTO"
+
 //import type Pictogram from "../Domain/Pictogram"
-import PictogramService from "./PictogramService";
+
 const baseurl = Environment.getBackendAddress();
 export default class DailyScheduleService {
 
 
-    static async fetchDailyScheduleToday(userId: string): Promise<DailyScheduleDTO> {
+    static async fetchDailyScheduleToday(userId: string): Promise<DailySchedule> {
 
 
         return await axios.get(baseurl + "/dailyschedule/today/" + userId)
-            .then((response: AxiosResponse<DailyScheduleDTO>) => { return response.data })
+            .then((response: AxiosResponse<DailySchedule>) => { return response.data })
 
 
 
     }
-    static async fetchDailyScheduleDay(userId: string, day: string): Promise<DailyScheduleDTO> {
+    static async fetchDailyScheduleDay(userId: string, day: string): Promise<DailySchedule> {
 
         return await axios.get(baseurl + "/dailyschedule/" + day + "/" + userId)
-            .then((response: AxiosResponse<DailyScheduleDTO>) => { return response.data })
+            .then((response: AxiosResponse<DailySchedule>) => { return response.data })
 
     }
 
@@ -40,30 +40,11 @@ export default class DailyScheduleService {
             .then((response) => response.data)
     }
     static async updateIndex(task: Task, index: number, occupandTask: Task) {
-        const taskId = task.dailyScheduleTaskID;
-        const occupandTaskId = occupandTask.dailyScheduleTaskID;
+        const taskId = task.dailyScheduleTaskId;
+        const occupandTaskId = occupandTask.dailyScheduleTaskId;
         const payload = { taskId, index, occupandTaskId }
         axios.put(baseurl + "/dailyschedule/updateIndex", payload)
             .then((response: AxiosResponse) => response.data)
-
-    }
-    static mapDTODailyScheduleToDomain(dailyScheduleDTO: DailyScheduleDTO): DailySchedule {
-
-        const tasklist = new Array<Task>();
-        dailyScheduleDTO.tasks.forEach((task) => {
-
-
-            tasklist.push({ dailyScheduleTaskID: task.dailyScheduleTaskId, index: task.index, pictogram: PictogramService.mapPictogramDTOToDomainPictogram(task.pictogram) })
-
-
-
-        })
-
-        return { day: dailyScheduleDTO.day, tasks: tasklist, }
-
-
-
-
 
     }
 

@@ -12,7 +12,7 @@ function NavigationBar()
             <img src={logo} className="logo" />
 
             {/* ===== NavBar Buttons ===== */}
-            <button onClick={() => navigate("/home")}>Hjem</button>
+            <button onClick={() => navigate("/")}>Hjem</button>
 
             <button onClick={() => navigate("/createPictogram")}>Opret Piktogram</button>
 

@@ -24,7 +24,7 @@ function App() {
 
               {/* ===== Sites with navigationbar ===== */}
               <Route element={<NavBarLayoutSites />}>
-                <Route path="/home" element={<Home />}/>
+                <Route path="/" element={<Home />}/>
                 <Route path="/createPictogram" element={<CreatePictogram />} />
                 <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
               </Route>

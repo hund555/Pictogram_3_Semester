@@ -7,18 +7,21 @@ import PictogramService from "../Services/PictogramService";
 import type Pictogram from "../Domain/Pictogram"
 import { Tasklist } from "../Domain/Tasklist"
 import Environment from "../Utillity"
+import type AllPictograms from "../Domain/AllPictograms";
 
 
 export default function Home() {
     const navigate = useNavigate();
     if (localStorage.getItem("loggedInUserId") == null) { () => navigate("/login") }
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [tasks, setTasks] = useState<Task[]>([])
+    const [tasks, setTasks] = useState<Task[]>([]);
     useEffect(() => {
         DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
             .then((DailySchedule) => {
-                setTasks(DailyScheduleService.mapDTODailyScheduleToDomain(DailySchedule).tasks)
-                Tasklist.addMany(DailyScheduleService.mapDTODailyScheduleToDomain(DailySchedule).tasks);
+                
+                Tasklist.set(DailySchedule.tasks);
+                setTasks([...Tasklist.Tasks])
+
             })
             .catch((err) => { console.log(err) })
         const unsubscribe = Tasklist.onChange(() => {
@@ -87,7 +90,7 @@ const TaskView = (tasks: TaskProps) => {
         <div style={{ borderStyle: "solid", borderColor: "black", height: "flex", width: "500px", }}>
             {tasks.tasks.map((t, index) => (
                 <div style={{ borderStyle: "solid", borderColor: "gray", display: "block", marginBottom: "5px", backgroundColor: "rgba(48, 48, 48, 128)" }} key={index}>
-                    <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.picture} style={{ height: "120px", width: "120px" }} />
+                    <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.pictureBytes} style={{ height: "120px", width: "120px" }} />
                     <h2>{t.pictogram.title}</h2>
                     <p>{t.pictogram.description}</p>
                     <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
@@ -147,11 +150,11 @@ const TaskEdit = (tasks: TaskProps) => {
                 <div style={{ borderStyle: "solid", borderColor: "gray", display: "flex", backgroundColor: "rgba(48, 48, 48, 128)", marginBottom: "20px" }} key={index}>
                     <div style={{ display: "grid", height: "100px", width: "100px", marginTop: "35px" }}>
                         <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index > 0) { DailyScheduleService.updateIndex(t, t.index - 1, Tasklist.Tasks[t.index - 1]) } Tasklist.moveUp(t.index); }}>↑</button>
-                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskID); Tasklist.remove(index); }}>-</button>
+                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskId); Tasklist.remove(index); }}>-</button>
                         <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index < Tasklist.Tasks.length) { DailyScheduleService.updateIndex(t, t.index + 1, Tasklist.Tasks[t.index + 1]) } Tasklist.moveDown(t.index) }}>↓</button>
                     </div>
                     <div style={{ display: "flex" }}>
-                        <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.picture} style={{ height: "200px", width: "200px" }} />
+                        <img src={"data:" + t.pictogram.fileType + ";base64," + t.pictogram.pictureBytes} style={{ height: "200px", width: "200px" }} />
                         <div><h2>{t.index} {t.pictogram.title}</h2><br />
                             <p>{t.pictogram.description}</p>
 
@@ -174,12 +177,24 @@ function PictogramLibrary() {
 
     const [PictogramLib, setPictogramLib] = useState<Pictogram[]>(new Array<Pictogram>);
     useEffect(() => {
-        PictogramService.getAllPictograms(Environment.debugUserId)
+        PictogramService.displayAllPictograms(localStorage.getItem("loggedInUserId"))
 
-            .then((dtoList) => {
+            .then((pictograms:AllPictograms[]) => {
+                const pictogramsCorrected: Pictogram[] = pictograms.map(pictogram => ({
+
+                    pictogramId: pictogram.pictogramId,
+                    title: pictogram.title,
+                    description: pictogram.description,
+                    fileType: pictogram.fileType,
+                    isPrivate: pictogram.isPrivate,
+                    pictureBytes: pictogram.picture,
+                    userId: pictogram.userId
 
 
-                setPictogramLib(dtoList)
+
+                }));
+
+                setPictogramLib(pictogramsCorrected);
 
             });
 
@@ -196,9 +211,9 @@ function PictogramLibrary() {
 
         <div style={{ display: "flex", borderStyle: "solid", borderColor: "grey", backgroundColor: "rgba(48, 48, 48, 128)" }}>
             {PictogramLib.map((pictogram, index) => (
-                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskID: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
+                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
                     <h4>{pictogram.title}</h4>
-                    <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.picture}></img>
+                    <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.pictureBytes}></img>
                     <p>{pictogram.description}</p>
 
                 </div>

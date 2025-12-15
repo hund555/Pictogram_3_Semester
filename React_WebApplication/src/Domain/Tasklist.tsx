@@ -6,7 +6,10 @@ class TaskList {
     private listeners: (() => void)[] = []
     
 
-
+    set(tasks:Task[]) {
+        this.Tasks = tasks;
+        this.sort()
+    }
 
 
     addOne = (task: Task) => {
