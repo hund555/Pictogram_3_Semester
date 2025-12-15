@@ -66,7 +66,7 @@ namespace PictogramAPI.Endpoints
             
             })
                 .WithTags("Pictogram")
-                .WithName("GetAllPictograms")
+                .WithName("DeletePic")
                 .WithSummary("Gets all no-private pictograms and the user's own private pictograms")
                 .RequireAuthorization();
             app.MapPost("/pictogram/update", async (IPictogramService pictogramService, [FromBody] UpdatePictogramDTO pictogramDTO) =>
