@@ -35,16 +35,11 @@ namespace PictogramAPI.Endpoints
                 try
                 {
                     string userId = httpCtx.User.FindFirst("user_id")?.Value;
-                    if (userId == null) 
-                        return Results.Unauthorized();
 
                     var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
-                    // Creates a Json-response object
-                    var jsonResult = Results.Json(getAllPictograms);
-
                     // The browser can cache the response for 60 seconds
-                    httpCtx.Response.Headers["Cache-Control"] = "public, max-age=60";
+                    httpCtx.Response.Headers["Cache-Control"] = "private, max-age=60";
 
                     return Results.Ok(getAllPictograms);
 
