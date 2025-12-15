@@ -8,7 +8,7 @@ namespace PictogramAPI.Endpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)
         {
-            app.MapPost("/pictograms", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
+            app.MapPost("/pictograms/create", async (IPictogramService pictogramService, [FromBody] CreatePictogramDTO createPictogramDTO) =>
             {
                 try
                 {
@@ -30,7 +30,7 @@ namespace PictogramAPI.Endpoints
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
             .RequireAuthorization();
 
-            app.MapGet("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
+            app.MapGet("/pictograms/getAllPictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
             {
                 try
                 {
