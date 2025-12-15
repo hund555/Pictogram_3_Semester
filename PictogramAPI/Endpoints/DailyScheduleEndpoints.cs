@@ -26,7 +26,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("DailySchedule")
             .WithName("CreateDailyTask")
-            .WithSummary("Create a new daily schedule task in the system.");
+            .WithSummary("Create a new daily schedule task in the system.")
+            .RequireAuthorization();
 
             app.MapGet("/dailyschedule/today/{userId}", async (IDailyScheduleService dailyScheduleService, string userId) =>
             {
@@ -43,7 +44,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("DailySchedule")
             .WithName("GetCurrentDaySchedule")
-            .WithSummary("Get schedule tasks for the current day");
+            .WithSummary("Get schedule tasks for the current day")
+            .RequireAuthorization();
 
             app.MapGet("/dailyschedule/{day}/{userId}", async (IDailyScheduleService dailyScheduleService, string day, string userId) =>
             {
@@ -59,9 +61,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("DailySchedule")
             .WithName("GetRequestedDaySchedule")
-            .WithSummary("Get schedule tasks for requested day");
-
-
+            .WithSummary("Get schedule tasks for requested day")
+            .RequireAuthorization();
 
             app.MapPut("/dailyschedule/updateIndex", async(IDailyScheduleService dailyScheduleService, [FromBody] UpdateDailyScheduleTaskIndexDTO updateDailyScheduleTaskIndexDTO) =>
             {
@@ -78,8 +79,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("DailySchedule")
             .WithName("UpdateDailyScheduleTaskIndex")
-            .WithSummary("Updates the Index of the Task with given id to the provided new id");
-
+            .WithSummary("Updates the Index of the Task with given id to the provided new id")
+            .RequireAuthorization();
 
             app.MapDelete("/dailyschedule/deleteTaskById/{taskId}", async (IDailyScheduleService dailyScheduleService, string taskId) =>
             {
@@ -96,9 +97,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("DailySchedule")
             .WithName("DeleteDailyScheduleTaskbyId")
-            .WithSummary("Deletes the task with given id");
-
-
+            .WithSummary("Deletes the task with given id")
+            .RequireAuthorization();
         }
     }
 }

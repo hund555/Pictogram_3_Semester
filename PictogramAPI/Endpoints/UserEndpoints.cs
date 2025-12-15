@@ -30,7 +30,8 @@ namespace PictogramAPI.Endpoints
             })
             .WithTags("Users")
             .WithName("CreateUser")
-            .WithSummary("Create a new user in the system.");
+            .WithSummary("Create a new user in the system.")
+            .AllowAnonymous();
 
             app.MapPost("/users/login", async (IUserService userService, [FromBody] LoginDTO loginDTO, HttpContext ctx) =>
             {
@@ -69,7 +70,6 @@ namespace PictogramAPI.Endpoints
             .WithName("LoginUser")
             .WithSummary("Login a user with email and password.")
             .AllowAnonymous();
-
 
             // POST logout — require authorization
             app.MapPost("/users/logout", async (HttpContext ctx) =>
