@@ -177,21 +177,20 @@ function PictogramLibrary() {
     useEffect(() => {
         PictogramService.displayAllPictograms(localStorage.getItem("loggedInUserId"))
 
-            .then((pictograms) => {
-                const pictogramsCorrected: Pictogram[] = pictograms.map((pictogram) => {
-                    
-                        pictogramId: pictogram.pictogramId,
-                        title: pictogram.title,
-                        description: pictogram.description,
-                        fileType: pictogram.fileType,
-                        isPrivate: pictogram.isPrivate,
-                        pictureBytes: pictogram.picture,
-                        userId: pictogram.userId
+            .then((pictograms:AllPictograms[]) => {
+                const pictogramsCorrected: Pictogram[] = pictograms.map(pictogram => ({
+
+                    pictogramId: pictogram.pictogramId,
+                    title: pictogram.title,
+                    description: pictogram.description,
+                    fileType: pictogram.fileType,
+                    isPrivate: pictogram.isPrivate,
+                    pictureBytes: pictogram.picture,
+                    userId: pictogram.userId
 
 
-                   
 
-                })
+                }));
 
                 setPictogramLib(pictogramsCorrected);
 
@@ -212,7 +211,7 @@ function PictogramLibrary() {
             {PictogramLib.map((pictogram, index) => (
                 <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskID: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
                     <h4>{pictogram.title}</h4>
-                    <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.picture}></img>
+                    <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.pictureBytes}></img>
                     <p>{pictogram.description}</p>
 
                 </div>
