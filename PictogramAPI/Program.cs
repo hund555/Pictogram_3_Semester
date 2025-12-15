@@ -17,12 +17,6 @@ namespace PictogramAPI
             builder.Services.AddScoped<IPictogramService, PictogramService>();
             builder.Services.AddScoped<IDailyScheduleService, DailyScheduleService>();
 
-            // Configure Antiforgery
-            /*builder.Services.AddAntiforgery(options =>
-            {
-                options.HeaderName = "X-XSRF-TOKEN";
-            });*/
-
             //Auth settings
             const string authScheme = "AuthCookie";
 
@@ -98,12 +92,9 @@ namespace PictogramAPI
                 options.SwaggerEndpoint("/openapi/v1.json", app.Environment.ApplicationName);
             });
 
-            //app.UseHttpsRedirection();
              
-            
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseAntiforgery();
 
 
             app.MapUserEndpoints(authScheme);

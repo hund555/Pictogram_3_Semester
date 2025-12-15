@@ -63,10 +63,6 @@ namespace PictogramAPI.Endpoints
                 //.RequireAuthorization();
 
 
-
-
-
-
             app.MapDelete("/pictograms/delete/{PictogramId}", async (IPictogramService pictogramService, string pictogramId ) => { 
                 try
                 {
@@ -81,6 +77,7 @@ namespace PictogramAPI.Endpoints
                 .WithName("DeletePictograms")
                 .WithSummary("Deletes pictogram with given PictogramId")
                 .RequireAuthorization();
+
             app.MapPost("/pictogram/update", async (IPictogramService pictogramService, [FromBody] UpdatePictogramDTO pictogramDTO) =>
             {
                 try
