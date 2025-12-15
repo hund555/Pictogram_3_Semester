@@ -28,7 +28,7 @@ namespace PictogramAPI.Endpoints
             .WithName("CreatePictogram")
             .WithSummary("Create a new pictogram in the system")
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
-            .AllowAnonymous();
+            .RequireAuthorization();
 
             app.MapGet("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
             {
