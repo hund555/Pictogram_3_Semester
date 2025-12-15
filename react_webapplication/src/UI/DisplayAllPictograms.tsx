@@ -44,12 +44,6 @@ function DisplayAllPictograms() {
                     </div>
                 ))}
             </div>
-
-
-            {/* ===== Buttons ===== */}
-            <div style={{ display: "flex", gap: "0.5rem", justifyContent: "top", marginTop: "1rem" }}>
-                <button onClick={displayAllPictograms}>Piktogrammer</button>
-            </div>
         </div>
     );
 }
