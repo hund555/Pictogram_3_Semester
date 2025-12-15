@@ -40,8 +40,8 @@ export default class DailyScheduleService {
             .then((response) => response.data)
     }
     static async updateIndex(task: Task, index: number, occupandTask: Task) {
-        const taskId = task.dailyScheduleTaskID;
-        const occupandTaskId = occupandTask.dailyScheduleTaskID;
+        const taskId = task.dailyScheduleTaskId;
+        const occupandTaskId = occupandTask.dailyScheduleTaskId;
         const payload = { taskId, index, occupandTaskId }
         axios.put(baseurl + "/dailyschedule/updateIndex", payload)
             .then((response: AxiosResponse) => response.data)

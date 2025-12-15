@@ -18,8 +18,10 @@ export default function Home() {
     useEffect(() => {
         DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
             .then((DailySchedule) => {
-                setTasks(DailySchedule.tasks)
-                Tasklist.addMany(DailySchedule.tasks);
+                
+                Tasklist.set(DailySchedule.tasks);
+                setTasks([...Tasklist.Tasks])
+
             })
             .catch((err) => { console.log(err) })
         const unsubscribe = Tasklist.onChange(() => {
@@ -148,7 +150,7 @@ const TaskEdit = (tasks: TaskProps) => {
                 <div style={{ borderStyle: "solid", borderColor: "gray", display: "flex", backgroundColor: "rgba(48, 48, 48, 128)", marginBottom: "20px" }} key={index}>
                     <div style={{ display: "grid", height: "100px", width: "100px", marginTop: "35px" }}>
                         <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index > 0) { DailyScheduleService.updateIndex(t, t.index - 1, Tasklist.Tasks[t.index - 1]) } Tasklist.moveUp(t.index); }}>↑</button>
-                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskID); Tasklist.remove(index); }}>-</button>
+                        <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { DailyScheduleService.deleteDailyScheduleTask(t.dailyScheduleTaskId); Tasklist.remove(index); }}>-</button>
                         <button style={{ width: "100px", borderStyle: "solid", borderColor: "white" }} onClick={() => { if (t.index < Tasklist.Tasks.length) { DailyScheduleService.updateIndex(t, t.index + 1, Tasklist.Tasks[t.index + 1]) } Tasklist.moveDown(t.index) }}>↓</button>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -209,7 +211,7 @@ function PictogramLibrary() {
 
         <div style={{ display: "flex", borderStyle: "solid", borderColor: "grey", backgroundColor: "rgba(48, 48, 48, 128)" }}>
             {PictogramLib.map((pictogram, index) => (
-                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskID: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
+                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
                     <h4>{pictogram.title}</h4>
                     <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.pictureBytes}></img>
                     <p>{pictogram.description}</p>
