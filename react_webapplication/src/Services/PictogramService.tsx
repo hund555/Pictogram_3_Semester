@@ -12,7 +12,7 @@ class PictogramService {
         const payload = { title, description, fileType, isPrivate, picture};
 
         console.log(JSON.stringify(picture));
-        return axios.post<Pictogram>("http://localhost:8080/pictograms", payload, {withCredentials: true})
+        return axios.post<Pictogram>("http://localhost:8080/pictograms/create", payload, {withCredentials: true})
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
             //.catch(function (error) { console.log(error) })
@@ -20,7 +20,7 @@ class PictogramService {
 
     static async displayAllPictograms() : Promise<AllPictograms[]>
         {
-            return axios.get<AllPictograms[]>(`http://localhost:8080/pictograms`, { withCredentials: true })
+            return axios.get<AllPictograms[]>(`http://localhost:8080/pictograms/getAllPictograms`, { withCredentials: true })
             .then((response: AxiosResponse<AllPictograms[]>) => response.data)
         }
     static async getAllPictograms(userid: string): Promise<Pictogram[]> {
