@@ -26,7 +26,7 @@ class PictogramService {
     static async getAllPictograms(userid: string): Promise<Pictogram[]> {
 
         return new Promise<Pictogram[]>((resolve, reject) => {
-            axios.get<Pictogram[]>(baseurl + "/pictograms/allpictograms", { data: { user_id: userid } })
+            axios.get<Pictogram[]>(baseurl + "/pictograms", { data: { user_id: userid } })
                 .then(res => resolve(res.data))
                 .catch(err => reject(err));
         });
