@@ -86,7 +86,25 @@ namespace PictogramAPI.Services
         {
             await _pictogramsCollection.DeleteManyAsync(pictogram => pictogram.UserId == userId && pictogram.IsPrivate);
         }
-
+        /// <summary>
+        /// Deletes all private pictograms associated with the specified PictogramId
+        /// </summary>
+        /// <param name="PictogramId"></param>
+        /// <returns></returns>
+        public async Task DeletePictogramsByPictogramId(string PictogramId)
+        {
+            Pictogram pictogram = await _pictogramsCollection.Find(pictogram => pictogram.PictogramId == PictogramId).FirstOrDefaultAsync();
+            if (pictogram == null)
+            {
+                throw new NullReferenceException($"No pictogram found with id: {PictogramId}");
+            }
+            await _pictogramsCollection.DeleteOneAsync(pictogram => pictogram.PictogramId == PictogramId);
+        }
+        /// <summary>
+        /// Gets all Pictograms associated with the provided userID 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<List<Pictogram>> GetAllPictogramsByUserId(string userId)
         {
             List<Pictogram> pictograms = await _pictogramsCollection.Find(pictogram => pictogram.UserId == userId).ToListAsync();
@@ -112,5 +130,32 @@ namespace PictogramAPI.Services
             }
             return dtoResultsToBeDisplayedInUI;
         }
+
+        public async Task UpdatePictogram(UpdatePictogramDTO updatePictogramDTO) 
+        {
+            byte[] pictureBytes = Convert.FromBase64String(updatePictogramDTO.Picture);
+            Pictogram pictogram = _pictogramsCollection.Find(p => p.PictogramId == updatePictogramDTO.PictogramId).FirstOrDefault();//updatePictogramDTO.MapUpdatePictogramDTOToPictogramDomaim(pictureBytes);
+
+            if ( pictogram == null)
+            {
+                throw new NullReferenceException($"No Pictogram Found with id {updatePictogramDTO.PictogramId}");
+            }
+            pictogram.Title = updatePictogramDTO.Title;
+            pictogram.Description = updatePictogramDTO.Description;
+            pictogram.IsPrivate = updatePictogramDTO.IsPrivate;
+            pictogram.PictureBytes = pictureBytes;
+            await _pictogramsCollection.ReplaceOneAsync(p => p.PictogramId == updatePictogramDTO.PictogramId, pictogram);
+            
+           
+
+
+
+        }
+
+
+
+
+
+
     } 
 }
