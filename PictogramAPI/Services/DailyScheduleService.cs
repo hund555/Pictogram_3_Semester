@@ -46,7 +46,8 @@ namespace PictogramAPI.Services
 
         public Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day)
         {
-            var filter = Builders<DailyScheduleTask>.Filter.Eq("UserId", userId) & Builders<DailyScheduleTask>.Filter.Eq("Day", day);
+            var filter = Builders<DailyScheduleTask>.Filter.Eq("UserId", userId) 
+                & Builders<DailyScheduleTask>.Filter.Eq("Day", day);
             List<DailyScheduleTask> dailyTasks = _dailySchedulesCollection.Find(filter).ToList();
 
             DisplayDayScheduleDTO displayDayScheduleDTO = new DisplayDayScheduleDTO
