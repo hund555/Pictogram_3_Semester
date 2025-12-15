@@ -10,5 +10,7 @@ namespace PictogramAPI.Services.Interfaces
         Task DeleteUsersPrivatePictogramsByUserId(string userId);
         Task<List<Pictogram>> GetAllPictogramsByUserId(string userId);
         Task<List<DisplayAllPictogramsDTO>> GetAllPictogramsAsync(string userId);
+        Task DeletePictogramsByPictogramId(string PictogramId);
+        Task UpdatePictogram(UpdatePictogramDTO updatePictogramDTO);
     }
 }

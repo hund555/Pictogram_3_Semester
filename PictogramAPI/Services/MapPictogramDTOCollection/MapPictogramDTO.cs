@@ -24,5 +24,23 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
                 PictureBytes = pictureBytes
             };
         }
+
+
+        public static Pictogram MapUpdatePictogramDTOToPictogramDomaim(this UpdatePictogramDTO pictogramDTO, byte[] pictureBytes)
+        {
+            return new Pictogram
+            {
+                PictogramId = pictogramDTO.PictogramId,
+                Title = pictogramDTO.Title,
+                Description = pictogramDTO.Description,
+                FileType = pictogramDTO.FileType,
+                IsPrivate = pictogramDTO.IsPrivate,
+                UserId = pictogramDTO.UserId,
+                PictureBytes = pictureBytes
+
+
+
+            };
+        }
     }
 }
