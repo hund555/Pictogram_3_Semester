@@ -36,7 +36,7 @@ function RegisterNewUser() {
         WebUserService.createUser(name, email, password)
             .then((webUser) => {
                 setCreatedUser(webUser);
-                navigateToSite("/");
+                navigateToSite("/login");
             })
             .catch(() => {
                 setError("Kunne ikke oprette bruger. Prøv igen");
@@ -48,7 +48,7 @@ function RegisterNewUser() {
 
     // If the user cancels registration they are sent back to the homepage
     function handleCancelRegistration() {
-        navigateToSite("/");
+        navigateToSite("/login");
     }
 
     return (

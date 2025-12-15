@@ -7,46 +7,29 @@ import Home from './UI/Home'
 import WebUserService from "./Services/WebUserService";
 import DisplayAllPictograms from "./UI/DisplayAllPictograms";
 import NavigationBar from "./UI/NavigationBar";
+import NavBarLayoutSites from "./UI/NavBarLayoutSites";
+import PublicLogo from "./UI/PublicLogo";
 
 function App() {
 
     {/* SPA */}
     return (
         <>
-            <NavigationBar />
             <Routes>
+              {/* ===== Sites without navigationbar ===== */}
+              <Route element={<PublicLogo />}>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/registerUser" element={<RegisterNewUser />} />
+              </Route>
 
-                {/* ===== Sites where navbar will be shown ===== */}
-                <Route path="/home" element={<Home />} />
+              {/* ===== Sites with navigationbar ===== */}
+              <Route element={<NavBarLayoutSites />}>
+                <Route path="/home" element={<Home />}/>
                 <Route path="/createPictogram" element={<CreatePictogram />} />
                 <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
-              
+              </Route>
             </Routes>
         </>           
     );
 }
 export default App
-
-
-
-function logoutUser() {
-    WebUserService.logout()
-        .then(() =>
-        {
-            alert("Du er nu logget ud.");
-        })
-        .catch(() =>
-        {
-            alert("Der skete en fejl under logout. Prøv venligst igen.");
-        })
-        .finally(() =>
-        {
-            localStorage.removeItem("loggedInUserId");
-            localStorage.removeItem("loggedInUserEmail");
-            localStorage.removeItem("loggedInUserName");
-            localStorage.removeItem("loggedInUserRole");
-            window.location.href = "/login";
-        });
-}

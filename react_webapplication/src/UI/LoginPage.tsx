@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WebUserService from "../Services/WebUserService";
+import NavigationBar from "./NavigationBar";
 import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 
 // Component for the LoginPage with login and create new user
@@ -38,11 +39,11 @@ function LoginPage() {
         WebUserService.login(email, password)
             .then((UserDisplayInfo) =>
             {
-                localStorage.setItem("loggedInUserId", UserDisplayInfo.id);
-                localStorage.setItem("loggedInUserEmail", UserDisplayInfo.email);
-                localStorage.setItem("loggedInUserName", UserDisplayInfo.name);
-                localStorage.setItem("loggedInUserRole", UserDisplayInfo.role);
-                navigateToSite("/displayallpictograms");
+                localStorage.setItem("loggedInUserId", UserDisplayInfo.Id);
+                localStorage.setItem("loggedInUserEmail", UserDisplayInfo.Email);
+                localStorage.setItem("loggedInUserName", UserDisplayInfo.Name);
+                localStorage.setItem("loggedInUserRole", UserDisplayInfo.Role);
+                navigateToSite("/home");
         })
         .catch(e => {
             setError(e.message)

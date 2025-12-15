@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/pictoplanner_logo.svg";
-import { Outlet } from "react-router-dom";
 import WebUserService from "../Services/WebUserService";
 
 /* Component for the navigationbar for some of the sites */
