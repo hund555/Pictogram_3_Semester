@@ -43,7 +43,7 @@ function CreatePictogram()
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
-        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64, userId);                
+        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64);                
                 
 
         
