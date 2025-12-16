@@ -90,8 +90,17 @@ function DisplayMyPictograms(pictograms: PictogramProp) {
                             <button style={{ width: "60px" }}
                                 onClick={
                                     () => {
-                                        
-                                        navigate("/editpictogram", { state: {pictogram}})
+                                        const item = {
+                                            pictogramId: pictogram.pictogramId,
+                                            title: pictogram.title,
+                                            description: pictogram.description,
+                                            fileType: pictogram.fileType,
+                                            isPrivate: pictogram.isPrivate,
+                                            picture: pictogram.picture,
+                                            userId: pictogram.userId
+
+                                        }
+                                        navigate("/editpictogram", { state: {item}})
 
                                     }
 

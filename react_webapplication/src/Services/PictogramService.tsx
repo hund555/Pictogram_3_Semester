@@ -37,12 +37,12 @@ class PictogramService {
     }
 
 
-    static async updatePictogram(PictogramId: string, Title: string, Description: string, Picture: string, FileType: string, isPrivate:boolean ) {
+    static async updatePictogram(pictogramId: string, title: string, description: string, picture: string, fileType: string, userId: string, isPrivate:boolean ) {
         const payload = {
-            PictogramId, Title,Description,Picture,FileType,isPrivate
+            pictogramId, title,description,picture,fileType,userId, isPrivate
         }
 
-        return axios.post(baseurl + "/pictograms/update", payload, {withCredentials:true})
+        return axios.post(baseurl + "/pictograms/update", payload, { withCredentials: true })
     }
 
 }

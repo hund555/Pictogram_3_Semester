@@ -1,40 +1,32 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
-import type AllPictograms from "../Domain/AllPictograms";
 
-type PictogramProp = {
-    pictogram: AllPictograms
-}
 
-function EditPictogram(pictogram: PictogramProp) {
+
+function EditPictogram() {
     //fetch data passed from previous site,
-    const { state } = useLocation();
-    const item:AllPictograms = state?.item;
-    
-
-    if (item == null) { return; }
+    const location = useLocation();
+    const item = location.state?.item;
+    //allows the navigation back to DisplayAllPictogram
+    const navigate = useNavigate();
+    console.log(item.title)
+    if (item == null) { return(<h3>Error</h3>) }
     
     //Data
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const [title, setTitle] = useState<string>(pictogram.pictogram.title);
-    const [file, setFile] = useState<string>(pictogram.pictogram.picture);
-    const [fileType, setFileType] = useState<string>(pictogram.pictogram.fileType)
-    const [descripion, setDescription] = useState<string>("");
-    const [isPrivate, setisPrivate] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>(item.title);
+    const [file, setFile] = useState<string>(item.picture);
+    const [fileType, setFileType] = useState<string>(item.fileType)
+    const [descripion, setDescription] = useState<string>(item.description);
+    const [isPrivate, setisPrivate] = useState<boolean>(item.isPrivate);
     
     //restrict, what Filetypes can be uploaded by the user;
     const acceptedFileEndingList: string[] = [".jpg", ".png", ".svg"];
 
-    //fill data in to useState;
-    setTitle(item.title);
-    setFile(item.picture);
-    setFileType(item.fileType);
-    setDescription(item.description);
-    setisPrivate(item.isPrivate);
-    
+   
    
 
     //Eventhandler to process fileupload
@@ -60,9 +52,10 @@ function EditPictogram(pictogram: PictogramProp) {
         }
 
       
-        PictogramService.updatePictogram(pictogram.pictogram.pictogramId, title, descripion, file, fileType, isPrivate);
+        PictogramService.updatePictogram(item.pictogramId, title, descripion, file, fileType, item.userId, isPrivate);
 
         
+        navigate("/displayallpictograms")
 
 
 
@@ -80,7 +73,7 @@ function EditPictogram(pictogram: PictogramProp) {
     return (
 
         <div className="module">
-            <div ><ImagePreview file={file} /></div>
+            <div ><ImagePreview file={file} fileType={fileType} /></div>
             <br />
             <label>
                 Title:
@@ -99,7 +92,7 @@ function EditPictogram(pictogram: PictogramProp) {
             <label>Kun synligt for mig: <input type="checkbox" onChange={() => setisPrivate(!isPrivate)} checked={isPrivate}></input> </label>
 
             <label style={{ color: 'red', fontWeight: 'bold' }}>{errorMessage}</label><br />
-            <button onClick={handleSubmit}>Opret</button>
+            <button onClick={handleSubmit}>Ret</button>
         </div>
     );
 
@@ -108,14 +101,15 @@ function EditPictogram(pictogram: PictogramProp) {
 //Create own property to pass the file;
 type ImagePreviewProps = {
     file: string
+    fileType:string
 
 }
 
 
 //Custom Previewer
-const ImagePreview = ({ file }: ImagePreviewProps) => {
+const ImagePreview = ({ file, fileType }: ImagePreviewProps) => {
     if (!file) { return null };
-    return (<img className="imagePreview" style={{ height: 300, width: 300 }} src={file} />)
+    return (<img className="imagePreview" style={{ height: 240, width: 240 }} src={`data:${fileType};base64,${file}`} />)
 
 }
 

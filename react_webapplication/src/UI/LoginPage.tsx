@@ -39,10 +39,11 @@ function LoginPage() {
         WebUserService.login(email, password)
             .then((UserDisplayInfo) =>
             {
-                localStorage.setItem("loggedInUserId", UserDisplayInfo.Id);
-                localStorage.setItem("loggedInUserEmail", UserDisplayInfo.Email);
-                localStorage.setItem("loggedInUserName", UserDisplayInfo.Name);
-                localStorage.setItem("loggedInUserRole", UserDisplayInfo.Role);
+                console.log(UserDisplayInfo)
+                localStorage.setItem("loggedInUserId", UserDisplayInfo.id);
+                localStorage.setItem("loggedInUserEmail", UserDisplayInfo.email);
+                localStorage.setItem("loggedInUserName", UserDisplayInfo.name);
+                localStorage.setItem("loggedInUserRole", UserDisplayInfo.role);
                 navigateToSite("/");
         })
         .catch(e => {
