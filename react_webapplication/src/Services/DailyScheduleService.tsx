@@ -28,7 +28,7 @@ export default class DailyScheduleService {
     static async deleteDailyScheduleTask(taskId: string) {
         console.log("call ok")
         return axios.delete(baseurl + "/dailyschedule/deleteTaskById/" + taskId, { withCredentials: true })
-            .then((response: AxiosResponse) => { console.log(response.data) })
+            .then((response: AxiosResponse) => response.data)
             .catch(err => { console.log(err) })
     }
     static async createDailyScheduleTask(userId: string, day: string, task: Task) {

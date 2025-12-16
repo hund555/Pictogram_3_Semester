@@ -12,7 +12,7 @@ function EditPictogram() {
     const item = location.state?.item;
     //allows the navigation back to DisplayAllPictogram
     const navigate = useNavigate();
-    console.log(item.title)
+    
     if (item == null) { return(<h3>Error</h3>) }
     
     //Data
@@ -54,7 +54,7 @@ function EditPictogram() {
       
         PictogramService.updatePictogram(item.pictogramId, title, descripion, file, fileType, item.userId, isPrivate);
 
-        window.location.reload();
+        
         navigate("/displayallpictograms")
 
 

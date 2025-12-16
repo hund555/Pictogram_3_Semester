@@ -7,8 +7,8 @@ import PictogramService from "../Services/PictogramService";
 // and the logged-in users own private pictograms.
 function DisplayAllPictograms() {
     const [allPictograms, setAllPictograms] = useState<AllPictograms[]>([])
-    const navigateToSite = useNavigate();
-
+   
+    
     //Fetches all pictograms from the API when the component is mounted
     useEffect(() => {
         PictogramService.displayAllPictograms()
@@ -103,7 +103,7 @@ function DisplayMyPictograms(pictograms: PictogramProp) {
                                     }
 
                             }>Ret</button>
-                            <button style={{ width: "60px" }} onClick={() => {PictogramService.deletePictogram(pictogram.pictogramId) } } >Slet</button>
+                            <button style={{ width: "60px" }} onClick={() => { PictogramService.deletePictogram(pictogram.pictogramId); window.location.reload();  } } >Slet</button>
                             
 
                         
