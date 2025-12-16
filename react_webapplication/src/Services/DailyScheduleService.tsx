@@ -12,7 +12,7 @@ export default class DailyScheduleService {
     static async fetchDailyScheduleToday(userId: string): Promise<DailySchedule> {
 
 
-        return await axios.get(baseurl + "/dailyschedule/today/" + userId)
+        return await axios.get(baseurl + "/dailyschedule/today/" + userId, { withCredentials: true })
             .then((response: AxiosResponse<DailySchedule>) => { return response.data })
 
 
@@ -20,14 +20,14 @@ export default class DailyScheduleService {
     }
     static async fetchDailyScheduleDay(userId: string, day: string): Promise<DailySchedule> {
 
-        return await axios.get(baseurl + "/dailyschedule/" + day + "/" + userId)
+        return await axios.get(baseurl + "/dailyschedule/" + day + "/" + userId, { withCredentials: true })
             .then((response: AxiosResponse<DailySchedule>) => { return response.data })
 
     }
 
     static async deleteDailyScheduleTask(taskId: string) {
         console.log("call ok")
-        return axios.delete(baseurl + "/dailyschedule/deleteTaskById/" + taskId)
+        return axios.delete(baseurl + "/dailyschedule/deleteTaskById/" + taskId, { withCredentials: true })
             .then((response: AxiosResponse) => { console.log(response.data) })
             .catch(err => { console.log(err) })
     }
@@ -36,7 +36,7 @@ export default class DailyScheduleService {
         const index = task.index;
         const payload = { userId, day, pictogramId, index };
 
-        return await axios.post(baseurl + "/dailyschedule/tasks", payload)
+        return await axios.post(baseurl + "/dailyschedule/tasks", payload, { withCredentials: true })
             .then((response) => response.data)
     }
     static async updateIndex(task: Task, index: number, occupandTask: Task) {

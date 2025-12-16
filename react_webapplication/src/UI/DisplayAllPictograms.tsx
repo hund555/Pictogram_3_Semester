@@ -22,10 +22,8 @@ function DisplayAllPictograms() {
     //Seperate Users owned Pictograms
     const usersPictogram: AllPictograms[] = allPictograms.filter(p => p.userId === localStorage.getItem("loggedInUserId"));
 
-    //Navigates user til the same site as they are on, if clicked.
-    function displayAllPictograms() {
-        navigateToSite("/displayallpictograms");
-    }
+
+
 
 
 
@@ -105,7 +103,7 @@ function DisplayMyPictograms(pictograms: PictogramProp) {
                                     }
 
                             }>Ret</button>
-                            <button style={{ width: "60px" }} >Slet</button>
+                            <button style={{ width: "60px" }} onClick={() => {PictogramService.deletePictogram(pictogram.pictogramId) } } >Slet</button>
                             
 
                         

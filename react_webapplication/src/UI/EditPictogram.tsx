@@ -54,7 +54,7 @@ function EditPictogram() {
       
         PictogramService.updatePictogram(item.pictogramId, title, descripion, file, fileType, item.userId, isPrivate);
 
-        
+        window.location.reload();
         navigate("/displayallpictograms")
 
 
