@@ -30,24 +30,16 @@ namespace PictogramAPI.Endpoints
             .WithMetadata(new IgnoreAntiforgeryTokenAttribute())
             .RequireAuthorization();
 
-            app.MapGet("/pictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
+            app.MapGet("/pictograms/getAllPictograms", async (IPictogramService pictogramService, HttpContext httpCtx) =>
             {
                 try
                 {
                     string userId = httpCtx.User.FindFirst("user_id")?.Value;
-                    if (userId == null)
-                        return Results.Unauthorized();
 
                     var getAllPictograms = await pictogramService.GetAllPictogramsAsync(userId);
 
-                    // Creates a Json-response object
-                    var jsonResult = Results.Json(getAllPictograms);
-
                     // The browser can cache the response for 60 seconds
                     httpCtx.Response.Headers["Cache-Control"] = "public, max-age=60";
-
-                    // ETag to check if data has changed or not.
-                    httpCtx.Response.Headers["ETag"] = $"pictogram-{userId}-{DateTime.UtcNow:yyyyMMddHHmmss}";
 
                     return Results.Ok(getAllPictograms);
                 }
