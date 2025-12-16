@@ -43,7 +43,7 @@ function LoginPage() {
                 localStorage.setItem("loggedInUserEmail", UserDisplayInfo.Email);
                 localStorage.setItem("loggedInUserName", UserDisplayInfo.Name);
                 localStorage.setItem("loggedInUserRole", UserDisplayInfo.Role);
-                navigateToSite("/home");
+                navigateToSite("/");
         })
         .catch(e => {
             setError(e.message)

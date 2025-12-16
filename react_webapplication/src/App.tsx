@@ -9,6 +9,7 @@ import DisplayAllPictograms from "./UI/DisplayAllPictograms";
 import NavigationBar from "./UI/NavigationBar";
 import NavBarLayoutSites from "./UI/NavBarLayoutSites";
 import PublicLogo from "./UI/PublicLogo";
+import EditPictogram from "./UI/EditPictogram"
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/" element={<Home />}/>
                 <Route path="/createPictogram" element={<CreatePictogram />} />
                 <Route path="/displayallpictograms" element={<DisplayAllPictograms />} />
+                <Route path="/editpictogram" element={<EditPictogram/> }/>
               </Route>
             </Routes>
         </>           

@@ -12,7 +12,7 @@ class PictogramService {
         const payload = { title, description, fileType, isPrivate, picture};
 
         console.log(JSON.stringify(picture));
-        return axios.post<Pictogram>("http://localhost:8080/pictograms", payload, {withCredentials: true})
+        return axios.post<Pictogram>("http://localhost:8080/pictograms/create", payload, {withCredentials: true})
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
             //.catch(function (error) { console.log(error) })
@@ -34,6 +34,15 @@ class PictogramService {
         });
 
 
+    }
+
+
+    static async updatePictogram(PictogramId: string, Title: string, Description: string, Picture: string, FileType: string, isPrivate:boolean ) {
+        const payload = {
+            PictogramId, Title,Description,Picture,FileType,isPrivate
+        }
+
+        return axios.post(baseurl + "/pictograms/update", payload, {withCredentials:true})
     }
 
 }
