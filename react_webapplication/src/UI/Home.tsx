@@ -6,7 +6,7 @@ import DailyScheduleService from "../Services/DailyScheduleService"
 import PictogramService from "../Services/PictogramService";
 import type Pictogram from "../Domain/Pictogram"
 import { Tasklist } from "../Domain/Tasklist"
-import Environment from "../Utillity"
+
 import type AllPictograms from "../Domain/AllPictograms";
 
 

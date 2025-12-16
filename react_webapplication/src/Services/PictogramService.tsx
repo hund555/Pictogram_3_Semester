@@ -10,11 +10,11 @@ class PictogramService
     { 
        
     
+        const userId = localStorage.getItem("loggedInUserId");
+        const payload = { title, description, fileType, isPrivate, picture, userId};
 
-        const payload = { title, description, fileType, isPrivate, picture};
-
-        console.log(JSON.stringify(picture));
-        return axios.post<Pictogram>("http://localhost:8080/pictograms/create", payload, {withCredentials: true})
+        
+        return axios.post<Pictogram>(baseurl + "/pictograms/create", payload, {withCredentials: true})
         .then((response: AxiosResponse<Pictogram>) => response.data)
          
             //.catch(function (error) { console.log(error) })
@@ -22,20 +22,23 @@ class PictogramService
 
     static async displayAllPictograms() : Promise<AllPictograms[]>
     {
-            return axios.get<AllPictograms[]>(`http://localhost:8080/pictograms/getAllPictograms`, { withCredentials: true })
+        return axios.get<AllPictograms[]>(baseurl + '/pictograms/getAllPictograms', { withCredentials: true })
             .then((response: AxiosResponse<AllPictograms[]>) => response.data)
     }
 
 
-    static async getAllPictograms(userid: string): Promise<Pictogram[]>
-    {
 
-        return new Promise<Pictogram[]>((resolve, reject) =>
-        {
-            axios.get<Pictogram[]>(baseurl + "/pictograms", { data: { user_id: userid } })
-                .then(res => resolve(res.data))
-                .catch(err => reject(err));
-        });
+
+
+    static async updatePictogram(pictogramId: string, title: string, description: string, picture: string, fileType: string, userId: string, isPrivate:boolean ) {
+        const payload = {
+            pictogramId, title,description,picture,fileType,userId, isPrivate
+        }
+
+        return axios.post(baseurl +"/pictograms/update", payload, { withCredentials: true })
+    }
+    static async deletePictogram(pictogramId: string) {
+        return axios.delete(baseurl + "/pictograms/delete/" + pictogramId, { withCredentials: true })
     }
 }
 
