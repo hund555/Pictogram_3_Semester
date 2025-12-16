@@ -1,0 +1,25 @@
+
+services:
+    # MongoDB service for data storage    
+    database:
+        image: mongo:7
+        container_name: mongodb_pictogram
+        ports:
+        - 27017:27017
+        volumes:
+        - mongo-data:/data/db
+
+    # Restful API server service
+    apiserver:
+        build:
+            context: .
+            target: final
+        depends_on:
+        - database
+        ports:
+        - 8080:8080
+        environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:8080
+volumes:
+    mongo-data:
