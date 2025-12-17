@@ -1,51 +1,54 @@
-services:
-    # MongoDB service for data storage    
-    database:
-        image: mongo:7
-        container_name: mongodb_pictogram
-        hostname: database
-        networks:
-          api-mongodb:
-            aliases:
-              - database 
-        
-        volumes:
-        - mongo-data:/data/db
+version: "3.9"
 
-    # Restful API server service
-    apiserver:
-        build:
-            context: ./PictogramAPI
-            dockerfile: Dockerfile
-        depends_on:
-        - database
-        ports:
-        - "8080:8080"
-        networks:
-          - api-mongodb
-          - default
-        environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://+:8080
-    # React Application service
-    reactapplication:
-      build:
-          context: ./react_webapplication
-          dockerfile: Dockerfile
-      container_name: pictogram_frontend
-      networks:
-        - "default"
-      ports: 
-        - "49732:49732"
-      depends_on:
-        - apiserver
-      
-networks:
-    api-mongodb:
-      driver: bridge
-      ipam:
-        config:
-          - subnet: 10.0.0.0/16
+services:
+  # MongoDB service for data storage    
+  database:
+    image: mongo:7
+    container_name: mongodb_pictogram
+    hostname: database
+    networks:
+      api-mongodb:
+        aliases:
+          - database
+    volumes:
+      - mongo-data:/data/db
+
+  # Restful API server service
+  apiserver:
+    build:
+      context: ./PictogramAPI
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    networks:
+      - api-mongodb
+      - default
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+
+  # React Application service
+  reactapplication:
+    build:
+      context: ./react_webapplication
+      dockerfile: Dockerfile
+    container_name: pictogram_frontend
+    ports: 
+      - "49732:49732"
+    depends_on:
+      - apiserver
+    networks:
+      - default
+      #- api-mongodb   # <-- add this if React needs to call API internally
 
 volumes:
-    mongo-data:
+  mongo-data:
+
+networks:
+  api-mongodb:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
