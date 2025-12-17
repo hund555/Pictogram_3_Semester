@@ -4,6 +4,10 @@ using WPF_PictoPlanner_Admin.Models;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
+    /// <summary>
+    ///  Main ViewModel responsible for controlling application state,
+    ///  navigation between views and authentication status.
+    /// </summary>
     public class MainViewModel : BaseViewModel
     {
         private BaseViewModel _currentPage;
