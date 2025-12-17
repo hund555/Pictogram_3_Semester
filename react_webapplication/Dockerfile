@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-
+RUN npm run build
 
 #Production
 FROM nginx:alpine
@@ -25,5 +25,5 @@ EXPOSE 80
 
 
 
-CMD ["nginx, "-g", "deamon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 
