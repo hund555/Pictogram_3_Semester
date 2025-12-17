@@ -5,7 +5,9 @@ import Environment from "../Utillity";
 
 const baseURL = Environment.getBackendAddress();
 
-// Service class to handle API-requests from the users
+/*
+* Service class to handle API-requests from the users
+*/
 class WebUserService {
     // Sends a request to the backend-API to create a new user in the system
     static async createUser(name: string, email: string, password: string): Promise<CreateUserWeb> {

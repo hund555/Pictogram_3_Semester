@@ -18,6 +18,8 @@ function NavigationBar()
 
             <button onClick={() => navigate("/displayallpictograms")}>Alle Piktogrammer</button>
 
+            {/* ===== Logout Button ===== */}
+
             <button onClick={() =>
             {
                 WebUserService.logout()
