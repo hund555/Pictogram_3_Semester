@@ -20,6 +20,7 @@ services:
         - 8080:8080
         networks:
           - api-mongodb
+          - host
         environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - ASPNETCORE_URLS=http://+:8080
