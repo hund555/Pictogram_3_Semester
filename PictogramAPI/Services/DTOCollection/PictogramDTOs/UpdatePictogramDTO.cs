@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Services.DTOCollection.PictogramDTOs
 {
+    /// <summary>
+    /// Data Transfer Object used to update an existing pictogram.
+    /// </summary>
     public class UpdatePictogramDTO
     {
         public string PictogramId { get; set; }

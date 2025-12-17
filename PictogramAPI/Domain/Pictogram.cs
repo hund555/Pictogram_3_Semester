@@ -2,6 +2,9 @@
 
 namespace PictogramAPI.Domain
 {
+    /// <summary>
+    /// Domain model representing a pictogram in the system.
+    /// </summary>
     public class Pictogram
     {
         public ObjectId _id { get; set; }

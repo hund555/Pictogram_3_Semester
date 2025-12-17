@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Domain
 {
+    /// <summary>
+    /// Domain model representing a daily scheduele in the system.
+    /// </summary>
     public class DailyScheduleTask
     {
         public string Id { get; set; }

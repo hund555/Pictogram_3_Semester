@@ -2,6 +2,9 @@
 
 namespace PictogramAPI.Services.DTOCollection.DailyScheduleDTOs
 {
+    /// <summary>
+    /// Data Transfer Object used to return task data when displaying tasks in a daily schedule.
+    /// </summary>
     public class DisplayTaskDTO
     {
         public string DailyScheduleTaskId { get; set; }

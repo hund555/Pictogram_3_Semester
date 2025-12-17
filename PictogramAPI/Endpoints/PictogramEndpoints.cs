@@ -4,6 +4,9 @@ using PictogramAPI.Services.Interfaces;
 
 namespace PictogramAPI.Endpoints
 {
+    /// <summary>
+    /// Contains all pictogram-related API endpoints.
+    /// </summary>
     public static class PictogramEndpoints
     {
         public static void MapPictogramEndpoints(this WebApplication app)

@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Services.DTOCollection.UserDTOs
 {
+    /// <summary>
+    /// Data Transfer Object used to expose user information to client
+    /// </summary>
     public class UserDisplayInfoDTO
     {
         public string Id { get; set; }

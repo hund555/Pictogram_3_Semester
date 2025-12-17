@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Domain
 {
+    /// <summary>
+    /// Domain model representing a user in the system.
+    /// </summary>
     public class User
     {
         public string Id { get; set; }

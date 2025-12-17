@@ -2,6 +2,9 @@
 
 namespace PictogramAPI.Services.Interfaces
 {
+    /// <summary>
+    /// A User interface defining user-related operations
+    /// </summary>
     public interface IUserService
     {
         Task<UserDisplayInfoDTO> GetUserDisplayInfoById(string id);
