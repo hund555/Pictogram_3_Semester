@@ -30,7 +30,7 @@ services:
           dockerfile: Dockerfile
       container_name: pictogram_frontend
       ports: 
-        - "49732:80"
+        - "49732:49732"
       depends_on:
         - apiserver
 networks:
