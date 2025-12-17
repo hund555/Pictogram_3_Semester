@@ -6,10 +6,6 @@ services:
     image: mongo:7
     container_name: mongodb_pictogram
     hostname: database
-    networks:
-      api-mongodb:
-        aliases:
-          - database
     volumes:
       - mongo-data:/data/db
 
@@ -22,9 +18,6 @@ services:
       - database
     ports:
       - "8080:8080"
-    networks:
-      - api-mongodb
-      - default
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
@@ -39,8 +32,6 @@ services:
       - "49732:49732"
     depends_on:
       - apiserver
-    networks:
-      - default
       #- api-mongodb   # <-- add this if React needs to call API internally
 
 volumes:
