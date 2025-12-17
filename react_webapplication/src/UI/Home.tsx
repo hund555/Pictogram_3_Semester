@@ -188,6 +188,7 @@ function PictogramLibrary() {
                     pictureBytes: pictogram.picture,
                     userId: pictogram.userId
                 }));
+                console.log(pictogramsCorrected.length)
                 setPictogramLib(pictogramsCorrected);
             });
     }, [])
