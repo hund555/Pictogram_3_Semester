@@ -34,7 +34,7 @@ services:
           dockerfile: Dockerfile
       container_name: pictogram_frontend
       networks:
-        - default
+        - "default"
       ports: 
         - "49732:49732"
       depends_on:
