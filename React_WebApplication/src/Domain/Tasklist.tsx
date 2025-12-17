@@ -1,6 +1,9 @@
-
 import type Task from "./Task"
 
+/*
+* A state-like utility class responsible for managing and ordering tasks
+* in the daily schedule and notifying listeners when changes occur.
+*/
 class TaskList {
     Tasks: Task[] = new Array<Task>;
     private listeners: (() => void)[] = []

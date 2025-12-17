@@ -1,12 +1,9 @@
-import { Routes, Route, Link } from "react-router-dom";
 import LoginPage from "./UI/LoginPage";
 import RegisterNewUser from "./UI/RegisterNewUser";
 import './App.css'
 import CreatePictogram from "./UI/CreatePictogram";
 import Home from './UI/Home'
-import WebUserService from "./Services/WebUserService";
 import DisplayAllPictograms from "./UI/DisplayAllPictograms";
-import NavigationBar from "./UI/NavigationBar";
 import NavBarLayoutSites from "./UI/NavBarLayoutSites";
 import PublicLogo from "./UI/PublicLogo";
 import EditPictogram from "./UI/EditPictogram"

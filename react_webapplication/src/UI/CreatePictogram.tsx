@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
 import { useNavigate } from "react-router-dom";
+
+/*
+* A component for creating a new pictogram
+*/
 function CreatePictogram() 
 {
     //Data

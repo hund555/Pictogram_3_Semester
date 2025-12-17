@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WebUserService from "../Services/WebUserService";
 
-
 // Component for the LoginPage with login and create new user
 function LoginPage() {
     const [email, setEmail] = useState<string>("");

@@ -4,6 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
 
+/*
+* A component to edit a Pictogram
+*/
 function EditPictogram() {
     //fetch data passed from previous site,
     const location = useLocation();
