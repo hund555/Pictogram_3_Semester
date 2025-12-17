@@ -3,21 +3,15 @@ import type DailySchedule from "../Domain/DailySchedule";
 import Environment from "../Utillity";
 import type Task from "../Domain/Task";
 
-//import type Pictogram from "../Domain/Pictogram"
-
 const baseurl = Environment.getBackendAddress();
-export default class DailyScheduleService {
-
-
-    static async fetchDailyScheduleToday(userId: string): Promise<DailySchedule> {
-
-
+export default class DailyScheduleService
+{
+    static async fetchDailyScheduleToday(userId: string): Promise<DailySchedule>
+    {
         return await axios.get(baseurl + "/dailyschedule/today/" + userId, { withCredentials: true })
             .then((response: AxiosResponse<DailySchedule>) => { return response.data })
-
-
-
     }
+
     static async fetchDailyScheduleDay(userId: string, day: string): Promise<DailySchedule> {
 
         return await axios.get(baseurl + "/dailyschedule/" + day + "/" + userId, { withCredentials: true })
@@ -31,6 +25,7 @@ export default class DailyScheduleService {
             .then((response: AxiosResponse) => response.data)
             .catch(err => { console.log(err) })
     }
+
     static async createDailyScheduleTask(userId: string, day: string, task: Task) {
         const pictogramId = task.pictogram.pictogramId;
         const index = task.index;
@@ -39,6 +34,7 @@ export default class DailyScheduleService {
         return await axios.post(baseurl + "/dailyschedule/tasks", payload, { withCredentials: true })
             .then((response) => response.data)
     }
+
     static async updateIndex(task: Task, index: number, occupandTask: Task) {
         const taskId = task.dailyScheduleTaskId;
         const occupandTaskId = occupandTask.dailyScheduleTaskId;
@@ -47,7 +43,4 @@ export default class DailyScheduleService {
             .then((response: AxiosResponse) => response.data)
 
     }
-
-
-
 } 

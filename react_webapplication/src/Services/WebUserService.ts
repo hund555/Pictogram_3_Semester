@@ -43,19 +43,5 @@ class WebUserService {
             throw error;
         }
     }
-    //static async logout(): Promise<void>
-    //{
-    //    return axios.post<void>(baseURL + "/users/logout",
-    //        {
-                
-    //            withCredentials: true,
-    //            Credentials: 'include'
-    //        })
-    //        .then((response: AxiosResponse<void>) =>
-    //        {
-    //            response.data
-    //            console.log(response.data)
-    //        });
-    //}
 }
 export default WebUserService;
