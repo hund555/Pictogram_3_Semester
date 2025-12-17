@@ -36,11 +36,6 @@ namespace PictogramAPI.Services
 
             byte[] imageData;
             imageData = Convert.FromBase64String(createPictogramDTO.Picture);
-            //using (var memoryStream = new MemoryStream())
-            //{
-            //    await createPictogramDTO.Picture.CopyToAsync(memoryStream);
-            //    imageData = memoryStream.ToArray();
-            //}
 
             Pictogram pictogram = createPictogramDTO.MapCreatePictogramDTOToPictogramDomain(imageData);
             await _pictogramsCollection.InsertOneAsync(pictogram);
@@ -73,7 +68,6 @@ namespace PictogramAPI.Services
                     pictogram = null;
                 }
             }
-
             return pictogram;
         }
 
@@ -86,6 +80,7 @@ namespace PictogramAPI.Services
         {
             await _pictogramsCollection.DeleteManyAsync(pictogram => pictogram.UserId == userId && pictogram.IsPrivate);
         }
+
         /// <summary>
         /// Deletes all private pictograms associated with the specified PictogramId
         /// </summary>
@@ -100,6 +95,7 @@ namespace PictogramAPI.Services
             }
             await _pictogramsCollection.DeleteOneAsync(pictogram => pictogram.PictogramId == PictogramId);
         }
+
         /// <summary>
         /// Gets all Pictograms associated with the provided userID 
         /// </summary>
@@ -131,10 +127,16 @@ namespace PictogramAPI.Services
             return dtoResultsToBeDisplayedInUI;
         }
 
+        /// <summary>
+        /// Updates pictogram with given ID
+        /// </summary>
+        /// <param name="updatePictogramDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
         public async Task UpdatePictogram(UpdatePictogramDTO updatePictogramDTO) 
         {
             byte[] pictureBytes = Convert.FromBase64String(updatePictogramDTO.Picture);
-            Pictogram pictogram = _pictogramsCollection.Find(p => p.PictogramId == updatePictogramDTO.PictogramId).FirstOrDefault();//updatePictogramDTO.MapUpdatePictogramDTOToPictogramDomaim(pictureBytes);
+            Pictogram pictogram = _pictogramsCollection.Find(p => p.PictogramId == updatePictogramDTO.PictogramId).FirstOrDefault();
 
             if ( pictogram == null)
             {
@@ -145,17 +147,6 @@ namespace PictogramAPI.Services
             pictogram.IsPrivate = updatePictogramDTO.IsPrivate;
             pictogram.PictureBytes = pictureBytes;
             await _pictogramsCollection.ReplaceOneAsync(p => p.PictogramId == updatePictogramDTO.PictogramId, pictogram);
-            
-           
-
-
-
         }
-
-
-
-
-
-
     } 
 }

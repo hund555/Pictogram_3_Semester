@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export default interface Pictogram {
-
+export default interface Pictogram
+{
     pictogramId:string
     title: string,
     description: string,
@@ -8,6 +8,4 @@ export default interface Pictogram {
     isPrivate: boolean,
     pictureBytes: string,
     userId: string
-
-
 } 

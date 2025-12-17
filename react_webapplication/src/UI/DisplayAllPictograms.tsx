@@ -7,7 +7,6 @@ import PictogramService from "../Services/PictogramService";
 // and the logged-in users own private pictograms.
 function DisplayAllPictograms() {
     const [allPictograms, setAllPictograms] = useState<AllPictograms[]>([])
-   
     
     //Fetches all pictograms from the API when the component is mounted
     useEffect(() => {
@@ -21,11 +20,6 @@ function DisplayAllPictograms() {
     }, []);
     //Seperate Users owned Pictograms
     const usersPictogram: AllPictograms[] = allPictograms.filter(p => p.userId === localStorage.getItem("loggedInUserId"));
-
-
-
-
-
 
     return (
         <div>
@@ -66,8 +60,6 @@ function DisplayMyPictograms(pictograms: PictogramProp) {
     const navigate = useNavigate();
     return (
         <div>
-            
-
             <div>
                 {pictograms.pictograms.map(pictogram => (
                     <div style={{display:"contents", placeContent:"center"}} key={pictogram.pictogramId}>
@@ -99,17 +91,11 @@ function DisplayMyPictograms(pictograms: PictogramProp) {
 
                                         }
                                         navigate("/editpictogram", { state: {item}})
-
                                     }
-
                             }>Ret</button>
                             <button style={{ width: "60px" }} onClick={() => { PictogramService.deletePictogram(pictogram.pictogramId); window.location.reload();  } } >Slet</button>
-                            
-
-                        
-                        </div>
-                           
-                        
+                                                 
+                        </div>                                                  
                     </div>
                 ))}
             </div>

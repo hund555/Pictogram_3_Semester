@@ -6,7 +6,7 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
     public static class MapPictogramDTO
     {
         /// <summary>
-        /// Map CreatePictogramDTO to Pictogram domain object with provided GridFS id
+        /// Map CreatePictogramDTO to Pictogram domain
         /// </summary>
         /// <param name="pictogramDTO"></param>
         /// <param name="gridFsId"></param>
@@ -26,6 +26,12 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
         }
 
 
+        /// <summary>
+        /// Map UpdatePictogramDTO to PictogramDomain
+        /// </summary>
+        /// <param name="pictogramDTO"></param>
+        /// <param name="pictureBytes"></param>
+        /// <returns></returns>
         public static Pictogram MapUpdatePictogramDTOToPictogramDomaim(this UpdatePictogramDTO pictogramDTO, byte[] pictureBytes)
         {
             return new Pictogram
@@ -37,9 +43,25 @@ namespace PictogramAPI.Services.MapPictogramDTOCollection
                 IsPrivate = pictogramDTO.IsPrivate,
                 UserId = pictogramDTO.UserId,
                 PictureBytes = pictureBytes
+            };
+        }
 
-
-
+        /// <summary>
+        /// Map PictogramDomain to DisplayAllPictogramsDTO
+        /// </summary>
+        /// <param name="pictogram"></param>
+        /// <returns></returns>
+        public static DisplayAllPictogramsDTO MapPictogramDomainToDisplayAllPictogramsDTO(this Pictogram pictogram)
+        {
+            return new DisplayAllPictogramsDTO
+            {
+                PictogramId = pictogram.PictogramId,
+                Title = pictogram.Title,
+                Description = pictogram.Description,
+                FileType = pictogram.FileType,
+                IsPrivate = pictogram.IsPrivate,
+                Picture = pictogram.PictureBytes != null ? Convert.ToBase64String(pictogram.PictureBytes) : null,
+                UserId = pictogram.UserId
             };
         }
     }

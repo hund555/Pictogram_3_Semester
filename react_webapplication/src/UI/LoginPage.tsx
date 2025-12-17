@@ -14,7 +14,8 @@ function LoginPage() {
     const navigateToSite = useNavigate();
 
    //Sets Focus to the Email input field when rendered first time or remounted
-    useEffect(() => {
+    useEffect(() =>
+    {
         emailRef.current?.focus();
     }, []);
 
@@ -45,7 +46,7 @@ function LoginPage() {
                 localStorage.setItem("loggedInUserName", UserDisplayInfo.name);
                 localStorage.setItem("loggedInUserRole", UserDisplayInfo.role);
                 navigateToSite("/");
-        })
+         })
         .catch(e => {
             setError(e.message)
         })

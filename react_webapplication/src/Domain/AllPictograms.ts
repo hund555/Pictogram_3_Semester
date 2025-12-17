@@ -1,7 +1,8 @@
 /*
 * Represents all Pictogram objetcs retrieved from the API backend
 */
-export default interface AllPictograms {
+export default interface AllPictograms
+{
     pictogramId: string;
     title: string;
     description: string;

@@ -8,13 +8,12 @@ import type Pictogram from "../Domain/Pictogram"
 import { Tasklist } from "../Domain/Tasklist"
 
 import type AllPictograms from "../Domain/AllPictograms";
-
-
 export default function Home() {
     const navigate = useNavigate();
     if (localStorage.getItem("loggedInUserId") == null) { () => navigate("/login") }
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [tasks, setTasks] = useState<Task[]>([]);
+
     useEffect(() => {
         DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
             .then((DailySchedule) => {
@@ -30,10 +29,6 @@ export default function Home() {
 
     }, [])
 
-
-
-
-
     return (<>
         <div style={{ display: "flex", placeContent: "center" }}>
             <h2>{new Date().toLocaleString('da-DK', { weekday: 'long' })}</h2>
@@ -43,20 +38,13 @@ export default function Home() {
                 onClick={() => setIsEditMode(!isEditMode)}
             >{isEditMode ? "Gem" : "Ret"}</button></div>
         {isEditMode ? <EditScheduel tasks={tasks} /> : <ViewScheduel tasks={tasks} />}
-
-
     </>)
-
-
-
-
 
 }
 type TaskProps = {
     tasks: Task[]
 
 }
-
 
 function ViewScheduel(tasks: TaskProps) {
 
@@ -68,23 +56,13 @@ function ViewScheduel(tasks: TaskProps) {
                     <TaskView tasks={tasks.tasks}></TaskView>
 
                 </div>
-
             </>
         }
-
     </>);
-
-
-
-    //HTML 
-
 }
 
 
 const TaskView = (tasks: TaskProps) => {
-
-
-
 
     return (
         <div style={{ borderStyle: "solid", borderColor: "black", height: "flex", width: "500px", }}>
@@ -94,16 +72,13 @@ const TaskView = (tasks: TaskProps) => {
                     <h2>{t.pictogram.title}</h2>
                     <p>{t.pictogram.description}</p>
                     <input id={index + "_checkmark"} type="checkbox" style={{ height: "50px", width: "50px" }} onChange={e => { if (e.target.checked) { alert("Godt gjordt") } }} />
-                </div>
-            
+                </div>        
             ))}
         </div>
     )
-
 }
 
 function EditScheduel(tasks: TaskProps) {
-
 
     const [libraryVisibiliy, setLibraryVisibility] = useState<CSSProperties["visibility"]>("hidden")
     //defines if 
@@ -113,34 +88,23 @@ function EditScheduel(tasks: TaskProps) {
         Tasklist.onChange(() => {
             setLibraryVisibility("hidden");
             setAddButtonChar("+");
-
         })
     }, [])
 
     return (<>
         {
             <>
-
                 <div><TaskEdit tasks={tasks.tasks}></TaskEdit></div>
                 <button onClick={() => { if (!buttonState) { setLibraryVisibility("visible"); setButtonState(!buttonState); setAddButtonChar("x") } else { setLibraryVisibility("hidden"); setAddButtonChar("+"); setButtonState(!buttonState) } }} >{addButtonChar}</button>
                 <div style={{ visibility: libraryVisibiliy }}>
                     <PictogramLibrary></PictogramLibrary>
-
                 </div>
             </>
         }
-
     </>);
-
-
-
-
 
 }
 const TaskEdit = (tasks: TaskProps) => {
-
-
-
 
     return (
 
@@ -161,16 +125,9 @@ const TaskEdit = (tasks: TaskProps) => {
                         </div>
                     </div>
                 </div>
-
-
             ))}
-
-
-
-
         </div>
     )
-
 }
 
 function PictogramLibrary() {
@@ -189,23 +146,13 @@ function PictogramLibrary() {
                     isPrivate: pictogram.isPrivate,
                     pictureBytes: pictogram.picture,
                     userId: pictogram.userId
-
-
-
                 }));
-
                 setPictogramLib(pictogramsCorrected);
-
             });
-
-
     }, [])
 
 
-
-
     if (!PictogramLib || PictogramLib.length == 0) { return (<><h3 style={{ color: "red" }}>Error, Pictograms could not be loaded</h3></>) }
-
 
     return (<>
 
@@ -215,12 +162,9 @@ function PictogramLibrary() {
                     <h4>{pictogram.title}</h4>
                     <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.pictureBytes}></img>
                     <p>{pictogram.description}</p>
-
                 </div>
             ))}
         </div>
-
-
     </>);
 }
 

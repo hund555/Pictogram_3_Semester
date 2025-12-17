@@ -4,15 +4,17 @@ import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 import Environment from "../Utillity";
 
 const baseURL = Environment.getBackendAddress();
+
 // Service class to handle API-requests from the users
 class WebUserService {
-    // Creates a new user in the system
+    // Sends a request to the backend-API to create a new user in the system
     static async createUser(name: string, email: string, password: string): Promise<CreateUserWeb> {
         const payload = { name, email, password };
 
         return axios.post(baseURL + "/users/create", payload).then((response: AxiosResponse<CreateUserWeb>) => response.data);
     }
 
+    // Sends a request to the backend-API to log the user in to the system
     static async login(email: string, password: string): Promise<UserDisplayInfo>
     {
         const payload = {email, password };
@@ -21,6 +23,7 @@ class WebUserService {
         .then((response: AxiosResponse<UserDisplayInfo>) => response.data);
     }
 
+    // Sends a request to the backend-API to logout the user from the system
     static async logout(): Promise<void> {
         try {
             const response = await fetch(baseURL + "/users/logout", {
@@ -28,8 +31,7 @@ class WebUserService {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({}) // empty body, optional
+                }
             });
 
             if (!response.ok) {
