@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictogramAPI", "PictogramAPI\PictogramAPI.csproj", "{7B827DA4-AC91-447A-9CD2-0BF3C6FBF601}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "react_webapplication", "React_WebApplication\react_webapplication.esproj", "{7C359A04-CF6F-065D-279A-4778582C20BA}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "React_WebApplication", "React_WebApplication\React_WebApplication.esproj", "{7C359A04-CF6F-065D-279A-4778582C20BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
