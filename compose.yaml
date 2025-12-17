@@ -37,9 +37,3 @@ services:
 volumes:
   mongo-data:
 
-networks:
-  api-mongodb:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.0.0/16
