@@ -21,7 +21,7 @@ COPY --from=BUILD /app/dist /usr/share/nginx/html
 
 
 
-EXPOSE 80
+EXPOSE 49732
 
 
 
