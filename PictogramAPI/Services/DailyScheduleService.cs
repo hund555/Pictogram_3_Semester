@@ -7,6 +7,9 @@ using PictogramAPI.Services.MapDailyTaskDTOCollection;
 
 namespace PictogramAPI.Services
 {
+    /// <summary>
+    /// A Service class responsible for handling Daily scheduele related business logic and data access
+    /// </summary>
     public class DailyScheduleService : IDailyScheduleService
     {
         private readonly IMongoDatabase _database;

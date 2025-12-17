@@ -9,6 +9,9 @@ using System.Text;
 
 namespace PictogramAPI.Services
 {
+    /// <summary>
+    /// A Service class responsible for handling user related business logic and data access
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly IMongoDatabase _mongodb;

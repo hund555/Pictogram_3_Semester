@@ -7,6 +7,9 @@ using PictogramAPI.Services.MapPictogramDTOCollection;
 
 namespace PictogramAPI.Services
 {
+    /// <summary>
+    /// A Service class responsible for handling pictogram related business logic and data access
+    /// </summary>
     public class PictogramService : IPictogramService
     {
         private readonly IMongoDatabase _database;
