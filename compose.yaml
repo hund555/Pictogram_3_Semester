@@ -24,6 +24,7 @@ services:
       - default
     ports:
       - "8080:8080"
+    hostname: pictogramapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
