@@ -31,7 +31,7 @@ export default function Home() {
 
             })
             .catch((err) => { console.log(err) })
-        const unsubscribe = Tasklist.onChange(() => {
+        Tasklist.onChange(() => {
             setTasks([...Tasklist.Tasks])
         });
 

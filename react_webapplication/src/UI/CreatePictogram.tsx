@@ -43,7 +43,7 @@ function CreatePictogram()
             navigate("/login");
             return;
         }      
-        const buffer = await file.arrayBuffer();
+        
         const b64 = await fileToBase64(file)
         PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64);
         navigate("/displayallpictograms");
