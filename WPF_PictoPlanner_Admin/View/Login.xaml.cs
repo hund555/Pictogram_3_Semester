@@ -11,6 +11,11 @@ namespace WPF_PictoPlanner_Admin.View
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Update the Login class password while typing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (DataContext is LoginViewModel vm)
