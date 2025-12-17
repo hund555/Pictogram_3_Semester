@@ -3,13 +3,14 @@ import { useState } from "react";
 import type Pictogram from '../Domain/Pictogram';
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
-
+import { useNavigate } from "react-router-dom";
 
 
 function CreatePictogram() 
 {
     //Data
     let [errorMessage, setErrorMessage] = useState<string>("");
+    const navigate = useNavigate();
     const [title, setTitle] = useState<string>("");
     const [file, setFile] = useState<File>();
     const [descripion, setDescription] = useState<string>("");
@@ -37,18 +38,15 @@ function CreatePictogram()
 
         const userId = localStorage.getItem("loggedInUserId");
         if (!userId) {
-            setErrorMessage("Du er ikke logget ind");
+            alert("Du er ikke logget ind");
+            navigate("/login");
             return;
         }
        
         const buffer = await file.arrayBuffer();
         const b64 = await fileToBase64(file)
-        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64);                
-                
-
-        
-
-
+        PictogramService.createPictogram(title, descripion, file.type, isPrivate, b64);
+        navigate("/displayallpictograms");
     }
     const acceptableFileEndings = () => {
         var result: string = "";
