@@ -6,6 +6,8 @@ services:
     image: mongo:7
     container_name: mongodb-pictogram
     hostname: database
+    networks:
+      - api-db
     volumes:
       - mongo-data:/data/db
 
@@ -17,6 +19,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - database
+    networks:
+      - api-db
+      - default
     ports:
       - "8080:8080"
     environment:
@@ -33,8 +38,13 @@ services:
       - "49732:49732"
     depends_on:
       - apiserver
-      #- api-mongodb   # <-- add this if React needs to call API internally
+    networks:
+      - default
 
 volumes:
   mongo-data:
+networks:
+  api-db:
+    driver: bridge
+    internal: true
 
