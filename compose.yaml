@@ -5,7 +5,10 @@ services:
         container_name: mongodb_pictogram
         hostname: database
         networks:
-          - api-mongodb
+          api-mongodb:
+            aliases:
+              - database 
+        
         volumes:
         - mongo-data:/data/db
 
@@ -39,7 +42,7 @@ services:
       
 networks:
     api-mongodb:
-      driver: none
+      driver: bridge
       ipam:
         config:
           - subnet: 10.0.0.0/16
