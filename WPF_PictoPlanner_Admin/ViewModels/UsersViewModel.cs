@@ -7,6 +7,9 @@ using WPF_PictoPlanner_Admin.Services.Interfaces;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
+    /// <summary>
+    /// A ViewModel responsible for managing users in the admin interface
+    /// </summary>
     public class UsersViewModel : BaseViewModel
     {
         public ObservableCollection<User> UsersList { get; set; } = new ObservableCollection<User>();
@@ -20,6 +23,8 @@ namespace WPF_PictoPlanner_Admin.ViewModels
         }
 
         private ICommand? _loadUsersCommand;
+
+        // Command used to load all users from the backend
         public ICommand LoadUsersCommand
         {
             get
@@ -50,6 +55,8 @@ namespace WPF_PictoPlanner_Admin.ViewModels
         }
 
         private ICommand? _deleteUserCommand;
+
+        // Command used to delete a selected user
         public ICommand DeleteUserCommand
         {
             get
@@ -79,6 +86,8 @@ namespace WPF_PictoPlanner_Admin.ViewModels
         }
 
         private ICommand? _updateUserRoleCommand;
+
+        // Command used to update the role of a selected user
         public ICommand UpdateUserRoleCommand
         {
             get
