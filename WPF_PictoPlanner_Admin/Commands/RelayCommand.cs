@@ -3,7 +3,7 @@
 namespace WPF_PictoPlanner_Admin.Commands
 {
     /// <summary>
-    /// A command to relay its functions 
+    /// A command used to delegate command logic from the ViewModel to methods
     /// </summary>
     public class RelayCommand : ICommand
     {

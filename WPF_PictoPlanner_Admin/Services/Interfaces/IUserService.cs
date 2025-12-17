@@ -3,7 +3,7 @@
 namespace WPF_PictoPlanner_Admin.Services.Interfaces
 {
     /// <summary>
-    /// Interface to retrieve and manage user data
+    /// An interface to retrieve and manage user data
     /// </summary>
     public interface IUserService
     {

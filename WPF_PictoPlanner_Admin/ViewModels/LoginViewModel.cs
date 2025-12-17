@@ -3,9 +3,14 @@ using System.Windows.Input;
 using WPF_PictoPlanner_Admin.Commands;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
+using WPF_PictoPlanner_Admin.View;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
+    /// <summary>
+    /// ViewModel responsible for handling user authentication.
+    /// </summary>
     public class LoginViewModel : BaseViewModel
     {
         public Login Login { get; set; } = new Login();
@@ -18,6 +23,7 @@ namespace WPF_PictoPlanner_Admin.ViewModels
             _main = main;
         }
 
+        // Command used to authenticate the user and navigate to the main admin view
         public ICommand LoginCommand
         {
             get
@@ -44,6 +50,7 @@ namespace WPF_PictoPlanner_Admin.ViewModels
             }
         }
 
+        // Called when the user logs out to notify the backend service
         public void OnLogout()
         {
             try
