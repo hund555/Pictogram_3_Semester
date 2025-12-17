@@ -61,7 +61,7 @@ namespace PictogramAPI
             {
                 options.AddPolicy(myCors, policy =>
                 {
-                    policy.WithOrigins("http://10.5.24.24:49732") // React dev server
+                    policy.WithOrigins("http://10.5.24.24:80", "http://localhost:49732") // React dev server
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

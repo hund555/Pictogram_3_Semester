@@ -202,7 +202,7 @@ function PictogramLibrary() {
                 <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() =>
                 {
                     Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length });
-                    DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB',
+                    DailyScheduleService.createDailyScheduleTask(userId, new Date().toLocaleString('en-GB',
                         { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]);
                 }}>
                     <h4>{pictogram.title}</h4>
