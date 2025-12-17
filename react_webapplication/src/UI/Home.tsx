@@ -1,4 +1,5 @@
-﻿/* eslint-disable @typescript-eslint/no-unused-expressions */
+﻿/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import type Task from "../Domain/Task";
 import { useState, useEffect, type CSSProperties } from "react"
 import { useNavigate } from "react-router-dom";
@@ -10,12 +11,13 @@ import { Tasklist } from "../Domain/Tasklist"
 import type AllPictograms from "../Domain/AllPictograms";
 export default function Home() {
     const navigate = useNavigate();
-    if (localStorage.getItem("loggedInUserId") == null) { () => navigate("/login") }
+    const userId = localStorage.getItem("loggedInUserId");
+    
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [tasks, setTasks] = useState<Task[]>([]);
-
+    if (!userId || userId == null) { navigate("/login"); return; };
     useEffect(() => {
-        DailyScheduleService.fetchDailyScheduleToday(localStorage.getItem("loggedInUserId"))
+        DailyScheduleService.fetchDailyScheduleToday(userId)
             .then((DailySchedule) => {
                 
                 Tasklist.set(DailySchedule.tasks);
@@ -133,8 +135,10 @@ const TaskEdit = (tasks: TaskProps) => {
 function PictogramLibrary() {
 
     const [PictogramLib, setPictogramLib] = useState<Pictogram[]>(new Array<Pictogram>);
+    const userId = localStorage.getItem("loggedInUserId");
+    if (!userId) return;
     useEffect(() => {
-        PictogramService.displayAllPictograms(localStorage.getItem("loggedInUserId"))
+        PictogramService.displayAllPictograms()
 
             .then((pictograms:AllPictograms[]) => {
                 const pictogramsCorrected: Pictogram[] = pictograms.map(pictogram => ({
@@ -158,7 +162,7 @@ function PictogramLibrary() {
 
         <div style={{ display: "flex", borderStyle: "solid", borderColor: "grey", backgroundColor: "rgba(48, 48, 48, 128)" }}>
             {PictogramLib.map((pictogram, index) => (
-                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(localStorage.getItem("loggedInUserId"), new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
+                <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() => { Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length }); DailyScheduleService.createDailyScheduleTask(userId, new Date().toLocaleString('en-GB', { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]); }}>
                     <h4>{pictogram.title}</h4>
                     <img style={{ height: "60px", width: "60px" }} src={"data:" + pictogram.fileType + ";base64," + pictogram.pictureBytes}></img>
                     <p>{pictogram.description}</p>
