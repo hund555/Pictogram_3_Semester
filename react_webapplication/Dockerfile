@@ -17,7 +17,7 @@ COPY nginx.conf /etc/nginx/conf.d
 
 
 
-COPY --from=BUILD /app/build /usr/share/nginx/html
+COPY --from=BUILD /app/dist /usr/share/nginx/html
 
 
 
