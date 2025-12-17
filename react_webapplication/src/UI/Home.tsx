@@ -188,7 +188,6 @@ function PictogramLibrary() {
                     pictureBytes: pictogram.picture,
                     userId: pictogram.userId
                 }));
-                console.log(pictogramsCorrected.length)
                 setPictogramLib(pictogramsCorrected);
             });
     }, [])
@@ -202,7 +201,7 @@ function PictogramLibrary() {
             {PictogramLib.map((pictogram, index) => (
                 <div key={index} style={{ display: "block", borderColor: "#303030", borderStyle: "solid", height: "200px", width: "200px" }} onClick={() =>
                 {
-                    Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: crypto.randomUUID(), index: Tasklist.Tasks.length });
+                    Tasklist.addOne({ pictogram: pictogram, dailyScheduleTaskId: Math.random().toString(36).substring(2) + Date.now().toString(36), index: Tasklist.Tasks.length });
                     DailyScheduleService.createDailyScheduleTask(userId, new Date().toLocaleString('en-GB',
                         { weekday: 'long' }), Tasklist.Tasks[Tasklist.Tasks.length - 1]);
                 }}>
