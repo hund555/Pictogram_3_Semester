@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WebUserService from "../Services/WebUserService";
-import NavigationBar from "./NavigationBar";
-import type UserDisplayInfo from "../Domain/UserDisplayInfo";
 
 // Component for the LoginPage with login and create new user
 function LoginPage() {

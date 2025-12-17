@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import type Pictogram from '../Domain/Pictogram';
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
 import { useNavigate } from "react-router-dom";
