@@ -20,7 +20,7 @@ services:
         - 8080:8080
         networks:
           - api-mongodb
-          - external
+          - bridge
         environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - ASPNETCORE_URLS=http://+:8080
@@ -35,8 +35,6 @@ services:
       depends_on:
         - apiserver
 networks:
-    external:
-      driver: host
     api-mongodb:
       driver: bridge
       ipam:
