@@ -4,13 +4,14 @@ services:
   # MongoDB service for data storage    
   database:
     image: mongo:7
-    container_name: mongodb_pictogram
+    container_name: mongodb-pictogram
     hostname: database
     volumes:
       - mongo-data:/data/db
 
   # Restful API server service
   apiserver:
+    container_name: pictogram-api
     build:
       context: ./PictogramAPI
       dockerfile: Dockerfile
@@ -27,7 +28,7 @@ services:
     build:
       context: ./react_webapplication
       dockerfile: Dockerfile
-    container_name: pictogram_frontend
+    container_name: pictogram-frontend
     ports: 
       - "49732:49732"
     depends_on:
