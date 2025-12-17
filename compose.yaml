@@ -26,7 +26,7 @@ services:
     # React Application service
     reactapplication:
       build:
-          context: ./react_webaplication
+          context: ./react_webapplication
           dockerfile: Dockerfile
       container_name: pictogram_frontend
       ports: 
