@@ -20,12 +20,14 @@ function RegisterNewUser() {
         event.preventDefault();
         setError(null);
 
-        if (password.includes(" ") || repeatPassword.includes(" ")) {
+        if (password.includes(" ") || repeatPassword.includes(" "))
+        {
             setError("Password må ikke indeholde mellemrum");
             return;
         }
 
-        if (password !== repeatPassword) {
+        if (password !== repeatPassword)
+        {
             setError("Password er ikke ens")
             return;
         }
@@ -34,20 +36,24 @@ function RegisterNewUser() {
         setCreatedUser(null);
 
         WebUserService.createUser(name, email, password)
-            .then((webUser) => {
+            .then((webUser) =>
+            {
                 setCreatedUser(webUser);
                 navigateToSite("/login");
             })
-            .catch(() => {
+            .catch(() =>
+            {
                 setError("Kunne ikke oprette bruger. Prøv igen");
             })
-            .finally(() => {
+            .finally(() =>
+            {
                 setLoading(false);
             });
     };
 
     // If the user cancels registration they are sent back to the homepage
-    function handleCancelRegistration() {
+    function handleCancelRegistration()
+    {
         navigateToSite("/login");
     }
 

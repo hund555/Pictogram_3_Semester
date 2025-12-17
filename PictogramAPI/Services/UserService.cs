@@ -105,6 +105,12 @@ namespace PictogramAPI.Services
             });
         }
 
+        /// <summary>
+        /// Updates a users role
+        /// </summary>
+        /// <param name="editUserRoleDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task UpdateUserRole(EditUserRoleDTO editUserRoleDTO)
         {
             User user = _usersCollection.Find(u => u.Id == editUserRoleDTO.Id).FirstOrDefault();

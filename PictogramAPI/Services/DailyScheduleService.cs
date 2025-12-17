@@ -44,6 +44,12 @@ namespace PictogramAPI.Services
             await _dailySchedulesCollection.InsertOneAsync(dailyScheduleTask);
         }
 
+        /// <summary>
+        /// Gets the scheduele for the user with the the given user ID for the requested day
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="day"></param>
+        /// <returns></returns>
         public Task<DisplayDayScheduleDTO> GetDayScheduleByUserIdAndDay(string userId, string day)
         {
             var filter = Builders<DailyScheduleTask>.Filter.Eq("UserId", userId) 
@@ -61,7 +67,6 @@ namespace PictogramAPI.Services
                 DisplayTaskDTO displayTaskDTO = task.MapDomainDailyScheduleTaskToDisplayTaskDTO(pictogram);
                 displayDayScheduleDTO.Tasks.Add(displayTaskDTO);
             }
-
             return Task.FromResult(displayDayScheduleDTO);
         }
 
@@ -104,7 +109,11 @@ namespace PictogramAPI.Services
         {
             DailyScheduleTask occupandDst = _dailySchedulesCollection.Find(task=> task.Id == taskUpdateIndexDTO.OccupandTaskId).FirstOrDefault();
             DailyScheduleTask dst = _dailySchedulesCollection.Find(task => task.Id == taskUpdateIndexDTO.TaskId).FirstOrDefault();
-            if (dst == null) { throw new Exception("Task not found"); }
+            if (dst == null) 
+            { 
+                throw new Exception("Task not found"); 
+            }
+
             if (occupandDst != null)
             {
                 int dstOldIndex = dst.Index;
@@ -113,7 +122,6 @@ namespace PictogramAPI.Services
                 await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId, dst);
                 await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.OccupandTaskId, occupandDst);
             }
-            
             
             dst.Index = taskUpdateIndexDTO.Index;
             await _dailySchedulesCollection.ReplaceOneAsync(task => task.Id == taskUpdateIndexDTO.TaskId,dst);

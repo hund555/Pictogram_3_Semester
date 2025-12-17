@@ -1,3 +1,4 @@
+
 export default interface UserDisplayInfo {
     id: string;
     name: string;

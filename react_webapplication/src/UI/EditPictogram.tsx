@@ -4,8 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import './StyleSheet/UI_Module_Template.css';
 import PictogramService from "../Services/PictogramService";
 
-
-
 function EditPictogram() {
     //fetch data passed from previous site,
     const location = useLocation();
@@ -25,9 +23,6 @@ function EditPictogram() {
     
     //restrict, what Filetypes can be uploaded by the user;
     const acceptedFileEndingList: string[] = [".jpg", ".png", ".svg"];
-
-   
-   
 
     //Eventhandler to process fileupload
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,16 +45,11 @@ function EditPictogram() {
             setErrorMessage("Du er ikke logget ind");
             return;
         }
-
-      
-        PictogramService.updatePictogram(item.pictogramId, title, descripion, file, fileType, item.userId, isPrivate);
-
-        
+ 
+        PictogramService.updatePictogram(item.pictogramId, title, descripion, file, fileType, item.userId, isPrivate);  
         navigate("/displayallpictograms")
-
-
-
     }
+
     const acceptableFileEndings = () => {
         let result: string = "";
         for (let i = 0; i < acceptedFileEndingList.length; i++) {
@@ -68,10 +58,8 @@ function EditPictogram() {
         return result;
     }
 
-
     //HTML
     return (
-
         <div className="module">
             <div ><ImagePreview file={file} fileType={fileType} /></div>
             <br />
@@ -95,31 +83,23 @@ function EditPictogram() {
             <button onClick={handleSubmit}>Ret</button>
         </div>
     );
-
-
 }
+
 //Create own property to pass the file;
-type ImagePreviewProps = {
+type ImagePreviewProps =
+{
     file: string
     fileType:string
-
 }
 
 
 //Custom Previewer
-const ImagePreview = ({ file, fileType }: ImagePreviewProps) => {
+const ImagePreview = ({ file, fileType }: ImagePreviewProps) =>
+{
     if (!file) { return null };
     return (<img className="imagePreview" style={{ height: 240, width: 240 }} src={`data:${fileType};base64,${file}`} />)
-
 }
-
-
-
 export default EditPictogram;
-
-
-
-
 
 //simple file to base64 string converter ==> Used for simple file transfer <==
 const fileToBase64 = (file: File): Promise<string> => {
@@ -132,10 +112,6 @@ const fileToBase64 = (file: File): Promise<string> => {
             resolve(clearString)
         }
         reader.onerror = (error) => reject(error)
-
     })
-
-
-
 }
 
