@@ -3,6 +3,9 @@ using PictogramAPI.Services.DTOCollection.PictogramDTOs;
 
 namespace PictogramAPI.Services.Interfaces
 {
+    /// <summary>
+    /// A Pictogram interface defining pictogram-related operations
+    /// </summary>
     public interface IPictogramService
     {
         Task CreatePictogram(CreatePictogramDTO createPictogramDTO);

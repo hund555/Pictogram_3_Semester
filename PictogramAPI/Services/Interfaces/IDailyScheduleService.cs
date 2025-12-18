@@ -2,6 +2,9 @@
 
 namespace PictogramAPI.Services.Interfaces
 {
+    /// <summary>
+    /// A Daily scehdueke interface defining DAilyScheduele-related operations
+    /// </summary>
     public interface IDailyScheduleService
     {
         Task CreateDailyScheduleTask(CreateDailyTaskDTO dailyTaskDTO);

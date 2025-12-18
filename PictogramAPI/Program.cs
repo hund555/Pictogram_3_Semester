@@ -17,7 +17,7 @@ namespace PictogramAPI
             builder.Services.AddScoped<IPictogramService, PictogramService>();
             builder.Services.AddScoped<IDailyScheduleService, DailyScheduleService>();
 
-            //Auth settings
+            //Authentication settings
             const string authScheme = "AuthCookie";
 
             builder.Services.AddAuthentication(authScheme).AddCookie(authScheme, options =>

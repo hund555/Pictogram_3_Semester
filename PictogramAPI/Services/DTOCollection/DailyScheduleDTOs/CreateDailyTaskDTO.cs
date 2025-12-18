@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Services.DTOCollection.DailyScheduleDTOs
 {
+    /// <summary>
+    /// Data Transfer Object used to create a new task in a daily schedule.
+    /// </summary>
     public class CreateDailyTaskDTO
     {
         public string UserId { get; set; }
