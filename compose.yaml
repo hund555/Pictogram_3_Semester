@@ -7,7 +7,7 @@ services:
     container_name: mongodb-pictogram
     hostname: database
     networks:
-      - api-db
+      - api-db # Internal network for communication between API and Database
     volumes:
       - mongo-data:/data/db
 
@@ -20,10 +20,10 @@ services:
     depends_on:
       - database
     networks:
-      - api-db
-      - default
+      - api-db # Internal network for communication between API and Database
+      - default # Public network for exposure
     ports:
-      - "8080:8080"
+      - "8080:8080" # Port of the API
     hostname: pictogramapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -36,16 +36,16 @@ services:
       dockerfile: Dockerfile
     container_name: pictogram-frontend
     ports: 
-      - "49732:49732"
+      - "49732:49732" # custom port used for React application
     depends_on:
       - apiserver
     networks:
-      - default
+      - default # Public network for exposure
 
-volumes:
+volumes: # Storage, where MongoDB Stored its data
   mongo-data:
-networks:
-  api-db:
+networks: 
+  api-db: # Defining internal network
     driver: bridge
     internal: true
 
