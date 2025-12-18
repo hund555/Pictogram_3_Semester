@@ -8,6 +8,9 @@ using System.Security.Claims;
 
 namespace PictogramAPI.Endpoints
 {
+    /// <summary>
+    /// Contains all user-related API endpoints.
+    /// </summary>
     public static class UserEndpoints
     {
         public static void MapUserEndpoints(this WebApplication app, string authscheme)

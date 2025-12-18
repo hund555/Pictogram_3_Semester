@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using PictogramAPI.Services.DTOCollection.DailyScheduleDTOs;
 using PictogramAPI.Services.Interfaces;
+using System.ComponentModel;
 
 namespace PictogramAPI.Endpoints
 {
+    /// <summary>
+    /// Contains all dailySchedule-related API endpoints.
+    /// </summary>
     public static class DailyScheduleEndpoints
     {
         public static void MapDailyScheduleEndpoints(this WebApplication app)

@@ -3,6 +3,10 @@ using System.Runtime.CompilerServices;
 
 namespace WPF_PictoPlanner_Admin.Models
 {
+    /// <summary>
+    /// Base class implementing INotifyPropertyChanged.
+    /// Provides helper methods for notifying the UI when a property value changes.
+    /// </summary>
     public abstract class Bindable : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;

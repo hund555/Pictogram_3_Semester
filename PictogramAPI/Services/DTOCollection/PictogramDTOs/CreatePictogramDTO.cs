@@ -1,5 +1,8 @@
 ﻿namespace PictogramAPI.Services.DTOCollection.PictogramDTOs
 {
+    /// <summary>
+    /// Data Transfer Object used to create a new pictogram in the system.
+    /// </summary>
     public class CreatePictogramDTO
     {
         public string Title { get; set; }

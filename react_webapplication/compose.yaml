@@ -1,0 +1,11 @@
+services:
+  # React Application service
+  reactapplication:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pictogram-frontend
+    ports: 
+      - "49732:49732" # custom port used for React application
+    networks:
+      - default # Public network for exposure
