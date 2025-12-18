@@ -3,8 +3,6 @@ using System.Windows.Input;
 using WPF_PictoPlanner_Admin.Commands;
 using WPF_PictoPlanner_Admin.Models;
 using WPF_PictoPlanner_Admin.Services.Interfaces;
-using WPF_PictoPlanner_Admin.View;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WPF_PictoPlanner_Admin.ViewModels
 {
