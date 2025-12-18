@@ -1,4 +1,3 @@
-#### Pictogram_3_Semester
-## React + ASP.net + MongoDB.
+## Deployment fully Dockerized
 To Deploy all Services to Dockercontainer, download the repository from the branch Deploy.
-Alternatively you can Clone it by typing: ´´´git clone -b Deploy 
+Alternatively you can Clone it by typing: ´git clone -b Deploy´
