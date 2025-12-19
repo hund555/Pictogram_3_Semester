@@ -1,5 +1,5 @@
 # PictoPlanner
-
+Test live version [here](http://49.13.17.29:49732)
 ## Important note:
   Make sure to go in to PictogramAPI and change the CORS origin in Program.cs before Building.
   This is how:
